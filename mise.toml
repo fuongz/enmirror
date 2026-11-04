@@ -1,0 +1,97 @@
+# Build-and-install tasks for enMirror (`mise tasks` lists them). Device and simulator IDs are per
+# machine: put them in mise.local.toml (gitignored), for example
+#
+#   [env]
+#   ENMIRROR_SIM = "<UDID of the simulator>"   # xcrun simctl list devices
+#   ENMIRROR_DEVICE = "<UDID of the iPhone>"   # xcrun devicectl list devices
+#
+# Signing for the iPhone comes from Config/Local.xcconfig (README.md, "Running on an iPhone").
+
+# Code checks run by scripts/ci-ios.sh (docs/conventions.md, "Tooling"). swift-format comes with Xcode.
+[tools]
+"aqua:realm/SwiftLint" = "0.65.1"
+"aqua:peripheryapp/periphery" = "3.8.0"
+
+[env]
+ENMIRROR_PROJECT = "EnMirror.xcodeproj"
+ENMIRROR_BUNDLE_ID = "com.trinhvaphuong.enmirror"
+ENMIRROR_SIM_DERIVED = "build/xcode-sim"
+ENMIRROR_DEVICE_DERIVED = "build/xcode-device"
+
+[tasks."ios:build-sim"]
+description = "Build the Debug app for the simulator"
+run = """
+set -euo pipefail
+: "${ENMIRROR_SIM:?set ENMIRROR_SIM in mise.local.toml}"
+xcodebuild build -quiet -project "$ENMIRROR_PROJECT" -scheme EnMirror \
+  -destination "platform=iOS Simulator,id=$ENMIRROR_SIM" -derivedDataPath "$ENMIRROR_SIM_DERIVED"
+"""
+
+[tasks."ios:sim"]
+description = "Build, then install and launch on the simulator (boots it)"
+depends = ["ios:build-sim"]
+run = """
+set -euo pipefail
+open -b com.apple.iphonesimulator 2>/dev/null || true
+xcrun simctl boot "$ENMIRROR_SIM" 2>/dev/null || true
+xcrun simctl install "$ENMIRROR_SIM" "$ENMIRROR_SIM_DERIVED/Build/Products/Debug-iphonesimulator/EnMirror.app"
+xcrun simctl launch "$ENMIRROR_SIM" "$ENMIRROR_BUNDLE_ID"
+"""
+
+[tasks."ios:build-device"]
+description = "Build the Debug app for the iPhone"
+run = """
+set -euo pipefail
+: "${ENMIRROR_DEVICE:?set ENMIRROR_DEVICE in mise.local.toml}"
+xcodebuild build -quiet -project "$ENMIRROR_PROJECT" -scheme EnMirror \
+  -destination "platform=iOS,id=$ENMIRROR_DEVICE" -derivedDataPath "$ENMIRROR_DEVICE_DERIVED" \
+  -allowProvisioningUpdates -allowProvisioningDeviceRegistration
+"""
+
+[tasks."ios:device"]
+description = "Build, then install and launch on the iPhone (unlocked, by cable or on the same Wi-Fi)"
+depends = ["ios:build-device"]
+run = """
+set -euo pipefail
+xcrun devicectl device install app --device "$ENMIRROR_DEVICE" \
+  "$ENMIRROR_DEVICE_DERIVED/Build/Products/Debug-iphoneos/EnMirror.app" | grep -E "App installed|error" || true
+xcrun devicectl device process launch --device "$ENMIRROR_DEVICE" "$ENMIRROR_BUNDLE_ID" | tail -1
+"""
+
+[tasks."ios:test"]
+description = "Run the unit tests on the simulator"
+run = """
+set -euo pipefail
+: "${ENMIRROR_SIM:?set ENMIRROR_SIM in mise.local.toml}"
+xcodebuild test -quiet -project "$ENMIRROR_PROJECT" -scheme EnMirror \
+  -destination "platform=iOS Simulator,id=$ENMIRROR_SIM" -derivedDataPath "$ENMIRROR_SIM_DERIVED"
+"""
+
+[tasks."ios:format"]
+description = "Format the Swift in place with swift-format (.swift-format)"
+run = "scripts/ios-swift-files.sh | xargs -0 xcrun swift-format format --in-place --parallel"
+
+[tasks."ios:lint"]
+description = "Check the Swift: swift-format, then SwiftLint"
+run = """
+set -euo pipefail
+scripts/ios-swift-files.sh | xargs -0 xcrun swift-format lint --strict --parallel
+swiftlint lint --quiet --strict
+"""
+
+[tasks."ios:dead-code"]
+description = "List unused Swift declarations with Periphery (builds for the simulator first)"
+run = """
+set -euo pipefail
+xcodebuild build -quiet -project "$ENMIRROR_PROJECT" -scheme EnMirror -destination "generic/platform=iOS Simulator" \
+  -derivedDataPath "build/ci-ios/iOS Simulator" CODE_SIGNING_ALLOWED=NO
+periphery scan --quiet --relative-results --index-store-path "build/ci-ios/iOS Simulator/Index.noindex/DataStore"
+"""
+
+[tasks."testflight:build"]
+description = "Archive and export the Release .ipa under build/testflight without uploading"
+run = "scripts/testflight.sh"
+
+[tasks."testflight:upload"]
+description = "Archive the Release build and upload it to App Store Connect (TestFlight)"
+run = "scripts/testflight.sh --upload"

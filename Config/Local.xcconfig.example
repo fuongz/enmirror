@@ -1,0 +1,7 @@
+// Copy to Local.xcconfig (gitignored) to sign for an iPhone and for TestFlight (README.md).
+// The paid team that owns com.trinhvaphuong.enmirror: Xcode › Settings › Accounts, or
+// developer.apple.com › Membership details.
+DEVELOPMENT_TEAM = ABCDE12345
+
+// A free Personal Team cannot use the App Store bundle ID: uncomment and pick your own.
+// ENMIRROR_APP_BUNDLE_ID = com.<you>.enmirror.dev

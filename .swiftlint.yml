@@ -1,0 +1,31 @@
+# SwiftLint for enMirror (docs/conventions.md, "Files and types"). Formatting is swift-format's job
+# (.swift-format); these rules catch what makes code hard to change. scripts/ci-ios.sh fails on any
+# violation.
+only_rules:
+  - file_length
+  - type_body_length
+  - function_body_length
+  - cyclomatic_complexity
+  - force_unwrapping
+  - force_try
+  - force_cast
+
+included:
+  - EnMirror
+  - EnMirrorTests
+  - scripts
+
+file_length:
+  warning: 500
+  error: 500
+  ignore_comment_only_lines: true
+type_body_length:
+  warning: 300
+  error: 300
+function_body_length:
+  warning: 60
+  error: 60
+cyclomatic_complexity:
+  warning: 15
+  error: 15
+  ignores_case_statements: true

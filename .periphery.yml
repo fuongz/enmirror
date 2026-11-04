@@ -1,0 +1,8 @@
+# Periphery (dead code), run by scripts/ci-ios.sh as a report: it does not fail the build.
+project: EnMirror.xcodeproj
+schemes:
+  - EnMirror
+retain_swift_ui_previews: true
+# Reads the index of the simulator build that scripts/ci-ios.sh already makes, so it adds no build
+# of its own. Run by hand: mise run ios:dead-code.
+skip_build: true

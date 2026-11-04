@@ -1,0 +1,9 @@
+// Base build settings of the app target: bundle ID and signing. Personal values (team ID, or a
+// development bundle ID for a free Personal Team) go in Local.xcconfig next to this file, which is
+// gitignored. scripts/ci-ios.sh builds with CODE_SIGNING_ALLOWED=NO, so it needs neither.
+ENMIRROR_APP_BUNDLE_ID = com.trinhvaphuong.enmirror
+PRODUCT_BUNDLE_IDENTIFIER = $(ENMIRROR_APP_BUNDLE_ID)
+DEVELOPMENT_TEAM =
+CODE_SIGN_STYLE = Automatic
+
+#include? "Local.xcconfig"
