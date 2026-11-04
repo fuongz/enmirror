@@ -1,0 +1,246 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "Allow Photos access in Settings to save": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hãy cho phép truy cập Ảnh trong Cài đặt để lưu"
+          }
+        }
+      }
+    },
+    "Allow camera access for enMirror in Settings to use the mirror.": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hãy cho phép enMirror dùng camera trong Cài đặt để soi gương."
+          }
+        }
+      }
+    },
+    "As others see you": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Như người khác nhìn bạn"
+          }
+        }
+      }
+    },
+    "Camera access is off": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chưa có quyền dùng camera"
+          }
+        }
+      }
+    },
+    "Captures a still so you can look closely": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chụp lại khung hình để bạn xem kỹ"
+          }
+        }
+      }
+    },
+    "Couldn't capture a photo": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Không chụp được ảnh"
+          }
+        }
+      }
+    },
+    "Couldn't save the photo": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Không lưu được ảnh"
+          }
+        }
+      }
+    },
+    "Delete": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xoá"
+          }
+        }
+      }
+    },
+    "Exposure": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Độ sáng"
+          }
+        }
+      }
+    },
+    "Frozen photo": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ảnh đã dừng"
+          }
+        }
+      }
+    },
+    "Light": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Đèn"
+          }
+        }
+      }
+    },
+    "Light size": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Độ dày đèn"
+          }
+        }
+      }
+    },
+    "Light tone": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tông màu đèn"
+          }
+        }
+      }
+    },
+    "Mirror": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gương"
+          }
+        }
+      }
+    },
+    "Mirror view": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chế độ gương"
+          }
+        }
+      }
+    },
+    "No front camera": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Không có camera trước"
+          }
+        }
+      }
+    },
+    "Open Settings": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mở Cài đặt"
+          }
+        }
+      }
+    },
+    "Photo from enMirror": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ảnh từ enMirror"
+          }
+        }
+      }
+    },
+    "Save": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lưu"
+          }
+        }
+      }
+    },
+    "Saved to Photos": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Đã lưu vào Ảnh"
+          }
+        }
+      }
+    },
+    "Share": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chia sẻ"
+          }
+        }
+      }
+    },
+    "Take photo": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chụp ảnh"
+          }
+        }
+      }
+    },
+    "Zoom": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Phóng to"
+          }
+        }
+      }
+    },
+    "enMirror needs a device with a front camera.": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "enMirror cần thiết bị có camera trước."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

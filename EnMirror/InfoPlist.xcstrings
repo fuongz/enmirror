@@ -1,0 +1,57 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "CFBundleDisplayName": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "enMirror"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "enMirror"
+          }
+        }
+      },
+      "shouldTranslate": true
+    },
+    "NSCameraUsageDescription": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "enMirror uses the front camera to show your reflection. Nothing is recorded or uploaded."
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "enMirror dùng camera trước để hiển thị hình ảnh của bạn. Không có gì được ghi lại hay tải lên."
+          }
+        }
+      },
+      "shouldTranslate": true
+    },
+    "NSPhotoLibraryAddUsageDescription": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "enMirror saves the photos you choose to your library."
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "enMirror lưu những ảnh bạn chọn vào thư viện."
+          }
+        }
+      },
+      "shouldTranslate": true
+    }
+  },
+  "version": "1.0"
+}
