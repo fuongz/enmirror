@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>enMirror · Hướng dẫn lên App Store</title>
+<!--
+  Cách cập nhật file này:
+  - Mỗi bước là một <section class="step" id="..."> trong <main>. Thêm section mới rồi thêm một
+    dòng <li><a href="#id">…</a></li> tương ứng vào <nav>.
+  - Trạng thái của enMirror: <span class="tag done">Đã xong</span>, <span class="tag todo">Chưa làm</span>,
+    <span class="tag info">Mỗi bản build</span>.
+  - Ghi chú: <div class="note">…</div> (thông tin), <div class="warn">…</div> (cần cẩn thận).
+  - Lệnh: <pre><code>…</code></pre>; nút Copy được thêm tự động.
+  - Ảnh: lưu vào docs/images/app-store/<bước>-<số>-<mô tả>.png (che email/thông tin cá nhân trước),
+    rồi đặt trong bước tương ứng:
+    <figure><a href="images/app-store/x.png"><img src="images/app-store/x.png" width="W" height="H" loading="lazy" alt="Mô tả màn hình"></a>
+    <figcaption>Chú thích</figcaption></figure>
+    Lấy W và H bằng: sips -g pixelWidth -g pixelHeight <file>
+  - Ghi lại thay đổi trong mục "Nhật ký cập nhật" ở cuối trang.
+  Không cần build: mở thẳng file trong trình duyệt.
+-->
+<style>
+  :root {
+    --bg: #fbfaf8; --fg: #1d1c1a; --muted: #6b6760; --line: #e6e2dc; --card: #fff;
+    --accent: #c98a2b; --accent-soft: #fbf1e1; --ok: #2f7d4f; --ok-soft: #e5f3ea;
+    --warn: #a4451f; --warn-soft: #fbe9e1; --code: #f3f0eb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141413; --fg: #ecebe8; --muted: #a29e96; --line: #2c2b29; --card: #1c1b1a;
+      --accent: #f0b35c; --accent-soft: #2e2416; --ok: #6fca93; --ok-soft: #17291e;
+      --warn: #f19a76; --warn-soft: #2f1c15; --code: #232220;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .layout { display: grid; grid-template-columns: 260px minmax(0, 760px); gap: 48px; max-width: 1100px; margin: 0 auto; padding: 48px 24px 96px; }
+  nav { position: sticky; top: 24px; align-self: start; font-size: 14px; }
+  nav .brand { font-weight: 700; font-size: 17px; margin-bottom: 4px; }
+  nav .sub { color: var(--muted); margin-bottom: 20px; }
+  nav ol { list-style: none; padding: 0; margin: 0; counter-reset: s; }
+  nav li { counter-increment: s; }
+  nav a { display: flex; gap: 10px; padding: 6px 10px; border-radius: 8px; color: var(--muted); text-decoration: none; }
+  nav a::before { content: counter(s); font-variant-numeric: tabular-nums; min-width: 1.2em; color: var(--accent); font-weight: 600; }
+  nav a:hover, nav a.active { background: var(--accent-soft); color: var(--fg); }
+  header h1 { font-size: 34px; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 8px; }
+  header p { color: var(--muted); margin: 0 0 32px; }
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 40px; }
+  .fact { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+  .fact b { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; }
+  .fact span { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 14px; }
+  .step { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 24px 28px; margin-bottom: 20px; }
+  .step h2 { font-size: 21px; letter-spacing: -0.01em; margin: 0 0 4px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+  .step .why { color: var(--muted); margin: 0 0 16px; }
+  h3 { font-size: 16px; margin: 20px 0 6px; }
+  ol.steps, ul { padding-left: 1.3em; }
+  ol.steps li, ul li { margin: 6px 0; }
+  .tag { font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; white-space: nowrap; }
+  .tag.done { background: var(--ok-soft); color: var(--ok); }
+  .tag.todo { background: var(--warn-soft); color: var(--warn); }
+  .tag.info { background: var(--accent-soft); color: var(--accent); }
+  .note, .warn { border-radius: 10px; padding: 12px 14px; margin: 14px 0; font-size: 15px; }
+  .note { background: var(--accent-soft); }
+  .warn { background: var(--warn-soft); }
+  .note::before { content: "Ghi chú · "; font-weight: 700; }
+  .warn::before { content: "Lưu ý · "; font-weight: 700; color: var(--warn); }
+  code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.88em; background: var(--code); padding: 1px 6px; border-radius: 5px; }
+  pre { position: relative; background: var(--code); border-radius: 10px; padding: 14px 16px; overflow-x: auto; margin: 12px 0; }
+  pre code { background: none; padding: 0; font-size: 13.5px; line-height: 1.6; }
+  pre button {
+    position: absolute; top: 8px; right: 8px; font: 600 12px -apple-system, sans-serif; color: var(--muted);
+    background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 3px 9px; cursor: pointer;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; margin: 12px 0; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); font-weight: 600; }
+  .check { list-style: none; padding: 0; }
+  .check li { display: flex; gap: 10px; align-items: baseline; }
+  .check input { accent-color: var(--accent); transform: translateY(2px); }
+  figure { margin: 14px 0 18px; }
+  figure img {
+    display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 10px;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px rgb(0 0 0 / 0.06);
+  }
+  figure a { display: block; cursor: zoom-in; }
+  figcaption { color: var(--muted); font-size: 14px; margin-top: 8px; }
+  kbd { font: 600 12px -apple-system, sans-serif; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px; padding: 1px 6px; background: var(--card); }
+  a { color: var(--accent); }
+  footer { color: var(--muted); font-size: 14px; margin-top: 32px; }
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; gap: 24px; padding-top: 24px; }
+    nav { position: static; }
+    .step { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+  <nav>
+    <div class="brand">enMirror</div>
+    <div class="sub">Từ code tới App Store</div>
+    <ol>
+      <li><a href="#prereq">Chuẩn bị</a></li>
+      <li><a href="#bundle-id">Bundle ID</a></li>
+      <li><a href="#asc-app">Tạo app trên App Store Connect</a></li>
+      <li><a href="#signing">Ký app trên máy</a></li>
+      <li><a href="#upload">Build &amp; upload</a></li>
+      <li><a href="#testflight">TestFlight</a></li>
+      <li><a href="#listing">Trang App Store</a></li>
+      <li><a href="#privacy">Quyền riêng tư</a></li>
+      <li><a href="#submit">Gửi duyệt &amp; phát hành</a></li>
+      <li><a href="#update">Bản cập nhật</a></li>
+      <li><a href="#cleanup">Xoá app &amp; Identifier</a></li>
+      <li><a href="#troubleshoot">Xử lý lỗi</a></li>
+      <li><a href="#changelog">Nhật ký cập nhật</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <header>
+      <h1>Hướng dẫn đưa enMirror lên App Store</h1>
+      <p>Các bước theo đúng thứ tự, từ tài khoản developer tới lúc app có trên App Store, kèm trạng thái hiện tại của enMirror. Chi tiết kỹ thuật nằm trong <code>docs/runbook.md</code> và <code>README.md</code>.</p>
+    </header>
+
+    <div class="facts">
+      <div class="fact"><b>Bundle ID</b><span>com.trinhvaphuong.enmirror</span></div>
+      <div class="fact"><b>Team</b><span>GWG64UPCV5</span></div>
+      <div class="fact"><b>Tên hiển thị</b><span>enMirror</span></div>
+      <div class="fact"><b>SKU</b><span>enMirror</span></div>
+      <div class="fact"><b>Apple ID</b><span>6830683755</span></div>
+      <div class="fact"><b>iOS tối thiểu</b><span>26.0</span></div>
+      <div class="fact"><b>Phiên bản</b><span>1.0</span></div>
+    </div>
+
+    <section class="step" id="prereq">
+      <h2>Chuẩn bị <span class="tag done">Đã xong</span></h2>
+      <p class="why">Phải có tài khoản trả phí thì mới lên được TestFlight và App Store.</p>
+      <ul>
+        <li><b>Apple Developer Program</b> (99 USD/năm): tài khoản Individual <code>Phuong Phung</code>, team <code>GWG64UPCV5</code>. Xem hạn ở developer.apple.com › Account › Membership details.</li>
+        <li><b>Xcode</b>: vào <kbd>⌘</kbd><kbd>,</kbd> › Accounts và đăng nhập bằng Apple ID của team. Xcode dùng tài khoản này để tự tạo certificate và provisioning profile.</li>
+        <li><b>mise</b>: chạy <code>mise install</code> trong repo để cài SwiftLint và Periphery đúng version đã pin.</li>
+      </ul>
+    </section>
+
+    <section class="step" id="bundle-id">
+      <h2>Bundle ID <span class="tag done">Đã xong</span></h2>
+      <p class="why">Mã định danh duy nhất của app. Một khi app đã lên App Store thì không đổi được nữa.</p>
+      <div class="warn">Bundle ID đã đổi từ <code>com.fuongz.enmirror</code> sang <code>com.trinhvaphuong.enmirror</code>, cùng họ với <code>com.trinhvaphuong.enchat</code>. ID mới đã được đăng ký. Còn ID cũ thì xem mục <a href="#cleanup">Xoá app &amp; Identifier</a>.</div>
+      <ol class="steps">
+        <li>Vào <a href="https://developer.apple.com/account/resources/identifiers/list">developer.apple.com › Identifiers</a> và bấm <b>+</b>.</li>
+        <li>Chọn <b>App IDs</b> rồi bấm <b>Continue</b>.
+          <figure>
+            <a href="images/app-store/bundle-id-1-app-ids.png"><img src="images/app-store/bundle-id-1-app-ids.png" width="1249" height="866" loading="lazy" alt="Màn hình Register a new identifier, đang chọn App IDs, nút Continue ở góc phải"></a>
+            <figcaption>Chọn App IDs, mục đầu tiên trong danh sách.</figcaption>
+          </figure>
+        </li>
+        <li>Ở <b>Select a type</b>, chọn <b>App</b> (không chọn App Clip) rồi bấm <b>Continue</b>.
+          <figure>
+            <a href="images/app-store/bundle-id-2-type-app.png"><img src="images/app-store/bundle-id-2-type-app.png" width="1240" height="443" loading="lazy" alt="Màn hình Select a type với hai lựa chọn App và App Clip, App đang được chọn"></a>
+            <figcaption>Chọn loại App.</figcaption>
+          </figure>
+        </li>
+        <li>Description: <code>enMirror</code>. Bundle ID: chọn <b>Explicit</b>, nhập <code>com.trinhvaphuong.enmirror</code>. App ID Prefix sẽ tự hiện <code>GWG64UPCV5 (Team ID)</code>.
+          <figure>
+            <a href="images/app-store/bundle-id-3-register.png"><img src="images/app-store/bundle-id-3-register.png" width="1266" height="741" loading="lazy" alt="Màn hình Register an App ID: Description enMirror, Bundle ID Explicit (ảnh chụp lúc còn dùng ID cũ com.fuongz.enmirror), App ID Prefix GWG64UPCV5, bên dưới là danh sách Capabilities chưa bật mục nào"></a>
+            <figcaption>Điền Description và Bundle ID. Danh sách Capabilities bên dưới để nguyên, không tick mục nào. Ảnh này chụp lúc còn dùng ID cũ: hãy nhập <code>com.trinhvaphuong.enmirror</code>.</figcaption>
+          </figure>
+        </li>
+        <li>Capabilities: không bật gì. Camera và Photos chỉ cần câu xin quyền trong Info.plist, app đã có sẵn. Bấm <b>Continue</b> › <b>Register</b>.</li>
+      </ol>
+    </section>
+
+    <section class="step" id="asc-app">
+      <h2>Tạo app trên App Store Connect <span class="tag done">Đã xong</span></h2>
+      <p class="why">Đây là bản ghi app mà TestFlight và App Store sẽ dùng.</p>
+      <ol class="steps">
+        <li>Vào <a href="https://appstoreconnect.apple.com/apps">appstoreconnect.apple.com › Apps</a> › <b>+</b> › <b>New App</b>.</li>
+        <li>Điền các mục sau:</li>
+      </ol>
+      <table>
+        <tr><th>Mục</th><th>Giá trị</th><th>Ghi chú</th></tr>
+        <tr><td>Platforms</td><td>iOS</td><td></td></tr>
+        <tr><td>Name</td><td><code>enMirror</code></td><td>Không được trùng với app khác trên App Store. Nếu đã có người dùng thì đặt tên khác, ví dụ "enMirror – Ring Light Mirror". Tên dưới icon trên màn hình chính vẫn là enMirror.</td></tr>
+        <tr><td>Primary Language</td><td>English (U.S.)</td><td>Tiếng Việt thêm sau ở mục Localizations.</td></tr>
+        <tr><td>Bundle ID</td><td><code>com.trinhvaphuong.enmirror</code></td><td>Chọn trong danh sách. Nếu không thấy thì xem lại bước 2.</td></tr>
+        <tr><td>SKU</td><td><code>enMirror</code></td><td>Mã nội bộ, người dùng không thấy. Không trùng với SKU của app đã xoá.</td></tr>
+        <tr><td>User Access</td><td><b>Full Access</b></td><td>Chỉ ảnh hưởng tới người dùng khác trong team. Tài khoản Individual chỉ có một người nên chọn kiểu nào cũng như nhau.</td></tr>
+      </table>
+      <p>Sau khi bấm <b>Create</b>, kiểm tra ở App Information › General Information:</p>
+      <figure>
+        <a href="images/app-store/asc-app-1-general-info.png"><img src="images/app-store/asc-app-1-general-info.png" width="563" height="247" loading="lazy" alt="General Information: Bundle ID enMirror - com.trinhvaphuong.enmirror, SKU enMirror, Apple ID 6830683755"></a>
+        <figcaption>Bundle ID, SKU và Apple ID của app. Apple ID <code>6830683755</code> là số trong link App Store sau này: <code>apps.apple.com/app/id6830683755</code>.</figcaption>
+      </figure>
+    </section>
+
+    <section class="step" id="signing">
+      <h2>Ký app trên máy <span class="tag done">Đã xong</span></h2>
+      <p class="why">Thông tin ký app không đưa lên git. Mỗi máy tự có một file riêng.</p>
+      <ul>
+        <li><code>Config/Signing.xcconfig</code> (có trong git): chứa bundle ID và kiểu ký tự động.</li>
+        <li><code>Config/Local.xcconfig</code> (gitignored): chứa team của máy này. Máy mới thì copy từ file mẫu:</li>
+      </ul>
+<pre><code>cp Config/Local.xcconfig.example Config/Local.xcconfig
+# rồi sửa: DEVELOPMENT_TEAM = GWG64UPCV5</code></pre>
+      <p>Kiểm tra: build cho iPhone rồi xem chữ ký có đúng team và bundle ID không:</p>
+<pre><code>mise run ios:device
+codesign -dvv build/xcode-device/Build/Products/Debug-iphoneos/EnMirror.app | grep -E "Identifier|Team"</code></pre>
+      <div class="note">Certificate <b>Apple Distribution</b> dùng cho TestFlight được tạo tự động lần đầu archive (nhờ <code>-allowProvisioningUpdates</code>), không cần tạo tay.</div>
+    </section>
+
+    <section class="step" id="upload">
+      <h2>Build &amp; upload <span class="tag info">Mỗi bản build</span></h2>
+      <p class="why">Một lệnh lo hết: archive bản Release, đánh số build, ký và upload.</p>
+<pre><code>scripts/ci-ios.sh              # kiểm tra mọi thứ trước
+mise run testflight:build      # chỉ xuất .ipa vào build/testflight, không upload
+mise run testflight:upload     # archive + upload lên App Store Connect</code></pre>
+      <ul>
+        <li><b>Build number</b> lấy theo giờ UTC (ví dụ <code>202611041230</code>), nên không bao giờ trùng giữa các lần upload.</li>
+        <li><b>Version</b> (<code>MARKETING_VERSION</code>, đang là 1.0): tăng lên khi ra phiên bản mới. Sửa trong Xcode › target EnMirror › General › Version.</li>
+        <li><b>Export compliance</b>: Info.plist đã có <code>ITSAppUsesNonExemptEncryption = NO</code>, nên App Store Connect không hỏi về mã hoá mỗi lần upload.</li>
+      </ul>
+      <div class="note">Có thể upload thủ công: chạy <code>testflight:build</code>, rồi kéo file <code>.ipa</code> vào app <b>Transporter</b> (tải trên Mac App Store).</div>
+    </section>
+
+    <section class="step" id="testflight">
+      <h2>TestFlight <span class="tag todo">Chưa làm</span></h2>
+      <p class="why">Cho người thật dùng thử trước khi lên App Store.</p>
+      <ol class="steps">
+        <li>Chờ build xử lý xong, khoảng 10 đến 30 phút. Apple sẽ gửi email báo.</li>
+        <li><b>Internal Testing</b> (tối đa 100 người có tài khoản trong App Store Connect): TestFlight › Internal Testing › <b>+</b> tạo group › thêm tester › thêm build. <b>Không cần Apple duyệt.</b></li>
+        <li><b>External Testing</b> (mời ai cũng được, qua email hoặc public link, tối đa 10.000 người): build đầu tiên của mỗi version phải qua <b>Beta App Review</b>, thường dưới một ngày.</li>
+        <li>Tester cài app <b>TestFlight</b> trên iPhone rồi bấm vào lời mời.</li>
+      </ol>
+      <h3>Test Information (bắt buộc với External)</h3>
+      <ul>
+        <li>Beta App Description: mô tả ngắn app làm gì và cần test phần nào.</li>
+        <li>Feedback Email: email nhận góp ý từ tester.</li>
+        <li>Review notes: <i>"No login needed. The app uses only the front camera; it needs a real device."</i></li>
+      </ul>
+      <div class="warn">Mỗi build TestFlight chỉ dùng được 90 ngày, sau đó phải upload build mới.</div>
+    </section>
+
+    <section class="step" id="listing">
+      <h2>Trang App Store <span class="tag todo">Chưa làm</span></h2>
+      <p class="why">Những gì người dùng thấy trước khi tải app.</p>
+      <table>
+        <tr><th>Mục</th><th>Gợi ý cho enMirror</th></tr>
+        <tr><td>Subtitle (≤ 30 ký tự)</td><td>Ring light mirror, no ads</td></tr>
+        <tr><td>Category</td><td>Lifestyle (phụ: Photo &amp; Video)</td></tr>
+        <tr><td>Keywords (≤ 100 ký tự)</td><td>mirror,makeup,ring light,selfie,zoom,beauty,compact,vanity</td></tr>
+        <tr><td>Description</td><td>Nêu rõ: miễn phí, không quảng cáo, chạy offline, có đèn viền, zoom, dừng hình, chế độ "như người khác nhìn".</td></tr>
+        <tr><td>Support URL</td><td>Bắt buộc. Có thể dùng trang GitHub hoặc một trang tĩnh.</td></tr>
+        <tr><td>Price</td><td>Free, tất cả quốc gia</td></tr>
+        <tr><td>Localizations</td><td>Thêm Vietnamese với mô tả tiếng Việt</td></tr>
+      </table>
+      <h3>Ảnh chụp màn hình</h3>
+      <ul>
+        <li>Bắt buộc bộ cho iPhone 6.9" (1320 × 2868 hoặc 1290 × 2796 px, dọc). Các kích thước nhỏ hơn App Store Connect tự co lại.</li>
+        <li>Tối thiểu 1 ảnh, tối đa 10 ảnh. Nên có 4 đến 5 ảnh: gương, đèn viền, zoom, dừng hình, chế độ người khác nhìn.</li>
+        <li>Simulator không có camera, nên ảnh phải chụp trên iPhone thật (nút nguồn + tăng âm lượng).</li>
+      </ul>
+      <div class="note">Kích thước bắt buộc có thể đổi theo từng năm. Xem lại ở App Store Connect › phần Previews and Screenshots trước khi làm ảnh.</div>
+    </section>
+
+    <section class="step" id="privacy">
+      <h2>Quyền riêng tư <span class="tag todo">Chưa làm</span></h2>
+      <p class="why">Phải khớp với những gì app thật sự làm. Khai sai là bị từ chối.</p>
+      <ul>
+        <li><b>App Privacy</b> › Get Started › <b>"No, we do not collect data from this app"</b>, tức nhãn <b>Data Not Collected</b>. Khớp với <code>EnMirror/PrivacyInfo.xcprivacy</code>.</li>
+        <li><b>Privacy Policy URL</b>: bắt buộc, kể cả khi app không thu thập dữ liệu. Chỉ cần một trang ngắn: app không thu thập, không gửi dữ liệu đi đâu, camera chỉ hiển thị trên máy, ảnh chỉ được lưu khi người dùng bấm Lưu.</li>
+        <li><b>Age Rating</b>: trả lời "None" cho tất cả, kết quả là <b>4+</b>.</li>
+      </ul>
+    </section>
+
+    <section class="step" id="submit">
+      <h2>Gửi duyệt &amp; phát hành <span class="tag todo">Chưa làm</span></h2>
+      <p class="why">App Review thường xong trong 1 đến 2 ngày.</p>
+      <ol class="steps">
+        <li>Ở trang version 1.0: chọn build ở mục <b>Build</b>.</li>
+        <li><b>App Review Information</b>: thông tin liên hệ. Không cần tài khoản demo vì app không có đăng nhập. Notes: <i>"Mirror app using the front camera. No account, no network, no ads."</i></li>
+        <li><b>Version Release</b>: chọn <i>Manually release</i> để tự bấm phát hành sau khi được duyệt.</li>
+        <li>Bấm <b>Add for Review</b> › <b>Submit</b>.</li>
+      </ol>
+      <h3>Checklist trước khi gửi</h3>
+      <ul class="check">
+        <li><input type="checkbox"> Đã test trên iPhone thật: camera, đèn viền, zoom, dừng hình, lưu ảnh, lật hình</li>
+        <li><input type="checkbox"> Câu xin quyền camera và Photos rõ ràng, có cả tiếng Anh và tiếng Việt</li>
+        <li><input type="checkbox"> Từ chối quyền camera thì app hiện hướng dẫn mở Cài đặt, không bị crash</li>
+        <li><input type="checkbox"> Ảnh chụp màn hình đúng kích thước, đúng với app hiện tại</li>
+        <li><input type="checkbox"> Đã có Privacy Policy URL và Support URL</li>
+        <li><input type="checkbox"> App Privacy là Data Not Collected, Age Rating là 4+</li>
+        <li><input type="checkbox"> <code>scripts/ci-ios.sh</code> pass</li>
+      </ul>
+      <div class="note">Các ô trên chỉ để tick tạm khi đọc, tải lại trang là mất.</div>
+    </section>
+
+    <section class="step" id="update">
+      <h2>Bản cập nhật <span class="tag info">Mỗi phiên bản</span></h2>
+      <ol class="steps">
+        <li>Tăng <b>Version</b> (1.0 → 1.1) trong Xcode.</li>
+        <li><code>scripts/ci-ios.sh</code> rồi <code>mise run testflight:upload</code>.</li>
+        <li>Thử qua TestFlight.</li>
+        <li>App Store Connect › <b>+</b> cạnh iOS App › nhập version mới › viết <b>What's New</b> › chọn build › Submit.</li>
+      </ol>
+    </section>
+
+    <section class="step" id="cleanup">
+      <h2>Xoá app &amp; Identifier <span class="tag todo">Dọn ID cũ</span></h2>
+      <p class="why">Dùng khi đổi Bundle ID hoặc tạo nhầm. Ở đây là để dọn <code>com.fuongz.enmirror</code>.</p>
+      <div class="warn">Thứ tự bắt buộc: <b>xoá app trên App Store Connect trước</b>, rồi mới xoá Identifier. Identifier còn gắn với một app thì Apple không cho xoá.</div>
+
+      <h3>1. Xoá app trên App Store Connect (nếu đã tạo với ID cũ)</h3>
+      <ol class="steps">
+        <li>Vào <a href="https://appstoreconnect.apple.com/apps">App Store Connect › Apps</a> và mở app đó.</li>
+        <li>Mở tab <b>App Store</b> › ở cột trái, dưới General, chọn <b>App Information</b>.</li>
+        <li>Kéo xuống cuối trang, bấm <b>Remove App</b> rồi xác nhận.</li>
+      </ol>
+      <ul>
+        <li>Chỉ xoá được app <b>chưa từng phát hành</b>. App đã lên App Store thì chỉ gỡ khỏi bán được, ở mục Pricing and Availability.</li>
+        <li>Nếu app đã có build TestFlight, có thể phải bấm <b>Expire</b> các build đó trước, ở TestFlight › chọn build.</li>
+        <li>Sau khi xoá, <b>SKU và Bundle ID của app đó không dùng lại được</b> cho app mới. Tên app được trả lại để đặt cho app khác, nhưng có thể phải chờ một thời gian.</li>
+      </ul>
+      <div class="note">Nếu chưa bấm Create ở màn hình New App với ID cũ thì không có gì để xoá, bỏ qua phần này.</div>
+
+      <h3>2. Xoá Identifier cũ</h3>
+      <ol class="steps">
+        <li>Vào <a href="https://developer.apple.com/account/resources/identifiers/list">developer.apple.com › Identifiers</a>.</li>
+        <li>Bấm vào dòng <code>com.fuongz.enmirror</code> để mở trang Edit your App ID Configuration.</li>
+        <li>Bấm <b>Remove</b> ở góc phải trên, rồi xác nhận.</li>
+      </ol>
+      <ul>
+        <li>Các provisioning profile tạo cho ID này sẽ bị vô hiệu theo. Xcode tự tạo profile mới cho ID mới ở lần build sau.</li>
+        <li>Nếu báo lỗi đang được dùng: quay lại phần 1, app với ID này vẫn còn trên App Store Connect.</li>
+      </ul>
+
+      <h3>3. Dọn trên máy</h3>
+      <ul>
+        <li><b>iPhone</b>: bản cài thử trước đây dùng ID cũ nên là một app riêng, cùng tên enMirror. Nhấn giữ icon › Xoá app. Bản build mới với ID mới sẽ cài thành một app khác.</li>
+        <li><b>Mac</b> (không bắt buộc): profile cũ nằm trong <code>~/Library/Developer/Xcode/UserData/Provisioning Profiles</code>. Để lại cũng không ảnh hưởng gì.</li>
+      </ul>
+    </section>
+
+    <section class="step" id="troubleshoot">
+      <h2>Xử lý lỗi</h2>
+      <table>
+        <tr><th>Triệu chứng</th><th>Cách xử lý</th></tr>
+        <tr><td><code>missing Xcode-Token</code> trong log build</td><td>Xcode › Settings › Accounts: sign out rồi sign in lại Apple ID.</td></tr>
+        <tr><td><code>No Account for Team</code> / <code>No profiles for 'com.trinhvaphuong.enmirror'</code></td><td>Kiểm tra <code>Config/Local.xcconfig</code> có <code>DEVELOPMENT_TEAM</code>, và Xcode đã đăng nhập đúng tài khoản.</td></tr>
+        <tr><td>iPhone hiện <code>unavailable</code></td><td>Mở khoá máy, cắm cáp hoặc dùng cùng Wi-Fi, bật Developer Mode (Cài đặt › Quyền riêng tư &amp; Bảo mật).</td></tr>
+        <tr><td>Upload báo build number đã tồn tại</td><td>Chạy lại script: build number theo phút UTC nên lần sau sẽ khác.</td></tr>
+        <tr><td>Bị từ chối vì thiếu mô tả quyền (Guideline 5.1.1)</td><td>Sửa câu xin quyền trong <code>InfoPlist.xcstrings</code> và build setting, nói rõ dùng camera để làm gì.</td></tr>
+        <tr><td>Bị từ chối vì giống app khác (Guideline 4.3, spam)</td><td>Nhấn mạnh điểm khác biệt trong Review Notes: miễn phí, không quảng cáo, đèn viền chỉnh được tông màu, chạy offline.</td></tr>
+      </table>
+    </section>
+
+    <section class="step" id="changelog">
+      <h2>Nhật ký cập nhật</h2>
+      <table>
+        <tr><th>Ngày</th><th>Thay đổi</th></tr>
+        <tr><td>2026-11-04</td><td>Đã tạo app trên App Store Connect (SKU <code>enMirror</code>, Apple ID <code>6830683755</code>), thêm ảnh General Information.</td></tr>
+        <tr><td>2026-11-04</td><td>Thêm mục Xoá app &amp; Identifier.</td></tr>
+        <tr><td>2026-11-04</td><td>Đổi Bundle ID sang <code>com.trinhvaphuong.enmirror</code>, cần đăng ký lại.</td></tr>
+        <tr><td>2026-11-04</td><td>Thêm ảnh minh hoạ cho bước Bundle ID (3 màn hình).</td></tr>
+        <tr><td>2026-11-04</td><td>Tạo hướng dẫn. Đã xong: tài khoản developer, Bundle ID, ký app qua xcconfig, script TestFlight.</td></tr>
+      </table>
+    </section>
+
+    <footer>Cập nhật lần cuối: 2026-11-04 · Xem thêm <code>docs/runbook.md</code>, <code>README.md</code>, <code>docs/conventions.md</code></footer>
+  </main>
+</div>
+
+<script>
+  // Copy buttons on code blocks.
+  document.querySelectorAll("pre").forEach((pre) => {
+    const button = document.createElement("button");
+    button.textContent = "Copy";
+    button.addEventListener("click", async () => {
+      await navigator.clipboard.writeText(pre.querySelector("code").innerText);
+      button.textContent = "Đã copy";
+      setTimeout(() => (button.textContent = "Copy"), 1200);
+    });
+    pre.appendChild(button);
+  });
+
+  // Highlight the section in view.
+  const links = new Map([...document.querySelectorAll("nav a")].map((a) => [a.hash.slice(1), a]));
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      links.forEach((a) => a.classList.remove("active"));
+      links.get(entry.target.id)?.classList.add("active");
+    });
+  }, { rootMargin: "-20% 0px -70% 0px" });
+  document.querySelectorAll(".step").forEach((section) => observer.observe(section));
+</script>
+</body>
+</html>
