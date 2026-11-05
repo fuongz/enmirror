@@ -1,21 +1,17 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { cn } from "cn"
 import {
+  BadgeCheckIcon,
+  CheckCircle2Icon,
   ChevronRightIcon,
   FileTextIcon,
-  GiftIcon,
   GlobeIcon,
-  HandIcon,
+  InfoIcon,
   LifeBuoyIcon,
-  LightbulbIcon,
   MailIcon,
-  Maximize2Icon,
   PaletteIcon,
-  RulerIcon,
-  ShieldCheckIcon,
   SparklesIcon,
   StarIcon,
-  WifiOffIcon,
   type LucideIcon,
 } from "lucide-react"
 
@@ -25,13 +21,11 @@ export type AboutLabels = {
   done: string
   tagline: string
   version: string
-  highlights: [string, string, string]
-  tipsTitle: string
-  tips: [string, string, string, string]
+  copied: string
+  /** The feature bento (ios/EnMirror/About/FeatureBento.swift). */
+  bento: Bento
   language: string
   languageName: string
-  privacyTitle: string
-  privacy: string
   privacyPolicy: string
   supportTitle: string
   rate: string
@@ -40,6 +34,8 @@ export type AboutLabels = {
   creditsTitle: string
   credits: [string, string]
 }
+
+type Bento = { title: string; subtitle: string; checks: [string, string, string]; offline: string; light: string }
 
 export type AboutLinks = { privacy: string; support: string; email: string }
 
@@ -102,6 +98,51 @@ function Row({ icon: Icon, children, trailing, href, onPress, muted }: { icon: L
   )
 }
 
+// #2C2C2E: the row colour and the artwork's background, so each image melts into its card.
+const card = "#2c2c2e"
+
+/**
+ * What enMirror promises, as the app's bento (ios/EnMirror/About/FeatureBento.swift): a wide card
+ * with the free checklist and 3D ribbons on the right, over two half cards with artwork on top.
+ */
+function FeatureBento({ bento }: { bento: Bento }) {
+  const half = (src: string, caption: string) => (
+    <div className="flex flex-1 flex-col overflow-hidden text-center" style={{ background: card, borderRadius: pt(22) }}>
+      <img src={src} alt="" width={600} height={400} className="aspect-[3/2] w-full" />
+      <p className="text-white/60" style={{ fontSize: pt(14), lineHeight: 1.3, padding: `0 ${pt(12)} ${pt(16)}` }}>
+        {caption}
+      </p>
+    </div>
+  )
+  return (
+    <div className="flex flex-col text-left" style={{ gap: pt(12), marginTop: pt(18) }}>
+      <div className="flex overflow-hidden" style={{ height: pt(200), background: card, borderRadius: pt(22) }}>
+        <div className="flex flex-1 flex-col" style={{ padding: pt(18), gap: pt(6) }}>
+          <p className="font-bold" style={{ fontSize: pt(22) }}>
+            {bento.title}
+          </p>
+          <p className="text-white/60" style={{ fontSize: pt(15) }}>
+            {bento.subtitle}
+          </p>
+          <ul className="mt-auto flex flex-col text-white/60" style={{ gap: pt(6), fontSize: pt(15) }}>
+            {bento.checks.map((check) => (
+              <li key={check} className="flex items-center" style={{ gap: pt(8) }}>
+                <BadgeCheckIcon aria-hidden="true" className="shrink-0" style={{ width: pt(17), height: pt(17) }} />
+                {check}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <img src="/about/ribbons.webp" alt="" width={600} height={600} className="h-full shrink-0 object-cover" style={{ width: pt(140) }} />
+      </div>
+      <div className="flex" style={{ gap: pt(12) }}>
+        {half("/about/ripple.webp", bento.offline)}
+        {half("/about/glow.webp", bento.light)}
+      </div>
+    </div>
+  )
+}
+
 const chevron = <ChevronRightIcon aria-hidden="true" className="shrink-0 self-center text-white/30" style={{ width: pt(16), height: pt(16) }} />
 
 /**
@@ -123,6 +164,13 @@ export function MirrorAboutSheet({
   onInApp: () => void
 }) {
   const done = useRef<HTMLButtonElement>(null)
+  const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    if (!copied) return
+    const timer = window.setTimeout(() => setCopied(false), 1500)
+    return () => window.clearTimeout(timer)
+  }, [copied])
 
   useEffect(() => {
     done.current?.focus({ preventScroll: true })
@@ -166,34 +214,13 @@ export function MirrorAboutSheet({
             <p className="text-white/60" style={{ fontSize: pt(15) }}>
               {labels.tagline}
             </p>
-            <p className="flex items-center text-white/80 tabular-nums" style={{ gap: pt(5), fontSize: pt(13) }}>
-              {labels.version} {appVersion}
-            </p>
           </header>
 
-          <Section>
-            <Row icon={GiftIcon}>{labels.highlights[0]}</Row>
-            <Row icon={WifiOffIcon}>{labels.highlights[1]}</Row>
-            <Row icon={SparklesIcon}>{labels.highlights[2]}</Row>
-          </Section>
-
-          <Section title={labels.tipsTitle}>
-            <Row icon={HandIcon}>{labels.tips[0]}</Row>
-            <Row icon={Maximize2Icon}>{labels.tips[1]}</Row>
-            <Row icon={RulerIcon}>{labels.tips[2]}</Row>
-            <Row icon={LightbulbIcon}>{labels.tips[3]}</Row>
-          </Section>
+          <FeatureBento bento={labels.bento} />
 
           <Section>
             <Row icon={GlobeIcon} trailing={<span className="self-center text-white/50">{labels.languageName}</span>}>
               {labels.language}
-            </Row>
-          </Section>
-
-          <Section title={labels.privacyTitle}>
-            <Row icon={ShieldCheckIcon}>{labels.privacy}</Row>
-            <Row icon={FileTextIcon} href={links.privacy} trailing={chevron}>
-              {labels.privacyPolicy}
             </Row>
           </Section>
 
@@ -207,6 +234,9 @@ export function MirrorAboutSheet({
             <Row icon={LifeBuoyIcon} href={links.support} trailing={chevron}>
               {labels.help}
             </Row>
+            <Row icon={FileTextIcon} href={links.privacy} trailing={chevron}>
+              {labels.privacyPolicy}
+            </Row>
           </Section>
 
           <Section title={labels.creditsTitle}>
@@ -215,6 +245,19 @@ export function MirrorAboutSheet({
             </Row>
             <Row icon={SparklesIcon} muted>
               {labels.credits[1]}
+            </Row>
+          </Section>
+
+          <Section>
+            <Row
+              icon={copied ? CheckCircle2Icon : InfoIcon}
+              onPress={() => {
+                void navigator.clipboard?.writeText(appVersion)
+                setCopied(true)
+              }}
+              trailing={<span className="self-center text-white/50 tabular-nums">{copied ? labels.copied : appVersion}</span>}
+            >
+              {labels.version}
             </Row>
           </Section>
         </div>
