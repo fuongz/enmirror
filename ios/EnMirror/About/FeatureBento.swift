@@ -23,7 +23,7 @@ struct FeatureBento: View {
     private var wideCard: some View {
         HStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 6) {
-                Text("Free forever")
+                Text("Free")
                     .font(.title2.bold())
                 Text("Costs nothing, now or later.")
                     .font(.subheadline)

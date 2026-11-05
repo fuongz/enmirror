@@ -251,12 +251,12 @@
         }
       }
     },
-    "Free forever": {
+    "Free": {
       "localizations": {
         "vi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Miễn phí mãi mãi"
+            "value": "Miễn phí"
           }
         }
       }
