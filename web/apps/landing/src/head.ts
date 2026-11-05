@@ -28,25 +28,43 @@ function meta(route: Route): { title: string; description: string } {
   }
 }
 
-// The <head> tags for one prerendered page: title, description, canonical URL, hreflang links.
+// SEO and social metadata are rendered into HTML so crawlers do not need JavaScript.
 export function headFor(route: Route): string {
   const { title, description } = meta(route)
+  const social = site.social[route.lang]
+  const imageUrl = `${site.origin}${social.image}`
   const tags = [
     `<title>${escape(title)}</title>`,
     `<meta name="description" content="${escape(description)}" />`,
     `<meta property="og:title" content="${escape(title)}" />`,
     `<meta property="og:description" content="${escape(description)}" />`,
     `<meta property="og:type" content="website" />`,
-    `<meta property="og:site_name" content="${site.name}" />`,
+    `<meta property="og:site_name" content="${escape(site.name)}" />`,
+    `<meta property="og:locale" content="${social.locale}" />`,
+    `<meta property="og:image" content="${escape(imageUrl)}" />`,
+    `<meta property="og:image:type" content="image/png" />`,
+    `<meta property="og:image:width" content="${site.social.imageWidth}" />`,
+    `<meta property="og:image:height" content="${site.social.imageHeight}" />`,
+    `<meta property="og:image:alt" content="${escape(social.imageAlt)}" />`,
+    `<meta name="twitter:card" content="summary_large_image" />`,
+    `<meta name="twitter:title" content="${escape(title)}" />`,
+    `<meta name="twitter:description" content="${escape(description)}" />`,
+    `<meta name="twitter:image" content="${escape(imageUrl)}" />`,
+    `<meta name="twitter:image:alt" content="${escape(social.imageAlt)}" />`,
   ]
   if (route.page === "notFound") {
     tags.push(`<meta name="robots" content="noindex" />`)
   } else {
-    tags.push(`<link rel="canonical" href="${site.origin}${route.path}" />`)
+    const url = escape(`${site.origin}${route.path}`)
+    tags.push(`<link rel="canonical" href="${url}" />`)
+    tags.push(`<meta property="og:url" content="${url}" />`)
     for (const lang of langs) {
-      tags.push(`<link rel="alternate" hreflang="${lang}" href="${site.origin}${alternatePath(route, lang)}" />`)
+      tags.push(`<link rel="alternate" hreflang="${lang}" href="${escape(`${site.origin}${alternatePath(route, lang)}`)}" />`)
+      if (lang !== route.lang) {
+        tags.push(`<meta property="og:locale:alternate" content="${site.social[lang].locale}" />`)
+      }
     }
-    tags.push(`<link rel="alternate" hreflang="x-default" href="${site.origin}${alternatePath(route, "vi")}" />`)
+    tags.push(`<link rel="alternate" hreflang="x-default" href="${escape(`${site.origin}${alternatePath(route, "vi")}`)}" />`)
   }
   return tags.join("\n    ")
 }
