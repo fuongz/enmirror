@@ -4,15 +4,6 @@ import { languages, ui } from "@/i18n"
 import { alternatePath, langs, type Lang, type Route } from "@/routes"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-function Flagged({ lang }: { lang: Lang }) {
-  return (
-    <>
-      <span aria-hidden="true">{languages[lang].flag}</span>
-      <span>{languages[lang].name}</span>
-    </>
-  )
-}
-
 // Every page exists in both languages, so picking one loads the same page in it.
 /** `globe`: a round icon-only trigger, for the header. */
 export function LanguageSelect({ route, globe = false }: { route: Route; globe?: boolean }) {
@@ -33,14 +24,14 @@ export function LanguageSelect({ route, globe = false }: { route: Route; globe?:
         </SelectTrigger>
       ) : (
         <SelectTrigger size="sm" variant="ghost" className="rounded-full" aria-label={ui[route.lang].language}>
-          <SelectValue>{(value: Lang) => <Flagged lang={value} />}</SelectValue>
+          <SelectValue>{(value: Lang) => languages[value].name}</SelectValue>
         </SelectTrigger>
       )}
       <SelectContent align="end" alignItemWithTrigger={false}>
         <SelectGroup>
           {langs.map((lang) => (
             <SelectItem key={lang} value={lang} lang={lang}>
-              <Flagged lang={lang} />
+              {languages[lang].name}
             </SelectItem>
           ))}
         </SelectGroup>

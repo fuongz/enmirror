@@ -20,6 +20,11 @@ export const site = {
     },
   },
   developerName: "Phuong Phung",
+  developerUrl: "https://phuongphung.com",
+  /** Add a name and URL here to show another product in the footer on every page. */
+  products: [
+    { name: "Enchat", url: "https://enchat.trinhvaphuong.com/", icon: "/products/enchat.png" },
+  ] as readonly { name: string; url: string; icon?: string }[],
   supportEmail: "support@trinhvaphuong.com",
   /** enMirror is open source under this licence (LICENSE at the repository root). */
   githubUrl: "https://github.com/fuongz/enmirror",

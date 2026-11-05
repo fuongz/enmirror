@@ -1,9 +1,9 @@
 import type { Lang } from "@/routes"
 
-/** Each language in its own name, with its flag. */
-export const languages: Record<Lang, { flag: string; name: string }> = {
-  vi: { flag: "🇻🇳", name: "Tiếng Việt" },
-  en: { flag: "🇬🇧", name: "English" },
+/** Each language in its own name. */
+export const languages: Record<Lang, { name: string }> = {
+  vi: { name: "Tiếng Việt" },
+  en: { name: "English" },
 }
 
 export const ui = {
@@ -16,6 +16,9 @@ export const ui = {
     updated: "Cập nhật lần cuối",
     onThisPage: "Trên trang này",
     footerRights: "Bảo lưu mọi quyền.",
+    moreProducts: "Sản phẩm khác",
+    footerDescription: "Gương soi miễn phí cho iPhone, có đèn viền và zoom. Không quảng cáo, không cần mạng.",
+    contact: "Liên hệ",
     notFoundTitle: "Không tìm thấy trang",
     notFoundBody: "Không thấy trang bạn đang tìm. Có thể trang đã được chuyển sang địa chỉ khác.",
     backHome: "Về trang chủ",
@@ -29,6 +32,9 @@ export const ui = {
     updated: "Last updated",
     onThisPage: "On this page",
     footerRights: "All rights reserved.",
+    moreProducts: "More products",
+    footerDescription: "A free mirror for iPhone, with a ring light and zoom. No ads. No internet needed.",
+    contact: "Contact",
     notFoundTitle: "Page not found",
     notFoundBody: "The page you are looking for does not exist or has moved.",
     backHome: "Back to home",
