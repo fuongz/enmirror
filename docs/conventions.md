@@ -1,6 +1,6 @@
 # Conventions and standards
 
-How code, files, tooling and history are organised in enMirror. These rules come from Enchat (`fuongz/enchat`, mostly `apps/ios/README.md`, `apps/ios/.swift-format`, `apps/ios/.swiftlint.yml`, `scripts/ci-ios.sh`, `docs/technical/ios-clean-code-audit.md`) and are scaled down for a single-screen app. When a rule here and Enchat disagree, this file wins for this repo.
+How code, files, tooling and history are organised in enMirror. These rules come from Enchat (`fuongz/enchat`, mostly `apps/ios/README.md`, `apps/ios/.swift-format`, `apps/ios/.swiftlint.yml`, `ios/scripts/ci-ios.sh`, `docs/technical/ios-clean-code-audit.md`) and are scaled down for a single-screen app. When a rule here and Enchat disagree, this file wins for this repo.
 
 ## Platform
 
@@ -14,19 +14,31 @@ How code, files, tooling and history are organised in enMirror. These rules come
 
 ## Repository layout
 
+The root holds only what spans the whole repo; each platform lives in its own folder with its own
+scripts and tool settings, and mise runs every task from the root.
+
 ```
-EnMirror.xcodeproj        Synchronized folders: files added under EnMirror/ or EnMirrorTests/ join the target, no project edits
-EnMirror/                 App target
-  EnMirrorApp.swift       @main; only hosts the root view
-  Camera/                 AVFoundation: session engine, @Observable service, preview bridge
-  Mirror/                 The mirror screen and its controls (one feature folder)
-  Support/                Pure logic and small platform helpers (math, screen brightness, Photos)
-  Assets.xcassets         App icon, accent colour
-  Localizable.xcstrings   UI strings
-  InfoPlist.xcstrings     Permission prompts and display name
-EnMirrorTests/            Swift Testing unit tests
-scripts/                  Repo tools (make-icon.swift renders the app icon)
-docs/                     This file, later ADRs (docs/adr/NNNN-title.md) and the runbook
+README.md, LICENSE, THIRD_PARTY_NOTICES.md, mise.toml, AGENTS.md
+docs/                         This file, the runbook, the App Store guide; later ADRs (docs/adr/NNNN-title.md)
+ios/
+  EnMirror.xcodeproj          Synchronized folders: files added under EnMirror/ or EnMirrorTests/ join the target, no project edits
+  EnMirror/                   App target
+    EnMirrorApp.swift         @main; only hosts the root view
+    Camera/                   AVFoundation: session engine, @Observable service, preview bridge
+    Mirror/                   The mirror screen and its controls (one feature folder)
+    About/                    The About sheet
+    Support/                  Pure logic and small platform helpers (math, links, screen brightness, Photos)
+    AppIcon.icon              App icon made in Icon Composer (Liquid Glass, dark and tinted variants)
+    Assets.xcassets           Accent colour, artwork
+    Localizable.xcstrings     UI strings
+    InfoPlist.xcstrings       Permission prompts and display name
+  EnMirrorTests/              Swift Testing unit tests
+  Config/                     Signing.xcconfig; Local.xcconfig (gitignored) holds the team
+  scripts/                    ci-ios.sh, testflight.sh, ios-swift-files.sh
+  .swift-format, .swiftlint.yml, .periphery.yml
+web/                          Bun workspace (same shape as enchat)
+  apps/landing/               The Cloudflare landing site
+  scripts/                    ci-web.sh
 ```
 
 **When it grows** (a widget, a second target, shared code), do as Enchat did: keep the Xcode project as a thin host and move the code into a local package (`EnMirrorKit/Sources/<Module>`) with modules in dependency order, a design-system module that is SwiftUI only, and feature folders `App/`, `Features/<Name>/`, `Shared/`, `Previews/` in the UI module.
@@ -88,7 +100,7 @@ Config copied from Enchat (`.swift-format`): 4-space indentation, lines up to 13
 | swift-format (bundled with Xcode) | `.swift-format` | `xcrun swift-format lint --strict` in CI; `format --in-place` to fix |
 | SwiftLint, pinned in `mise.toml` | `.swiftlint.yml` (`only_rules`: lengths, complexity, force unwrap/try/cast) | Fails CI on any new violation; old ones go in a baseline |
 | Periphery, pinned in `mise.toml` | `.periphery.yml` | Dead-code report, does not fail CI |
-| `scripts/ci-ios.sh` | | Format, lint, tests, simulator and device builds with `CODE_SIGNING_ALLOWED=NO`. Run before committing |
+| `ios/scripts/ci-ios.sh` | | Format, lint, tests, simulator and device builds with `CODE_SIGNING_ALLOWED=NO`. Run before committing |
 
 mise tasks follow Enchat's names: `ios:build-sim`, `ios:sim`, `ios:device`, `ios:format`, `ios:lint`, `ios:dead-code`.
 
@@ -99,7 +111,7 @@ mise tasks follow Enchat's names: `ios:build-sim`, `ios:sim`, `ios:device`, `ios
 
 ## Signing and configuration
 
-- Signing stays out of git: `Config/Signing.xcconfig` (committed: bundle ID, empty team) includes the gitignored `Config/Local.xcconfig` (`DEVELOPMENT_TEAM`, optionally a development bundle ID), copied from the committed `Local.xcconfig.example`. A free Personal Team must use a development-only bundle ID. The same team signs Debug and Release, so enMirror needs no separate `Release.local.xcconfig`.
+- Signing stays out of git: `ios/Config/Signing.xcconfig` (committed: bundle ID, empty team) includes the gitignored `ios/Config/Local.xcconfig` (`DEVELOPMENT_TEAM`, optionally a development bundle ID), copied from the committed `Local.xcconfig.example`. A free Personal Team must use a development-only bundle ID. The same team signs Debug and Release, so enMirror needs no separate `Release.local.xcconfig`.
 - Per-machine device and simulator IDs go in `mise.local.toml` (gitignored), not in xcconfig.
 - Ship `PrivacyInfo.xcprivacy`: no tracking, no collected data, Required Reason API `UserDefaults` CA92.1 (for `@AppStorage`).
 
@@ -118,6 +130,6 @@ Cards live on the Lanework board `mayfamily/enmirror` (see `AGENTS.md`): decisio
 
 ## Where enMirror stands today
 
-All gaps from the first audit are closed (FE-02): one main type per file, swift-format + SwiftLint + Periphery wired into `scripts/ci-ios.sh` and `mise.toml`, signing in `Config/Signing.xcconfig` + gitignored `Local.xcconfig`, `PrivacyInfo.xcprivacy`, `THIRD_PARTY_NOTICES.md`, `README.md`, `docs/runbook.md`, and canvas previews in `Mirror/Previews.swift`. `scripts/ci-ios.sh` passes with no warnings and Periphery finds no unused code.
+All gaps from the first audit are closed (FE-02): one main type per file, swift-format + SwiftLint + Periphery wired into `ios/scripts/ci-ios.sh` and `mise.toml`, signing in `ios/Config/Signing.xcconfig` + gitignored `Local.xcconfig`, `PrivacyInfo.xcprivacy`, `THIRD_PARTY_NOTICES.md`, `README.md`, `docs/runbook.md`, and canvas previews in `Mirror/Previews.swift`. `ios/scripts/ci-ios.sh` passes with no warnings and Periphery finds no unused code.
 
 Watch next: `MirrorView.swift` is the largest file (~315 lines). If it gains features, move the bottom bar and the tool panel into their own views before it nears the 300-line type limit.

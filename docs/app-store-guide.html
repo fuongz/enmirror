@@ -203,10 +203,10 @@
       <h2>Ký app trên máy <span class="tag done">Đã xong</span></h2>
       <p class="why">Thông tin ký app không đưa lên git. Mỗi máy tự có một file riêng.</p>
       <ul>
-        <li><code>Config/Signing.xcconfig</code> (có trong git): chứa bundle ID và kiểu ký tự động.</li>
-        <li><code>Config/Local.xcconfig</code> (gitignored): chứa team của máy này. Máy mới thì copy từ file mẫu:</li>
+        <li><code>ios/Config/Signing.xcconfig</code> (có trong git): chứa bundle ID và kiểu ký tự động.</li>
+        <li><code>ios/Config/Local.xcconfig</code> (gitignored): chứa team của máy này. Máy mới thì copy từ file mẫu:</li>
       </ul>
-<pre><code>cp Config/Local.xcconfig.example Config/Local.xcconfig
+<pre><code>cp ios/Config/Local.xcconfig.example ios/Config/Local.xcconfig
 # rồi sửa: DEVELOPMENT_TEAM = GWG64UPCV5</code></pre>
       <p>Kiểm tra: build cho iPhone rồi xem chữ ký có đúng team và bundle ID không:</p>
 <pre><code>mise run ios:device
@@ -217,7 +217,7 @@ codesign -dvv build/xcode-device/Build/Products/Debug-iphoneos/EnMirror.app | gr
     <section class="step" id="upload">
       <h2>Build &amp; upload <span class="tag info">Mỗi bản build</span></h2>
       <p class="why">Một lệnh lo hết: archive bản Release, đánh số build, ký và upload.</p>
-<pre><code>scripts/ci-ios.sh              # kiểm tra mọi thứ trước
+<pre><code>ios/scripts/ci-ios.sh              # kiểm tra mọi thứ trước
 mise run testflight:build      # chỉ xuất .ipa vào build/testflight, không upload
 mise run testflight:upload     # archive + upload lên App Store Connect</code></pre>
       <ul>
@@ -272,7 +272,7 @@ mise run testflight:upload     # archive + upload lên App Store Connect</code><
       <h2>Quyền riêng tư <span class="tag todo">Chưa làm</span></h2>
       <p class="why">Phải khớp với những gì app thật sự làm. Khai sai là bị từ chối.</p>
       <ul>
-        <li><b>App Privacy</b> › Get Started › <b>"No, we do not collect data from this app"</b>, tức nhãn <b>Data Not Collected</b>. Khớp với <code>EnMirror/PrivacyInfo.xcprivacy</code>.</li>
+        <li><b>App Privacy</b> › Get Started › <b>"No, we do not collect data from this app"</b>, tức nhãn <b>Data Not Collected</b>. Khớp với <code>ios/EnMirror/PrivacyInfo.xcprivacy</code>.</li>
         <li><b>Privacy Policy URL</b>: bắt buộc, kể cả khi app không thu thập dữ liệu. Chỉ cần một trang ngắn: app không thu thập, không gửi dữ liệu đi đâu, camera chỉ hiển thị trên máy, ảnh chỉ được lưu khi người dùng bấm Lưu.</li>
         <li><b>Age Rating</b>: trả lời "None" cho tất cả, kết quả là <b>4+</b>.</li>
       </ul>
@@ -295,7 +295,7 @@ mise run testflight:upload     # archive + upload lên App Store Connect</code><
         <li><input type="checkbox"> Ảnh chụp màn hình đúng kích thước, đúng với app hiện tại</li>
         <li><input type="checkbox"> Đã có Privacy Policy URL và Support URL</li>
         <li><input type="checkbox"> App Privacy là Data Not Collected, Age Rating là 4+</li>
-        <li><input type="checkbox"> <code>scripts/ci-ios.sh</code> pass</li>
+        <li><input type="checkbox"> <code>ios/scripts/ci-ios.sh</code> pass</li>
       </ul>
       <div class="note">Các ô trên chỉ để tick tạm khi đọc, tải lại trang là mất.</div>
     </section>
@@ -304,7 +304,7 @@ mise run testflight:upload     # archive + upload lên App Store Connect</code><
       <h2>Bản cập nhật <span class="tag info">Mỗi phiên bản</span></h2>
       <ol class="steps">
         <li>Tăng <b>Version</b> (1.0 → 1.1) trong Xcode.</li>
-        <li><code>scripts/ci-ios.sh</code> rồi <code>mise run testflight:upload</code>.</li>
+        <li><code>ios/scripts/ci-ios.sh</code> rồi <code>mise run testflight:upload</code>.</li>
         <li>Thử qua TestFlight.</li>
         <li>App Store Connect › <b>+</b> cạnh iOS App › nhập version mới › viết <b>What's New</b> › chọn build › Submit.</li>
       </ol>
@@ -351,7 +351,7 @@ mise run testflight:upload     # archive + upload lên App Store Connect</code><
       <table>
         <tr><th>Triệu chứng</th><th>Cách xử lý</th></tr>
         <tr><td><code>missing Xcode-Token</code> trong log build</td><td>Xcode › Settings › Accounts: sign out rồi sign in lại Apple ID.</td></tr>
-        <tr><td><code>No Account for Team</code> / <code>No profiles for 'com.trinhvaphuong.enmirror'</code></td><td>Kiểm tra <code>Config/Local.xcconfig</code> có <code>DEVELOPMENT_TEAM</code>, và Xcode đã đăng nhập đúng tài khoản.</td></tr>
+        <tr><td><code>No Account for Team</code> / <code>No profiles for 'com.trinhvaphuong.enmirror'</code></td><td>Kiểm tra <code>ios/Config/Local.xcconfig</code> có <code>DEVELOPMENT_TEAM</code>, và Xcode đã đăng nhập đúng tài khoản.</td></tr>
         <tr><td>iPhone hiện <code>unavailable</code></td><td>Mở khoá máy, cắm cáp hoặc dùng cùng Wi-Fi, bật Developer Mode (Cài đặt › Quyền riêng tư &amp; Bảo mật).</td></tr>
         <tr><td>Upload báo build number đã tồn tại</td><td>Chạy lại script: build number theo phút UTC nên lần sau sẽ khác.</td></tr>
         <tr><td>Bị từ chối vì thiếu mô tả quyền (Guideline 5.1.1)</td><td>Sửa câu xin quyền trong <code>InfoPlist.xcstrings</code> và build setting, nói rõ dùng camera để làm gì.</td></tr>
