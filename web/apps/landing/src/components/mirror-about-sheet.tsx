@@ -205,7 +205,7 @@ export function MirrorAboutSheet({
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto overscroll-contain" style={{ padding: `0 ${pt(16)} ${pt(28)}` }}>
+        <div className="mirror-about-scroll min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain" style={{ padding: `0 ${pt(16)} ${pt(28)}` }}>
           <header className="flex flex-col items-center text-center" style={{ gap: pt(8), paddingTop: pt(14) }}>
             <img src="/logo.png" alt="" width={512} height={512} className="shadow-lg" style={{ width: pt(88), height: pt(88), borderRadius: pt(20) }} />
             <p className="font-bold" style={{ fontSize: pt(22) }}>

@@ -1,6 +1,14 @@
 import { useEffect, useRef, useState } from "react"
 
-import { MirrorScreen, type DemoLabels, type MirrorArt } from "@/components/mirror-screen"
+import {
+  delayChoices,
+  guideChoices,
+  MirrorScreen,
+  withSeconds,
+  type DemoLabels,
+  type Guide,
+  type MirrorArt,
+} from "@/components/mirror-screen"
 import { pathFor, type Lang } from "@/routes"
 import { site } from "@/site"
 
@@ -13,6 +21,12 @@ const toastMs = 1600
 const doubleTapMs = 300
 // A press that moves less than this is a tap, not a drag or a pinch.
 const tapSlop = 6
+
+/** Off → 2 s → 3 s → 5 s → off (MirrorDelay.next). */
+const nextDelay = (current: number | null) => {
+  const index = current === null ? -1 : delayChoices.indexOf(current)
+  return index + 1 < delayChoices.length ? delayChoices[index + 1] : null
+}
 
 const clampZoom = (value: number) => Math.min(Math.max(value, zoomRange.min), zoomRange.max)
 
@@ -28,13 +42,20 @@ type State = {
   meterAt?: { x: number; y: number; key: number }
   toast?: { text: string; key: number }
   aboutOpen: boolean
+  guide: Guide
+  /** Seconds behind; null = live. */
+  delay: number | null
+  /** The delayed mirror is still collecting its first seconds; the key restarts the wait. */
+  delayFilling?: number
 }
 
 /**
  * The mirror in the hero, playable: the same controls as the app over the reflection photo. Light
  * opens the ring light and its tone and size; exposure and zoom open their sliders; the flip shows
  * "as others see you"; the shutter freezes the frame with Share, Save (in the app only, so a toast
- * says so) and Delete. On the mirror: tap meters (the yellow square), double tap resets the zoom,
+ * says so) and Delete. Top right, as in the app: the delayed mirror (off, 2, 3, 5 s; dark for the
+ * delay, since there is no camera) and the alignment guide; a tap steps, touch and hold opens a
+ * menu. On the mirror: tap meters (the yellow square), double tap resets the zoom,
  * two fingers pinch it, and a trackpad pinch or the wheel (while the zoom slider is open) zooms.
  */
 export function MirrorDemo({ labels, lang }: { labels: DemoLabels; lang: Lang }) {
@@ -47,6 +68,8 @@ export function MirrorDemo({ labels, lang }: { labels: DemoLabels; lang: Lang })
     flipped: false,
     frozen: false,
     aboutOpen: false,
+    guide: "off",
+    delay: null,
   })
   const mirror = useRef<HTMLDivElement>(null)
   const pointers = useRef(new Map<number, { x: number; y: number; startX: number; startY: number }>())
@@ -59,6 +82,13 @@ export function MirrorDemo({ labels, lang }: { labels: DemoLabels; lang: Lang })
   const update = (change: Partial<State>) => setState((current) => ({ ...current, ...change }))
   const toast = (text: string) => update({ toast: { text, key: Date.now() } })
   const setZoom = (value: number) => update({ zoom: clampZoom(value) })
+
+  // The web has no camera: the delayed mirror stays dark for its delay, then shows the reflection again.
+  useEffect(() => {
+    if (!state.delayFilling || !state.delay) return
+    const timer = window.setTimeout(() => update({ delayFilling: undefined }), state.delay * 1000)
+    return () => window.clearTimeout(timer)
+  }, [state.delayFilling, state.delay])
 
   useEffect(() => {
     if (!state.toast) return
@@ -96,7 +126,18 @@ export function MirrorDemo({ labels, lang }: { labels: DemoLabels; lang: Lang })
     frozen: state.frozen,
     meterAt: state.meterAt,
     toast: state.toast?.text,
+    guide: state.guide,
+    delay: state.delay,
+    delayFilling: state.delayFilling !== undefined,
   }
+
+  const setDelay = (delay: number | null) =>
+    update({
+      delay,
+      delayFilling: delay ? Date.now() : undefined,
+      toast: { text: delay ? withSeconds(labels.delayedBy, delay) : labels.liveMirror, key: Date.now() },
+    })
+  const setGuide = (guide: Guide) => update({ guide, toast: { text: labels.guides[guide], key: Date.now() } })
 
   return (
     <MirrorScreen
@@ -117,7 +158,9 @@ export function MirrorDemo({ labels, lang }: { labels: DemoLabels; lang: Lang })
             flipped: !current.flipped,
             toast: { text: current.flipped ? labels.mirrorView : labels.asOthers, key: Date.now() },
           })),
-        shutter: () => update({ frozen: true, panel: undefined }),
+        shutter: () => {
+          if (latest.current.delayFilling === undefined) update({ frozen: true, panel: undefined })
+        },
         setTone: (value) => update({ tone: value }),
         setSize: (value) => update({ size: value }),
         setZoom,
@@ -125,6 +168,10 @@ export function MirrorDemo({ labels, lang }: { labels: DemoLabels; lang: Lang })
         share: () => toast(labels.inApp),
         save: () => toast(labels.inApp),
         remove: () => update({ frozen: false }),
+        cycleDelay: () => setDelay(nextDelay(latest.current.delay)),
+        setDelay,
+        cycleGuide: () => setGuide(guideChoices[(guideChoices.indexOf(latest.current.guide) + 1) % guideChoices.length]),
+        setGuide,
         about: {
           open: state.aboutOpen,
           show: () => update({ aboutOpen: true, panel: undefined }),
