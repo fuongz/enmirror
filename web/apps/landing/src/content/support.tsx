@@ -19,16 +19,16 @@ export type SupportDoc = {
 const vi: SupportDoc = {
   title: "Hỗ trợ",
   description: "Câu trả lời cho những thắc mắc thường gặp về enMirror và cách liên hệ.",
-  intro: "Bạn cần hỗ trợ? Tìm câu trả lời bên dưới hoặc gửi email cho enMirror.",
+  intro: "Bạn cần hỗ trợ? Xem các câu hỏi bên dưới hoặc gửi email cho enMirror nhé.",
   contactTitle: "Liên hệ",
   contactBody:
-    "Có thắc mắc, góp ý hay gặp lỗi? Hãy gửi email cho chúng tôi, kèm phiên bản app nếu được. Chúng tôi trả lời trong 1–2 ngày làm việc.",
+    "Bạn có thắc mắc, muốn góp ý hay báo lỗi? Gửi email cho chúng tôi nhé. Nếu được, gửi kèm phiên bản app để chúng tôi dễ kiểm tra. Chúng tôi sẽ trả lời trong 1–2 ngày làm việc.",
   emailLabel: "Gửi email",
   faqTitle: "Câu hỏi thường gặp",
   faq: [
     {
       id: "camera-access",
-      q: "Gương không hiện hình, app báo chưa có quyền dùng camera",
+      q: "Gương không hiện hình thì làm sao?",
       a: (
         <TypographyP>
           enMirror cần camera trước để làm gương. Bấm <strong>Mở Cài đặt</strong> trong app, hoặc vào
@@ -42,9 +42,9 @@ const vi: SupportDoc = {
       q: "Làm sao để hình rõ nét nhất?",
       a: (
         <TypographyP>
-          Cầm iPhone cách mặt khoảng 30 cm: camera trước nét nhất ở khoảng cách đó. Trong phòng tối,
-          hãy bật đèn viền. Từ iPhone 14 trở lên, chạm vào gương để máy đo sáng và lấy nét tại điểm đó;
-          camera trước của các đời cũ hơn có tiêu cự cố định nên chạm chỉ chỉnh độ sáng.
+          Giữ iPhone cách mặt khoảng 30 cm để hình rõ nét nhất. Nếu thiếu sáng, bạn bật thêm đèn viền.
+          Chạm vào chỗ muốn chỉnh sáng; với iPhone 14 trở lên, máy sẽ lấy nét ở đó luôn. Camera trước
+          trên các đời cũ hơn có điểm lấy nét cố định, nên thao tác chạm chỉ chỉnh độ sáng.
         </TypographyP>
       ),
     },
@@ -53,8 +53,8 @@ const vi: SupportDoc = {
       q: "Vì sao màn hình sáng hẳn lên khi bật đèn viền?",
       a: (
         <TypographyP>
-          Để viền sáng như đèn vòng thật, enMirror tăng độ sáng màn hình lên tối đa khi đèn bật. Độ sáng
-          trở lại mức cũ ngay khi bạn tắt đèn hoặc rời app. Bấm vào nút đèn để chỉnh{" "}
+          enMirror tăng độ sáng màn hình lên tối đa để đèn viền chiếu sáng rõ hơn. Màn hình sẽ
+          trở về mức sáng cũ khi bạn tắt đèn hoặc rời app. Bấm nút đèn để chỉnh{" "}
           <strong>Tông màu đèn</strong> (từ ấm sang lạnh) và <strong>Độ dày đèn</strong>.
         </TypographyP>
       ),
@@ -72,7 +72,7 @@ const vi: SupportDoc = {
     },
     {
       id: "save-photo",
-      q: "Tôi không lưu được ảnh vào Ảnh",
+      q: "Không lưu được ảnh thì làm sao?",
       a: (
         <TypographyP>
           enMirror chỉ xin quyền thêm ảnh vào thư viện, không đọc ảnh có sẵn. Nếu app báo{" "}
@@ -87,7 +87,7 @@ const vi: SupportDoc = {
       a: (
         <TypographyP>
           Không. enMirror không kết nối mạng và không thu thập dữ liệu. Hình từ camera được xử lý ngay
-          trên iPhone, không được lưu hay gửi đi. Ảnh chỉ vào thư viện Ảnh khi bạn bấm{" "}
+          trên iPhone, không được lưu hay gửi đi. Ảnh chỉ được lưu vào thư viện Ảnh khi bạn bấm{" "}
           <strong>Lưu</strong>. Xem chi tiết trong{" "}
           <TypographyLink href={pathFor("vi", "privacy")}>Chính sách quyền riêng tư</TypographyLink>.
         </TypographyP>
@@ -98,8 +98,8 @@ const vi: SupportDoc = {
       q: "enMirror chạy trên máy nào?",
       a: (
         <TypographyP>
-          iPhone chạy iOS 26 trở lên. enMirror hiện chỉ dành cho iPhone. App có tiếng Việt và tiếng
-          Anh; đổi ngôn ngữ trong Cài đặt → enMirror → Ngôn ngữ.
+          enMirror dùng được trên iPhone chạy iOS 26 trở lên. App có cả tiếng Việt và tiếng Anh.
+          Bạn có thể đổi ngôn ngữ trong Cài đặt → enMirror → Ngôn ngữ.
         </TypographyP>
       ),
     },
@@ -108,8 +108,8 @@ const vi: SupportDoc = {
       q: "enMirror có thật sự miễn phí không?",
       a: (
         <TypographyP>
-          Có. enMirror miễn phí, không quảng cáo, không gói đăng ký, không mua trong app và không cần
-          tài khoản.
+          Có nhé. Đèn viền, zoom và chụp ảnh đều có sẵn, hoàn toàn miễn phí. Không quảng cáo,
+          không cần đăng ký gói hay mua thêm tính năng. Bạn cũng không cần tạo tài khoản.
         </TypographyP>
       ),
     },
@@ -119,8 +119,8 @@ const vi: SupportDoc = {
       a: (
         <TypographyP>
           Chạm nút <strong>i</strong> ở góc trên màn hình gương để mở <strong>Giới thiệu</strong>, rồi chọn{" "}
-          <strong>Gửi góp ý</strong>: email được soạn sẵn kèm phiên bản app. Bạn cũng có thể chạm vào dòng
-          phiên bản để sao chép, rồi gửi kèm trong email.
+          <strong>Gửi góp ý</strong>. App sẽ mở email soạn sẵn, có kèm phiên bản app. Bạn cũng có thể
+          chạm vào dòng phiên bản để sao chép rồi dán vào email.
         </TypographyP>
       ),
     },
@@ -130,16 +130,16 @@ const vi: SupportDoc = {
 const en: SupportDoc = {
   title: "Support",
   description: "Answers to common questions about enMirror, and how to reach us.",
-  intro: "Need help? Check the common questions below, or email us.",
+  intro: "Need a hand? Check the questions below or send us an email.",
   contactTitle: "Contact",
   contactBody:
-    "Send questions, feedback or bug reports, with the app version if you can. We reply within 1–2 business days.",
+    "Got a question, an idea or a bug to report? Email us and include the app version if you can. We’ll get back to you within 1–2 business days.",
   emailLabel: "Send email",
   faqTitle: "Frequently asked questions",
   faq: [
     {
       id: "camera-access",
-      q: "The mirror is blank and says camera access is off",
+      q: "Why is the mirror blank?",
       a: (
         <TypographyP>
           enMirror needs the front camera to work as a mirror. Tap <strong>Open Settings</strong> in the
@@ -153,7 +153,7 @@ const en: SupportDoc = {
       q: "How do I get the sharpest image?",
       a: (
         <TypographyP>
-          Hold your iPhone about 30 cm from your face: the front camera is sharpest there. In a dim room,
+          Hold your iPhone about 30 cm from your face for the sharpest view. If the room is dim,
           turn on the ring light. On iPhone 14 and later, tap the mirror to set exposure and focus at that
           point; older front cameras have fixed focus, so a tap sets exposure only.
         </TypographyP>
@@ -164,8 +164,8 @@ const en: SupportDoc = {
       q: "Why does the screen get so bright with the ring light on?",
       a: (
         <TypographyP>
-          To glow like a real ring light, enMirror turns screen brightness up to full while the light is
-          on. It goes back to where it was as soon as you turn the light off or leave the app. Tap the light
+          enMirror turns screen brightness up to full so the ring light can light up your face.
+          Brightness returns to its previous level when you turn the light off or leave the app. Tap the light
           button to set the <strong>Light tone</strong> (warm to cool) and <strong>Light size</strong>.
         </TypographyP>
       ),
@@ -219,7 +219,8 @@ const en: SupportDoc = {
       q: "Is enMirror really free?",
       a: (
         <TypographyP>
-          Yes. No ads, no subscriptions, no in-app purchases and no account.
+          Yes. The ring light, zoom and photo features are all included for free. No ads,
+          subscriptions or in-app purchases. You don’t need an account either.
         </TypographyP>
       ),
     },
@@ -229,7 +230,7 @@ const en: SupportDoc = {
       a: (
         <TypographyP>
           Tap the <strong>i</strong> button at the top of the mirror to open <strong>About</strong>, then
-          choose <strong>Send Feedback</strong>: the email comes with the app version filled in. You can also
+          choose <strong>Send Feedback</strong>. A draft email opens with the app version already included. You can also
           tap the version line to copy it and paste it into your email.
         </TypographyP>
       ),

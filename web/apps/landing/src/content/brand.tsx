@@ -17,12 +17,12 @@ const ofl = "https://openfontlicense.org"
 const colours = [
   {
     hex: "#8B45FF",
-    vi: "Đầu dải tím của biểu tượng (display P3 0.510, 0.286, 0.965)",
+    vi: "Màu tím ở phía trên biểu tượng (display P3 0.510, 0.286, 0.965)",
     en: "Top of the icon's purple gradient (display P3 0.510, 0.286, 0.965)",
   },
   {
     hex: "#36108B",
-    vi: "Cuối dải tím của biểu tượng (display P3 0.192, 0.071, 0.521)",
+    vi: "Màu tím ở phía dưới biểu tượng (display P3 0.192, 0.071, 0.521)",
     en: "Bottom of the icon's purple gradient (display P3 0.192, 0.071, 0.521)",
   },
   { hex: "#702CDB", vi: "Tím enMirror trên trang web: nút, liên kết", en: "enMirror purple on the website: buttons, links" },
@@ -65,8 +65,8 @@ const vi: LegalDoc = {
   description: "Tên, biểu tượng và màu sắc của enMirror. Những điều cần biết khi giới thiệu enMirror.",
   intro: (
     <TypographyP>
-      Bạn muốn giới thiệu enMirror? Đây là cách viết tên, dùng biểu tượng và màu sắc. Phần ghi công bên dưới
-      liệt kê các tác phẩm enMirror sử dụng.
+      Bạn muốn giới thiệu enMirror? Dưới đây là tên, biểu tượng và bảng màu để bạn dùng cho đúng.
+      Bạn cũng có thể xem phần ghi công ở cuối trang.
     </TypographyP>
   ),
   sections: [
@@ -86,7 +86,7 @@ const vi: LegalDoc = {
       body: (
         <>
           <TypographyP>
-            Biểu tượng enMirror là chiếc gương cầm tay màu oải hương trên nền tím chuyển màu. Hãy giữ nguyên
+            Biểu tượng enMirror là chiếc gương cầm tay màu tím nhạt trên nền tím chuyển màu. Hãy giữ nguyên
             tỉ lệ và màu sắc, chừa khoảng trống xung quanh. Không thêm viền, đổ bóng hay hiệu ứng.
           </TypographyP>
           <LogoBlock download="Tải biểu tượng PNG" />
@@ -99,8 +99,8 @@ const vi: LegalDoc = {
       body: (
         <>
           <TypographyP>
-            Màu tím của biểu tượng chuyển từ trên xuống dưới. Trên trang web, màu tím enMirror chỉ dùng cho
-            những chỗ nổi bật như nút và liên kết. Trong app, nút đang bật có màu vàng hổ phách, hợp với ánh
+            Nền biểu tượng chuyển từ tím sáng ở trên sang tím đậm ở dưới. Trên web, màu tím enMirror
+            dùng để làm nổi bật nút và liên kết. Trong app, nút đang bật có màu vàng hổ phách, hợp với ánh
             đèn viền.
           </TypographyP>
           <Swatches lang="vi" />
@@ -112,11 +112,11 @@ const vi: LegalDoc = {
       title: "Ghi công",
       body: (
         <>
-          <TypographyP>enMirror không dùng mã nguồn, phông chữ hay âm thanh của bên thứ ba. Các tác phẩm được dùng:</TypographyP>
+          <TypographyP>App enMirror không dùng mã nguồn, phông chữ hay âm thanh của bên thứ ba. Hình ảnh và biểu tượng được ghi công dưới đây, cùng với phông chữ của trang web:</TypographyP>
           <TypographyList>
             <li>
-              Hình chiếc gương trong biểu tượng là tác phẩm riêng cho enMirror: tạo bằng ChatGPT (OpenAI) cho
-              tác giả, rồi hoàn thiện trong Icon Composer.
+              Hình chiếc gương được tạo riêng cho enMirror bằng ChatGPT (OpenAI),
+              sau đó được tác giả hoàn thiện trong Icon Composer.
             </li>
             <li>Biểu tượng trong giao diện app là SF Symbols của Apple.</li>
             <li>
@@ -138,8 +138,8 @@ const en: LegalDoc = {
   description: "enMirror's name, icon and colours, and credits for the work enMirror builds on.",
   intro: (
     <TypographyP>
-      What to know when writing about enMirror or using its imagery: how to write the name, the icon, the
-      colours, and credits for the work enMirror builds on.
+      Writing about enMirror? Here’s how to use the name, icon and colours.
+      You’ll also find artwork and font credits below.
     </TypographyP>
   ),
   sections: [
@@ -172,7 +172,7 @@ const en: LegalDoc = {
       body: (
         <>
           <TypographyP>
-            The icon's purple runs from top to bottom. On the website, enMirror purple is kept for prominent
+            The icon fades from light purple at the top to deep purple at the bottom. On the website, enMirror purple highlights
             elements such as buttons and links. In the app, active controls are amber, to match the ring light.
           </TypographyP>
           <Swatches lang="en" />
@@ -184,7 +184,7 @@ const en: LegalDoc = {
       title: "Credits",
       body: (
         <>
-          <TypographyP>enMirror ships no third-party code, fonts or sounds. The work it uses:</TypographyP>
+          <TypographyP>The enMirror app ships no third-party code, fonts or sounds. Artwork and symbol credits are listed below, along with the website font:</TypographyP>
           <TypographyList>
             <li>
               The hand mirror in the icon is original artwork for enMirror: generated with ChatGPT (OpenAI) for

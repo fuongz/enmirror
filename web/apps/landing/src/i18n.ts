@@ -17,7 +17,7 @@ export const ui = {
     onThisPage: "Trên trang này",
     footerRights: "Bảo lưu mọi quyền.",
     notFoundTitle: "Không tìm thấy trang",
-    notFoundBody: "Trang bạn tìm không tồn tại hoặc đã chuyển sang địa chỉ khác.",
+    notFoundBody: "Không thấy trang bạn đang tìm. Có thể trang đã được chuyển sang địa chỉ khác.",
     backHome: "Về trang chủ",
   },
   en: {

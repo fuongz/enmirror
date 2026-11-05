@@ -23,7 +23,7 @@ function Permissions({ lang }: { lang: Lang }) {
           { name: "Camera", when: "The first time you open the app", why: "Shows the front camera as your mirror. The image is only shown on screen, never stored or sent." },
           { name: "Photos (add only)", when: "The first time you tap Save", why: "Adds the photo you chose to your library. enMirror cannot read the photos already there." },
         ]
-  const head = lang === "vi" ? ["Quyền", "Khi nào được hỏi", "Dùng để làm gì"] : ["Permission", "When it is asked", "What it is for"]
+  const head = lang === "vi" ? ["Quyền", "Khi nào app xin quyền", "Dùng để làm gì"] : ["Permission", "When we ask", "What it is for"]
 
   return (
     <Table>
@@ -50,18 +50,18 @@ function Permissions({ lang }: { lang: Lang }) {
 const vi: LegalDoc = {
   title: "Chính sách quyền riêng tư",
   description:
-    "enMirror không thu thập dữ liệu. Hình từ camera chỉ ở trên iPhone của bạn, không có gì được tải lên.",
+    "enMirror không thu thập dữ liệu. Hình từ camera chỉ được xử lý trên iPhone của bạn, không được tải lên mạng.",
   updated: site.legalUpdated,
   intro: (
     <>
       <TypographyP>
-        Nói ngắn gọn: <strong>enMirror không thu thập dữ liệu nào của bạn.</strong> App không kết nối
+        <strong>enMirror không thu thập dữ liệu của bạn.</strong> App không kết nối
         mạng, không cần tài khoản, không có quảng cáo, không dùng công cụ phân tích hay theo dõi và không
         chứa SDK của bên thứ ba.
       </TypographyP>
       <TypographyP>
         Hình từ camera chỉ được xử lý ngay trên iPhone của bạn. Ảnh chỉ được lưu vào thư viện Ảnh khi
-        bạn bấm Lưu. Dưới đây là chi tiết.
+        bạn bấm Lưu. Bạn có thể xem chi tiết bên dưới.
       </TypographyP>
     </>
   ),
@@ -82,8 +82,8 @@ const vi: LegalDoc = {
       body: (
         <>
           <TypographyP>
-            Không có. enMirror không gửi bất kỳ yêu cầu mạng nào, nên không có dữ liệu nào rời khỏi iPhone
-            của bạn qua app. Cụ thể:
+            Không có dữ liệu nào được thu thập. enMirror không kết nối mạng, nên app không gửi dữ liệu
+            từ iPhone của bạn đi đâu. Cụ thể:
           </TypographyP>
           <TypographyList>
             <li>không tài khoản, không đăng nhập, không mã định danh người dùng;</li>
@@ -116,12 +116,12 @@ const vi: LegalDoc = {
         <>
           <TypographyP>
             Khi bạn bấm nút chụp, enMirror giữ khung hình đó trong bộ nhớ để bạn xem kỹ. Bấm{" "}
-            <strong>Xoá</strong> hoặc quay lại gương thì ảnh mất đi. Ảnh chỉ được ghi vào thư viện Ảnh khi
+            <strong>Xoá</strong> hoặc quay lại gương thì ảnh sẽ được xoá khỏi bộ nhớ. Ảnh chỉ được lưu vào thư viện Ảnh khi
             bạn bấm <strong>Lưu</strong>, dùng quyền <strong>chỉ thêm ảnh</strong>: enMirror không đọc được
             ảnh có sẵn trong thư viện.
           </TypographyP>
           <TypographyP>
-            Khi bạn bấm <strong>Chia sẻ</strong>, ảnh được giao cho app hoặc người bạn chọn trong bảng chia
+            Khi bạn bấm <strong>Chia sẻ</strong>, ảnh được gửi tới app hoặc người bạn chọn trong bảng chia
             sẻ của iOS. Từ đó, cách ảnh được xử lý tuân theo chính sách của app hoặc dịch vụ bạn chọn.
           </TypographyP>
         </>
@@ -129,7 +129,7 @@ const vi: LegalDoc = {
     },
     {
       id: "permissions",
-      title: "Quyền app xin",
+      title: "Các quyền app cần",
       body: (
         <>
           <TypographyP>
@@ -141,12 +141,11 @@ const vi: LegalDoc = {
     },
     {
       id: "on-device",
-      title: "Cài đặt lưu trên máy",
+      title: "Các tuỳ chọn lưu trên iPhone",
       body: (
         <TypographyP>
-          enMirror nhớ một vài lựa chọn của bạn, như tông màu và độ dày đèn viền, và chế độ "Như người khác
-          nhìn bạn". Chúng được lưu trên iPhone (UserDefaults), không được gửi đi đâu, và bị xoá khi bạn
-          xoá app.
+          enMirror lưu một số tuỳ chọn như tông màu, độ dày đèn viền và chế độ "Như người khác
+          nhìn bạn". Các tuỳ chọn này chỉ được lưu trên iPhone và bị xoá khi bạn xoá app.
         </TypographyP>
       ),
     },
@@ -200,12 +199,12 @@ const en: LegalDoc = {
   intro: (
     <>
       <TypographyP>
-        In short: <strong>enMirror collects no data about you.</strong> The app makes no network requests,
+        <strong>enMirror collects no data about you.</strong> The app makes no network requests,
         has no account, no ads, no analytics or tracking, and no third-party SDKs.
       </TypographyP>
       <TypographyP>
         Camera frames are processed on your iPhone only. A photo is saved to your Photos library only when
-        you tap Save. The details follow.
+        you tap Save. You can find the details below.
       </TypographyP>
     </>
   ),
@@ -246,8 +245,8 @@ const en: LegalDoc = {
       title: "Camera",
       body: (
         <TypographyP>
-          enMirror uses the front camera to show your reflection. Frames are processed on the device to draw
-          them on screen. They are never stored, never recorded and never sent anywhere.
+          enMirror uses the front camera to show your reflection. Frames are processed on your iPhone
+          and shown on screen. They are never stored, never recorded and never sent anywhere.
         </TypographyP>
       ),
     },
@@ -285,7 +284,7 @@ const en: LegalDoc = {
       body: (
         <TypographyP>
           enMirror remembers a few choices, such as the ring light's tone and size and the "As others see
-          you" view. They are stored on your iPhone (UserDefaults), never sent anywhere, and removed when you
+          you" view. They are stored only on your iPhone and removed when you
           delete the app.
         </TypographyP>
       ),

@@ -40,12 +40,14 @@ export function HomePage({ lang }: { lang: Lang }) {
         <ChevronRightIcon aria-hidden="true" className="size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
       </a>
 
-      <h1 className="mt-8 font-serif text-5xl leading-[1.05] font-medium tracking-[-0.02em] text-balance text-foreground sm:text-7xl">
-        {doc.heading}{" "}
-        <span className="bg-[linear-gradient(180deg,#9a6cf0,#5a1fc0)] bg-clip-text pr-1 font-normal text-transparent italic">
-          {doc.headingAccent}
+      <h1 className="mt-8 w-full font-serif text-5xl leading-[1.05] font-medium tracking-[-0.02em] text-balance text-foreground sm:text-7xl">
+        <span className="block">{doc.heading}</span>{" "}
+        <span className="mt-2 block text-[0.8em] text-balance">
+          <span className="box-decoration-clone bg-[linear-gradient(180deg,#9a6cf0,#5a1fc0)] bg-clip-text py-[0.2em] pr-1 font-normal text-transparent italic">
+            {doc.headingAccent}
+          </span>{" "}
+          <Logo className="ml-1 inline-block size-[0.9em] translate-y-[-0.08em] rotate-[8deg] rounded-[24%] align-middle shadow-[0_12px_28px_-10px_rgb(112_44_219/0.6)] sm:ml-2" />
         </span>
-        <Logo className="ml-3 inline-block size-[0.9em] translate-y-[-0.08em] rotate-[8deg] rounded-[24%] align-middle shadow-[0_12px_28px_-10px_rgb(112_44_219/0.6)] sm:ml-5" />
       </h1>
 
       <p className="mt-6 max-w-2xl text-lg text-pretty text-muted-foreground sm:text-xl">{doc.lead}</p>

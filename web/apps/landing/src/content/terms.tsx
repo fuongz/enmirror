@@ -16,19 +16,18 @@ const vi: LegalDoc = {
   intro: (
     <TypographyP>
       Các điều khoản này áp dụng khi bạn dùng ứng dụng enMirror do {site.developerName} cung cấp. Khi tải
-      và dùng enMirror, bạn đồng ý với các điều khoản này. Cách enMirror xử lý dữ liệu (thực ra là không
-      thu thập gì) có trong{" "}
+      và dùng enMirror, bạn đồng ý với các điều khoản này. enMirror không thu thập dữ liệu. Bạn có thể đọc thêm trong{" "}
       <TypographyLink href={pathFor("vi", "privacy")}>Chính sách quyền riêng tư</TypographyLink>.
     </TypographyP>
   ),
   sections: [
     {
       id: "free",
-      title: "Miễn phí, không tài khoản",
+      title: "Miễn phí, không cần tài khoản",
       body: (
         <TypographyP>
-          enMirror miễn phí: không quảng cáo, không gói đăng ký, không mua trong app. Bạn không cần tạo tài
-          khoản, và app chạy hoàn toàn offline.
+          enMirror hoàn toàn miễn phí, không quảng cáo, không cần đăng ký gói hay mua thêm tính năng.
+          Bạn không cần tạo tài khoản và có thể dùng app khi không có mạng.
         </TypographyP>
       ),
     },
@@ -134,7 +133,7 @@ const en: LegalDoc = {
   intro: (
     <TypographyP>
       These terms apply when you use the enMirror app, provided by {site.developerName}. By downloading and
-      using enMirror you agree to them. How enMirror handles data (it collects none) is described in the{" "}
+      using enMirror you agree to them. enMirror collects no data. You can read more in the{" "}
       <TypographyLink href={pathFor("en", "privacy")}>Privacy Policy</TypographyLink>.
     </TypographyP>
   ),
@@ -144,8 +143,8 @@ const en: LegalDoc = {
       title: "Free, with no account",
       body: (
         <TypographyP>
-          enMirror is free: no ads, no subscriptions, no in-app purchases. You do not need an account, and the
-          app works fully offline.
+          enMirror is completely free, with no ads, subscriptions or in-app purchases.
+          You don’t need an account or an internet connection to use it.
         </TypographyP>
       ),
     },
