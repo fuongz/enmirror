@@ -6,6 +6,7 @@
     "apps/landing"
   ],
   "scripts": {
+    "cf-typegen": "bun run --filter @enmirror/landing cf-typegen",
     "typecheck": "bun run --filter @enmirror/landing typecheck",
     "build": "bun run --filter @enmirror/landing build",
     "dev": "bun run --filter @enmirror/landing dev",
