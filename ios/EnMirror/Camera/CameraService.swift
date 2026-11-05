@@ -33,6 +33,14 @@ final class CameraService {
     var canAdjustExposure: Bool { biasRange.upperBound > biasRange.lowerBound }
 
     func start() async {
+        #if DEBUG
+            if StoreDemo.isOn {
+                zoomRange = 1...CameraMath.maxUsefulZoom
+                biasRange = -CameraMath.biasLimit...CameraMath.biasLimit
+                status = .running
+                return
+            }
+        #endif
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
             break
@@ -83,6 +91,9 @@ final class CameraService {
                 self.delayStarts += 1
             }
         }
+        #if DEBUG
+            if StoreDemo.isOn { isDelayFilling = false }
+        #endif
     }
 
     func setZoom(_ value: CGFloat) {
@@ -107,6 +118,9 @@ final class CameraService {
 
     /// The live camera's full-resolution still, or with a delay the old frame on screen.
     func capturePhoto(mirrored: Bool) async throws -> Data {
+        #if DEBUG
+            if let data = StoreDemo.photoData { return data }
+        #endif
         guard delay != nil else { return try await engine.capturePhoto(mirrored: mirrored) }
         guard let data = await engine.delay.photoData(mirrored: mirrored) else { throw CaptureEngine.CaptureError.noData }
         return data

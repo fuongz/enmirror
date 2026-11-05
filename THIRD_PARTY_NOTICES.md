@@ -5,7 +5,7 @@ enMirror ships no third-party code, fonts or sounds. Its artwork is listed below
 | Asset | Source |
 | --- | --- |
 | App icon (`ios/EnMirror/AppIcon.icon`) | Original artwork for enMirror: the hand-mirror image was generated with ChatGPT (OpenAI) for the author, who owns the output under OpenAI's terms; layered and finished in Icon Composer. The same hand-mirror image is reused in the About header and the Home Screen widget (`ios/EnMirrorWidgets/Assets.xcassets`) |
-| Landing reflection photo (`web/apps/landing/public/mirror/reflection.webp`) | A fictional person, not a real one, generated for enMirror with OpenAI image generation through the Codex CLI; the author owns the output under OpenAI's terms |
+| Landing reflection photo (`web/apps/landing/public/mirror/reflection.webp`) | A fictional person, not a real one, generated for enMirror with OpenAI image generation through the Codex CLI; the author owns the output under OpenAI's terms. Also the stand-in for the camera in the App Store screenshots (`ios/scripts/store-capture.sh`) |
 | About sheet artwork (`ios/EnMirror/Assets.xcassets/About*.imageset`, `web/apps/landing/public/about/`) | Abstract 3D renders generated for enMirror with OpenAI image generation through the Codex CLI; the author owns the output under OpenAI's terms |
 | Symbols in the interface | SF Symbols, part of iOS, used under Apple's terms for apps on Apple platforms |
 

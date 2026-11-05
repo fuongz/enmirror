@@ -85,6 +85,9 @@ struct MirrorView: View {
         .onChange(of: lightOn) { updateScreenLight() }
         .onChange(of: launch.request, initial: true) { _, request in open(request) }
         .sheet(isPresented: $showsAbout) { AboutSheet() }
+        #if DEBUG
+            .modifier(StoreDemoScene(camera: camera, panel: $panel, pinned: $pinned, freeze: freeze))
+        #endif
         // Volume buttons and Camera Control act as the shutter; the photo output plays its own sound.
         .onCameraCaptureEvent(isEnabled: camera.status == .running && !showsAbout, defaultSoundDisabled: true) { event in
             if event.phase == .ended { hardwareShutter() }

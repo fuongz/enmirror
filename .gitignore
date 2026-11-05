@@ -5,3 +5,5 @@ xcuserdata/
 *.xcuserstate
 mise.local.toml
 ios/Config/Local.xcconfig
+ios/StoreScreenshots/
+__pycache__/

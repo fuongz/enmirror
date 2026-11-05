@@ -59,6 +59,22 @@ struct LivePreview: View {
 
     @ViewBuilder
     private var mirror: some View {
+        #if DEBUG
+            if let demo = StoreDemo.image {
+                // Store screenshots on the simulator: the demo photo stands in for the camera.
+                Color.clear
+                    .overlay { Image(uiImage: demo).resizable().scaledToFill().scaleEffect(camera.zoom) }
+                    .clipped()
+            } else {
+                cameraMirror
+            }
+        #else
+            cameraMirror
+        #endif
+    }
+
+    @ViewBuilder
+    private var cameraMirror: some View {
         if camera.delay != nil {
             DelayedPreview(layer: camera.delayLayer)
         } else {

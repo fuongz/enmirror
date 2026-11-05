@@ -87,6 +87,16 @@ scripts/ios-swift-files.sh | xargs -0 xcrun swift-format lint --strict --paralle
 swiftlint lint --quiet --strict
 """
 
+[tasks."ios:store"]
+description = "App Store screenshots and creative (EN + VI): capture on the simulator, then compose"
+dir = "ios"
+run = """
+set -euo pipefail
+scripts/store-capture.sh
+uv run scripts/store-screenshots.py
+uv run scripts/store-creative.py
+"""
+
 [tasks."ios:dead-code"]
 description = "List unused Swift declarations with Periphery (builds for the simulator first)"
 dir = "ios"

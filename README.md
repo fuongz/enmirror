@@ -29,7 +29,7 @@ enmirror/
 | `ios/EnMirrorTests/` | Swift Testing unit tests for the math |
 | `ios/Config/Widgets.xcconfig`, `ios/Config/EnMirrorWidgets-Info.plist` | The extension's settings: it includes `Signing.xcconfig` and appends `.widgets` to the app's bundle ID |
 | `ios/Config/Signing.xcconfig` | Bundle ID (`com.trinhvaphuong.enmirror`) and signing of the app target. Includes the gitignored `Local.xcconfig`. |
-| `ios/scripts/` | `ci-ios.sh` (every check), `testflight.sh` (archive and upload), `ios-swift-files.sh` |
+| `ios/scripts/` | `ci-ios.sh` (every check), `testflight.sh` (archive and upload), `ios-swift-files.sh`, and the App Store images: `store-capture.sh` (raw screens on the simulator via the Debug-only `StoreDemo`), `store-screenshots.py`, `store-creative.py` (`mise run ios:store`, output in the gitignored `ios/StoreScreenshots/out/<lang>`) |
 | `ios/.swift-format`, `ios/.swiftlint.yml`, `ios/.periphery.yml` | Style, lint and dead-code settings |
 
 ### web/
