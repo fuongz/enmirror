@@ -19,6 +19,7 @@ struct AboutSheet: View {
                 acknowledgements
             }
             .listStyle(.insetGrouped)
+            .labelStyle(.topAligned)
             .navigationTitle(Text("About"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

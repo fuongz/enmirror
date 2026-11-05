@@ -68,14 +68,15 @@ function Section({ title, children }: { title?: string; children: React.ReactNod
 
 function Row({ icon: Icon, children, trailing, href, onPress, muted }: { icon: LucideIcon; children: React.ReactNode; trailing?: React.ReactNode; href?: string; onPress?: () => void; muted?: boolean }) {
   const className = cn(
-    "flex w-full items-center text-left not-last:border-b not-last:border-white/10",
+    "flex w-full items-start text-left not-last:border-b not-last:border-white/10",
     (href || onPress) && "cursor-pointer outline-none hover:bg-white/5 focus-visible:bg-white/10",
     muted ? "text-white/60" : "text-white",
   )
   const style = { gap: pt(12), padding: `${pt(11)} ${pt(16)}`, fontSize: pt(15), lineHeight: 1.3 }
   const content = (
     <>
-      <Icon aria-hidden="true" className="shrink-0" style={{ width: pt(20), height: pt(20), color: href || onPress ? accent : undefined }} />
+      {/* Top-aligned with the first line of text, like the app's TopAlignedLabelStyle. */}
+      <Icon aria-hidden="true" className="shrink-0" style={{ width: pt(20), height: pt(20), marginTop: pt(-0.5), color: href || onPress ? accent : undefined }} />
       <span className="flex-1">{children}</span>
       {trailing}
     </>
@@ -101,7 +102,7 @@ function Row({ icon: Icon, children, trailing, href, onPress, muted }: { icon: L
   )
 }
 
-const chevron = <ChevronRightIcon aria-hidden="true" className="shrink-0 text-white/30" style={{ width: pt(16), height: pt(16) }} />
+const chevron = <ChevronRightIcon aria-hidden="true" className="shrink-0 self-center text-white/30" style={{ width: pt(16), height: pt(16) }} />
 
 /**
  * The app's About sheet (ios/EnMirror/About/AboutSheet.swift) inside the demo phone: a dark sheet
@@ -184,7 +185,7 @@ export function MirrorAboutSheet({
           </Section>
 
           <Section>
-            <Row icon={GlobeIcon} trailing={<span className="text-white/50">{labels.languageName}</span>}>
+            <Row icon={GlobeIcon} trailing={<span className="self-center text-white/50">{labels.languageName}</span>}>
               {labels.language}
             </Row>
           </Section>
