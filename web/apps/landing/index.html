@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#702CDB" />
+    <!-- The app icon (EnMirror/AppIcon.icon): the hand mirror on the purple gradient, from scripts/make-icons.swift. -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Sets the dark class before first paint; an external file so the CSP needs no inline script. -->
+    <script src="/theme.js"></script>
+    <!-- Load styles before first paint, including the cross-document transition opt-in. -->
+    <link rel="stylesheet" href="/src/index.css" />
+    <!-- Register before first render, including when returning from the back/forward cache. -->
+    <script src="/page-transitions.js"></script>
+    <!--app-head-->
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/entry-client.tsx"></script>
+  </body>
+</html>

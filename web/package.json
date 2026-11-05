@@ -1,0 +1,18 @@
+{
+  "name": "enmirror-web",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/landing"
+  ],
+  "scripts": {
+    "typecheck": "bun run --filter @enmirror/landing typecheck",
+    "build": "bun run --filter @enmirror/landing build",
+    "dev": "bun run --filter @enmirror/landing dev",
+    "deploy": "bun run --filter @enmirror/landing deploy"
+  },
+  "devDependencies": {
+    "@types/bun": "1.4.2",
+    "typescript": "5.9.3"
+  }
+}
