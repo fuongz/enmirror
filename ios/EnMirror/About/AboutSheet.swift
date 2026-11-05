@@ -1,9 +1,20 @@
 import SwiftUI
 
-/// What enMirror is, its version, how to get the most from it, privacy, links and credits.
+/// What enMirror is (a bento of feature cards), its language, support and privacy links, credits and version.
 struct AboutSheet: View {
     @Environment(\.dismiss) private var dismiss
     @State private var copiedVersion = false
+    // periphery:ignore - read and written through `$detent` by presentationDetents, which Periphery does not see
+    @State private var detent = Self.initialDetent
+
+    /// Debug builds launched with `-showAbout` open it full height, for simulator screenshots.
+    private static var initialDetent: PresentationDetent {
+        #if DEBUG
+            ProcessInfo.processInfo.arguments.contains("-showAbout") ? .large : .medium
+        #else
+            .medium
+        #endif
+    }
 
     private let version = AppInfo.version
 
@@ -12,11 +23,10 @@ struct AboutSheet: View {
             List {
                 header
                 highlights
-                tips
                 language
-                privacy
                 links
                 acknowledgements
+                versionRow
             }
             .listStyle(.insetGrouped)
             .labelStyle(.topAligned)
@@ -28,7 +38,7 @@ struct AboutSheet: View {
                 }
             }
         }
-        .presentationDetents([.medium, .large])
+        .presentationDetents([.medium, .large], selection: $detent)
         .presentationDragIndicator(.visible)
         .sensoryFeedback(.success, trigger: copiedVersion) { _, copied in copied }
         .task(id: copiedVersion) {
@@ -48,19 +58,6 @@ struct AboutSheet: View {
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
-                Button {
-                    UIPasteboard.general.string = version
-                    copiedVersion = true
-                } label: {
-                    Label {
-                        Text(copiedVersion ? "Copied" : "Version \(version)")
-                    } icon: {
-                        Image(systemName: copiedVersion ? "checkmark" : "doc.on.doc")
-                    }
-                    .font(.footnote.monospacedDigit())
-                }
-                .buttonStyle(.borderless)
-                .accessibilityHint(Text("Copies the version for a support request"))
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 8)
@@ -70,25 +67,10 @@ struct AboutSheet: View {
 
     private var highlights: some View {
         Section {
-            Label("Free forever: no ads, no subscriptions, no in-app purchases", systemImage: "gift")
-            Label("Works offline, with no account", systemImage: "wifi.slash")
-            Label("Ring light, zoom and a true view of how others see you", systemImage: "sparkles")
+            FeatureBento()
+                .listRowInsets(EdgeInsets())
         }
-    }
-
-    private var tips: some View {
-        Section("Tips") {
-            Label(
-                "Tap the mirror to set the exposure there. On iPhone 14 and later it focuses there too.",
-                systemImage: "hand.tap"
-            )
-            Label("Pinch to zoom, double-tap to go back to 1×.", systemImage: "arrow.up.left.and.arrow.down.right")
-            Label(
-                "Hold your iPhone about 30 cm from your face: the front camera is sharpest there.",
-                systemImage: "ruler"
-            )
-            Label("In a dim room, turn on the ring light.", systemImage: "lightbulb")
-        }
+        .listRowBackground(Color.clear)
     }
 
     /// iOS keeps a per-app language in Settings once an app ships two localizations; switching
@@ -110,20 +92,6 @@ struct AboutSheet: View {
         }
     }
 
-    private var privacy: some View {
-        Section {
-            Label(
-                "enMirror collects no data. The camera image stays on your iPhone, nothing is uploaded, and a photo is saved only when you tap Save.",
-                systemImage: "lock.shield"
-            )
-            if let url = AppLinks.privacyPolicy {
-                Link(destination: url) { Label("Privacy Policy", systemImage: "hand.raised") }
-            }
-        } header: {
-            Text("Privacy")
-        }
-    }
-
     private var links: some View {
         Section("Support") {
             if let url = AppLinks.writeReview {
@@ -135,6 +103,9 @@ struct AboutSheet: View {
             if let url = AppLinks.support {
                 Link(destination: url) { Label("Help & Support", systemImage: "questionmark.circle") }
             }
+            if let url = AppLinks.privacyPolicy {
+                Link(destination: url) { Label("Privacy Policy", systemImage: "hand.raised") }
+            }
         }
     }
 
@@ -145,5 +116,30 @@ struct AboutSheet: View {
         }
         .font(.footnote)
         .foregroundStyle(.secondary)
+    }
+
+    /// The version people quote in a support request; tapping copies it.
+    private var versionRow: some View {
+        Section {
+            Button {
+                UIPasteboard.general.string = version
+                copiedVersion = true
+            } label: {
+                LabeledContent {
+                    Group {
+                        if copiedVersion {
+                            Text("Copied")
+                        } else {
+                            Text(verbatim: version)
+                        }
+                    }
+                    .monospacedDigit()
+                } label: {
+                    Label("Version", systemImage: copiedVersion ? "checkmark.circle" : "info.circle")
+                }
+            }
+            .foregroundStyle(.primary)
+            .accessibilityHint(Text("Copies the version for a support request"))
+        }
     }
 }

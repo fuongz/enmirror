@@ -27,7 +27,12 @@ struct MirrorView: View {
     @State private var isCapturing = false
     @State private var toast: Toast?
     @State private var focusMark: FocusMark?
-    @State private var showsAbout = false
+    // Debug builds open the About sheet at launch with `-showAbout`, for simulator screenshots.
+    #if DEBUG
+        @State private var showsAbout = ProcessInfo.processInfo.arguments.contains("-showAbout")
+    #else
+        @State private var showsAbout = false
+    #endif
 
     /// Where the last tap landed, in the preview's own (unflipped) coordinates.
     private struct FocusMark: Equatable {

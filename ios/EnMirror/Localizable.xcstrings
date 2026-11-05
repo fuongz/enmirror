@@ -121,6 +121,16 @@
         }
       }
     },
+    "Costs nothing, now or later.": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Không tốn đồng nào, bây giờ hay sau này."
+          }
+        }
+      }
+    },
     "Couldn't capture a photo": {
       "localizations": {
         "vi": {
@@ -171,12 +181,12 @@
         }
       }
     },
-    "Free forever: no ads, no subscriptions, no in-app purchases": {
+    "Free forever": {
       "localizations": {
         "vi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Miễn phí mãi mãi: không quảng cáo, không gói đăng ký, không mua trong app"
+            "value": "Miễn phí mãi mãi"
           }
         }
       }
@@ -197,26 +207,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Trợ giúp & Hỗ trợ"
-          }
-        }
-      }
-    },
-    "Hold your iPhone about 30 cm from your face: the front camera is sharpest there.": {
-      "localizations": {
-        "vi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cầm iPhone cách mặt khoảng 30 cm: camera trước nét nhất ở khoảng cách đó."
-          }
-        }
-      }
-    },
-    "In a dim room, turn on the ring light.": {
-      "localizations": {
-        "vi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Trong phòng tối, hãy bật đèn viền."
           }
         }
       }
@@ -281,12 +271,42 @@
         }
       }
     },
+    "No ads": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Không quảng cáo"
+          }
+        }
+      }
+    },
     "No front camera": {
       "localizations": {
         "vi": {
           "stringUnit": {
             "state": "translated",
             "value": "Không có camera trước"
+          }
+        }
+      }
+    },
+    "No in-app purchases": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Không mua trong app"
+          }
+        }
+      }
+    },
+    "No subscriptions": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Không gói đăng ký"
           }
         }
       }
@@ -321,26 +341,6 @@
         }
       }
     },
-    "Pinch to zoom, double-tap to go back to 1×.": {
-      "localizations": {
-        "vi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Chụm hai ngón để zoom, chạm hai lần để về 1×."
-          }
-        }
-      }
-    },
-    "Privacy": {
-      "localizations": {
-        "vi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Quyền riêng tư"
-          }
-        }
-      }
-    },
     "Privacy Policy": {
       "localizations": {
         "vi": {
@@ -361,12 +361,12 @@
         }
       }
     },
-    "Ring light, zoom and a true view of how others see you": {
+    "Ring light, zoom and how others see you.": {
       "localizations": {
         "vi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Đèn viền, zoom và chế độ xem như người khác nhìn bạn"
+            "value": "Đèn viền, zoom và góc nhìn như người khác thấy bạn."
           }
         }
       }
@@ -441,42 +441,22 @@
         }
       }
     },
-    "Tap the mirror to set the exposure there. On iPhone 14 and later it focuses there too.": {
+    "Version": {
       "localizations": {
         "vi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Chạm vào gương để đo sáng tại điểm đó. Từ iPhone 14 trở lên, máy lấy nét luôn tại đó."
+            "value": "Phiên bản"
           }
         }
       }
     },
-    "Tips": {
+    "Works offline, no account needed.": {
       "localizations": {
         "vi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Mẹo"
-          }
-        }
-      }
-    },
-    "Version %@": {
-      "localizations": {
-        "vi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Phiên bản %@"
-          }
-        }
-      }
-    },
-    "Works offline, with no account": {
-      "localizations": {
-        "vi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Chạy offline, không cần tài khoản"
+            "value": "Chạy offline, không cần tài khoản."
           }
         }
       }
@@ -487,16 +467,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Phóng to"
-          }
-        }
-      }
-    },
-    "enMirror collects no data. The camera image stays on your iPhone, nothing is uploaded, and a photo is saved only when you tap Save.": {
-      "localizations": {
-        "vi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "enMirror không thu thập dữ liệu. Hình từ camera chỉ ở trên iPhone của bạn, không có gì được tải lên, và ảnh chỉ được lưu khi bạn bấm Lưu."
           }
         }
       }
