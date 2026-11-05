@@ -17,10 +17,19 @@ final class CaptureEngine: @unchecked Sendable {
 
     private let queue = DispatchQueue(label: "com.trinhvaphuong.enmirror.capture", qos: .userInitiated)
     private let photoOutput = AVCapturePhotoOutput()
+    /// Frames for the delayed mirror. In the session from the start (adding it later would
+    /// interrupt the preview); it delivers nothing until `setDelay` gives it a delegate.
+    private let videoOutput = AVCaptureVideoDataOutput()
+    let delay: DelayPipeline
     private var device: AVCaptureDevice?
     private var capabilities: Capabilities?
     private var inFlight: [Int64: PhotoDelegate] = [:]
     private var subjectAreaObserver: (any NSObjectProtocol)?
+
+    @MainActor
+    init() {
+        delay = DelayPipeline()
+    }
 
     deinit {
         if let subjectAreaObserver { NotificationCenter.default.removeObserver(subjectAreaObserver) }
@@ -76,11 +85,29 @@ final class CaptureEngine: @unchecked Sendable {
         }
     }
 
+    /// `seconds` nil shows the live preview again and frees the held frames.
+    func setDelay(_ seconds: Double?, onFirstFrame: @escaping @Sendable () -> Void) {
+        queue.async {
+            if let seconds {
+                self.delay.start(delay: seconds, onFirstFrame: onFirstFrame)
+                self.videoOutput.setSampleBufferDelegate(self.delay, queue: self.delay.queue)
+            } else {
+                self.videoOutput.setSampleBufferDelegate(nil, queue: nil)
+                self.delay.stop()
+            }
+        }
+    }
+
     /// Full-resolution still. `mirrored` should match what the preview shows.
     func capturePhoto(mirrored: Bool) async throws -> Data {
         try await withCheckedThrowingContinuation { continuation in
             queue.async {
-                guard self.device != nil, let connection = self.photoOutput.connection(with: .video) else {
+                // A stopped session leaves the connection inactive, and capturing then raises an
+                // exception; a self-timer can end just after the app was backgrounded.
+                guard
+                    self.device != nil, self.session.isRunning,
+                    let connection = self.photoOutput.connection(with: .video), connection.isActive, connection.isEnabled
+                else {
                     continuation.resume(throwing: CaptureError.notConfigured)
                     return
                 }
@@ -131,6 +158,7 @@ final class CaptureEngine: @unchecked Sendable {
         }
         session.addInput(input)
         session.addOutput(photoOutput)
+        addVideoOutput()
         useSharpestFormat(of: device)
 
         let largest = device.activeFormat.supportedMaxPhotoDimensions.max {
@@ -169,6 +197,25 @@ final class CaptureEngine: @unchecked Sendable {
     }
 
     private static let center = CGPoint(x: 0.5, y: 0.5)
+
+    /// Preview-sized, portrait and mirrored like the preview layer, so the delayed mirror matches
+    /// the live one. Optional: without it the app only loses the delay.
+    private func addVideoOutput() {
+        guard session.canAddOutput(videoOutput) else { return }
+        videoOutput.automaticallyConfiguresOutputBufferDimensions = false
+        videoOutput.deliversPreviewSizedOutputBuffers = true
+        videoOutput.alwaysDiscardsLateVideoFrames = true
+        videoOutput.videoSettings = [
+            kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange
+        ]
+        session.addOutput(videoOutput)
+        guard let connection = videoOutput.connection(with: .video) else { return }
+        if connection.isVideoRotationAngleSupported(90) { connection.videoRotationAngle = 90 }
+        if connection.isVideoMirroringSupported {
+            connection.automaticallyAdjustsVideoMirroring = false
+            connection.isVideoMirrored = true
+        }
+    }
 
     /// After a tap the point holds until the subject moves; then the whole frame drives it again.
     private func resumeAutomaticMetering() {

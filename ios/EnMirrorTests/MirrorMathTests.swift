@@ -90,7 +90,10 @@ struct SettingsTests {
     }
 
     @Test func keysAreUnique() {
-        let keys = [SettingsKey.asOthersSee, SettingsKey.lightOn, SettingsKey.lightTone, SettingsKey.lightSize]
+        let keys = [
+            SettingsKey.asOthersSee, SettingsKey.lightOn, SettingsKey.lightTone, SettingsKey.lightSize, SettingsKey.guide,
+            SettingsKey.zoom,
+        ]
         #expect(Set(keys).count == keys.count)
     }
 }
@@ -156,5 +159,161 @@ struct LanguageNameTests {
     @Test func namesEachLanguageInItself() {
         #expect(AppInfo.languageName(for: "vi") == "Tiếng Việt")
         #expect(AppInfo.languageName(for: "en") == "English")
+    }
+}
+
+struct GuideTests {
+    @Test func tapsCycleThroughEveryGuideAndBackToOff() {
+        #expect(Guide.off.next == .centerLine)
+        #expect(Guide.centerLine.next == .grid)
+        #expect(Guide.grid.next == .oval)
+        #expect(Guide.oval.next == .off)
+    }
+
+    @Test func ovalIsCentredAndFitsTallScreens() {
+        let size = CGSize(width: 400, height: 860)
+        let rect = Guide.ovalRect(in: size)
+        #expect(rect.midX == 200)
+        #expect(rect.midY == 430)
+        #expect(rect.width == 248)
+        #expect(abs(rect.height - 248 * 1.35) < 0.001)
+    }
+
+    @Test func ovalShrinksWhenTheMirrorIsShort() {
+        let size = CGSize(width: 400, height: 300)
+        let rect = Guide.ovalRect(in: size)
+        #expect(rect.height == 210)
+        #expect(CGRect(origin: .zero, size: size).contains(rect))
+    }
+
+    @Test func ovalIsEmptyForAnEmptyMirror() {
+        #expect(Guide.ovalRect(in: .zero) == .zero)
+    }
+}
+
+struct DelayTests {
+    @Test func buttonCyclesThroughEachDelayAndBackToLive() {
+        #expect(MirrorDelay.next(after: nil) == 2)
+        #expect(MirrorDelay.next(after: 2) == 3)
+        #expect(MirrorDelay.next(after: 3) == 5)
+        #expect(MirrorDelay.next(after: 5) == nil)
+    }
+
+    @Test func nothingShowsUntilTheFirstFrameIsOldEnough() {
+        var buffer = DelayBuffer<Int>(delay: 3)
+        #expect(buffer.push(0, at: 10.0) == nil)
+        #expect(buffer.push(1, at: 11.0) == nil)
+        #expect(buffer.push(2, at: 12.9) == nil)
+        #expect(buffer.push(3, at: 13.0) == 0)
+    }
+
+    @Test func showsTheNewestDueFrameAndDropsOlderOnes() {
+        var buffer = DelayBuffer<Int>(delay: 2)
+        for frame in 0..<10 { _ = buffer.push(frame, at: Double(frame) * 0.1) }
+        // A gap: frames 0...9 are all at least 2 s old at t = 3.0; the newest of them shows.
+        #expect(buffer.push(10, at: 3.0) == 9)
+        #expect(buffer.count == 1)
+    }
+
+    @Test func holdsAboutTheDelayAtThirtyFramesPerSecond() {
+        var buffer = DelayBuffer<Int>(delay: 5)
+        for frame in 0..<600 { _ = buffer.push(frame, at: Double(frame) / 30) }
+        #expect((149...151).contains(buffer.count))
+    }
+
+    @Test func removeAllEmptiesTheBuffer() {
+        var buffer = DelayBuffer<Int>(delay: 1)
+        _ = buffer.push(0, at: 0)
+        buffer.removeAll()
+        #expect(buffer.count == 0)
+    }
+
+    @Test func framesShrinkToTheLongSideAndStayEven() {
+        #expect(CameraMath.scaledSize(width: 1080, height: 1440, longSide: 960) == CGSize(width: 720, height: 960))
+        #expect(CameraMath.scaledSize(width: 1081, height: 1441, longSide: 960) == CGSize(width: 720, height: 960))
+        #expect(CameraMath.scaledSize(width: 480, height: 640, longSide: 960) == CGSize(width: 480, height: 640))
+        #expect(CameraMath.scaledSize(width: 0, height: 0, longSide: 960) == .zero)
+    }
+}
+
+struct PinTests {
+    private let area = CGRect(x: 16, y: 76, width: 360, height: 600)
+    private let tile = CGSize(width: 108, height: 144)
+
+    @Test func dragEndPicksTheCornerOfItsQuarter() {
+        #expect(PinMath.nearestCorner(to: CGPoint(x: 30, y: 100), in: area) == .topLeading)
+        #expect(PinMath.nearestCorner(to: CGPoint(x: 300, y: 100), in: area) == .topTrailing)
+        #expect(PinMath.nearestCorner(to: CGPoint(x: 30, y: 600), in: area) == .bottomLeading)
+        #expect(PinMath.nearestCorner(to: CGPoint(x: 300, y: 600), in: area) == .bottomTrailing)
+    }
+
+    @Test func dragsPastTheEdgeStillSnapToTheNearestCorner() {
+        #expect(PinMath.nearestCorner(to: CGPoint(x: -200, y: 2000), in: area) == .bottomLeading)
+    }
+
+    @Test func tileSitsInsideTheAreaAtEveryCorner() {
+        for corner in PinCorner.allCases {
+            let center = PinMath.center(of: corner, tile: tile, in: area)
+            let frame = CGRect(
+                x: center.x - tile.width / 2,
+                y: center.y - tile.height / 2,
+                width: tile.width,
+                height: tile.height
+            )
+            #expect(area.contains(frame))
+        }
+        #expect(PinMath.center(of: .topTrailing, tile: tile, in: area) == CGPoint(x: 322, y: 148))
+    }
+}
+
+struct SelfTimerTests {
+    @Test func pressCapturesWithoutATimer() {
+        #expect(SelfTimer.press(timer: nil, isCounting: false) == .capture)
+    }
+
+    @Test func pressStartsTheChosenCountdown() {
+        #expect(SelfTimer.press(timer: 3, isCounting: false) == .startCountdown(3))
+        #expect(SelfTimer.press(timer: 10, isCounting: false) == .startCountdown(10))
+    }
+
+    @Test func pressDuringACountdownCancelsIt() {
+        #expect(SelfTimer.press(timer: 3, isCounting: true) == .cancelCountdown)
+    }
+
+    @Test func countdownShowsEachSecondDownToOne() {
+        #expect(SelfTimer.ticks(from: 3) == [3, 2, 1])
+        #expect(SelfTimer.ticks(from: 10).count == 10)
+        #expect(SelfTimer.ticks(from: 0).isEmpty)
+    }
+}
+
+struct ZoomMemoryTests {
+    @Test func savedZoomIsRestoredInsideTheRange() {
+        #expect(CameraMath.restoredZoom(saved: 2.2, range: 1...3) == 2.2)
+    }
+
+    @Test func savedZoomIsClampedOnAPhoneWithLessZoom() {
+        #expect(CameraMath.restoredZoom(saved: 2.8, range: 1...2) == 2)
+    }
+
+    @Test func noSavedZoomStartsAtOne() {
+        #expect(CameraMath.restoredZoom(saved: nil, range: 1...3) == 1)
+    }
+}
+
+struct QuickActionTests {
+    @Test func everyModeRoundTripsThroughItsShortcutType() {
+        for mode in MirrorLaunch.Mode.allCases {
+            #expect(MirrorLaunch.Mode(shortcutType: mode.shortcutType) == mode)
+        }
+    }
+
+    @Test func unknownShortcutTypesAreIgnored() {
+        #expect(MirrorLaunch.Mode(shortcutType: "enmirror.open.selfie") == nil)
+        #expect(MirrorLaunch.Mode(shortcutType: "light") == nil)
+    }
+
+    @Test func iconMenuOffersTheFourChosenModes() {
+        #expect(QuickActions.modes == [.light, .delayed, .asOthersSee, .guide])
     }
 }

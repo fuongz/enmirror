@@ -46,6 +46,34 @@ import SwiftUI
     .preferredColorScheme(.dark)
 }
 
+#Preview("Alignment guides") {
+    HStack(spacing: 4) {
+        ForEach([Guide.centerLine, .grid, .oval], id: \.self) { guide in
+            ZStack {
+                PreviewSample.backdrop
+                GuideOverlay(guide: guide)
+            }
+        }
+    }
+    .ignoresSafeArea()
+}
+
+#Preview("Pinned photo and timer") {
+    @Previewable @State var corner = PinCorner.topTrailing
+
+    ZStack {
+        PreviewSample.backdrop.ignoresSafeArea()
+        CountdownNumber(value: 3)
+        PinnedPhotoView(photo: PreviewSample.frozen, flipped: false, corner: $corner, onOpen: {}, onUnpin: {})
+        VStack {
+            Spacer()
+            ShutterButton(isBusy: false, timer: 3, isCounting: true, action: {})
+        }
+        .padding(.bottom, 24)
+    }
+    .preferredColorScheme(.dark)
+}
+
 #Preview("Focus square") {
     ZStack {
         PreviewSample.backdrop.ignoresSafeArea()

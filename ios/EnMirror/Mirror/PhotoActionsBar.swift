@@ -1,9 +1,12 @@
 import SwiftUI
 
-/// Actions on a captured photo: share it, save it to Photos, or delete it and return to live.
+/// Actions on a captured photo: share it, save it to Photos, pin it over the live mirror to
+/// compare, or delete it and return to live.
 struct PhotoActionsBar: View {
     let photo: FrozenPhoto
+    var isPinned = false
     let onSave: () -> Void
+    var onPin: () -> Void = {}
     let onDelete: () -> Void
 
     var body: some View {
@@ -22,20 +25,33 @@ struct PhotoActionsBar: View {
                 }
                 .buttonStyle(.glassProminent)
 
+                Button(action: onPin) {
+                    action("Pin", systemImage: isPinned ? "pin.fill" : "pin")
+                }
+                .buttonStyle(.glass)
+                .disabled(isPinned)
+
                 Button(role: .destructive, action: onDelete) {
                     action("Delete", systemImage: "trash")
                 }
                 .buttonStyle(.glass)
             }
-            .controlSize(.extraLarge)
-            .font(.headline)
+            .controlSize(.large)
+            .buttonBorderShape(.roundedRectangle(radius: 22))
+            .font(.footnote.weight(.semibold))
         }
     }
 
     private func action(_ title: LocalizedStringKey, systemImage: String) -> some View {
-        Label(title, systemImage: systemImage)
-            .labelStyle(.titleAndIcon)
-            .lineLimit(1)
-            .frame(maxWidth: .infinity)
+        // Icon above title, so four actions fit across the narrowest iPhone in either language.
+        VStack(spacing: 4) {
+            Image(systemName: systemImage)
+                .font(.system(size: 19, weight: .semibold))
+            Text(title)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+        }
+        .padding(.vertical, 4)
+        .frame(maxWidth: .infinity)
     }
 }

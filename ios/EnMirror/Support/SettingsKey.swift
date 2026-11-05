@@ -4,4 +4,6 @@ enum SettingsKey {
     static let lightOn = "light.on"
     static let lightTone = "light.tone"
     static let lightSize = "light.size"
+    static let guide = "mirror.guide"
+    static let zoom = "camera.zoom"
 }

@@ -1,32 +1,26 @@
+import AVKit
 import SwiftUI
 
 struct MirrorView: View {
-    private enum ToolPanel {
-        case zoom, exposure, light
-    }
-
-    private struct Toast: Equatable {
-        let id = UUID()
-        let message: LocalizedStringResource
-
-        static func == (lhs: Toast, rhs: Toast) -> Bool { lhs.id == rhs.id }
-    }
-
     @State private var camera = CameraService()
+    @State private var launch = MirrorLaunch.shared
     @Environment(\.scenePhase) private var scenePhase
-    @Environment(\.openURL) private var openURL
 
     @AppStorage(SettingsKey.asOthersSee) private var asOthersSee = false
     @AppStorage(SettingsKey.lightOn) private var lightOn = false
     @AppStorage(SettingsKey.lightTone) private var lightTone = RingLight.defaultTone
     @AppStorage(SettingsKey.lightSize) private var lightSize = RingLight.defaultSize
+    @AppStorage(SettingsKey.guide) private var guide = Guide.off
 
     @State private var panel: ToolPanel?
-    @State private var pinchBase: CGFloat?
     @State private var frozen: FrozenPhoto?
+    /// Kept in memory only: closing the app forgets it.
+    @State private var pinned: FrozenPhoto?
+    // periphery:ignore - passed to PinnedPhotoView as a binding.
+    @State private var pinCorner = PinCorner.topTrailing
     @State private var isCapturing = false
-    @State private var toast: Toast?
-    @State private var focusMark: FocusMark?
+    @State private var selfTimer = SelfTimerCountdown()
+    @State private var toast = MirrorToast()
     // Debug builds open the About sheet at launch with `-showAbout`, for simulator screenshots.
     #if DEBUG
         @State private var showsAbout = ProcessInfo.processInfo.arguments.contains("-showAbout")
@@ -34,23 +28,39 @@ struct MirrorView: View {
         @State private var showsAbout = false
     #endif
 
-    /// Where the last tap landed, in the preview's own (unflipped) coordinates.
-    private struct FocusMark: Equatable {
-        let id = UUID()
-        let point: CGPoint
-    }
-
     var body: some View {
         ZStack {
             GeometryReader { proxy in
                 ZStack {
                     lightColor
                     surface
+                        // Inside the ring light's inset and outside the flip: the guide follows the
+                        // mirror's size and its centre line stays in the middle either way.
+                        .overlay { GuideOverlay(guide: guide) }
                         .clipShape(.rect(cornerRadius: lightOn ? 36 : 0, style: .continuous))
                         .padding(lightOn ? RingLight.inset(size: lightSize, in: proxy.size) : 0)
                 }
             }
             .ignoresSafeArea()
+
+            // Under the buttons, so it never covers a control.
+            if let pinned, frozen == nil {
+                PinnedPhotoView(
+                    photo: pinned,
+                    flipped: pinned.asOthersSee != asOthersSee,
+                    corner: $pinCorner,
+                    onOpen: {
+                        selfTimer.cancel()
+                        frozen = pinned
+                    },
+                    onUnpin: { self.pinned = nil }
+                )
+                .transition(.scale(scale: 0.6).combined(with: .opacity))
+            }
+
+            if let remaining = selfTimer.remaining {
+                CountdownNumber(value: remaining)
+            }
 
             VStack {
                 topBar
@@ -63,29 +73,42 @@ struct MirrorView: View {
         .animation(.smooth(duration: 0.2), value: lightSize)
         .animation(.snappy, value: panel)
         .animation(.snappy, value: frozen?.id)
-        .animation(.snappy, value: toast)
-        .animation(.easeOut(duration: 0.3), value: focusMark)
+        .animation(.snappy, value: pinned?.id)
+        .animation(.snappy, value: toast.current)
         .statusBarHidden()
         .persistentSystemOverlays(.hidden)
         .sensoryFeedback(.impact(weight: .medium), trigger: frozen?.id)
+        .sensoryFeedback(.success, trigger: camera.delayStarts)
+        .sensoryFeedback(.impact(weight: .light), trigger: selfTimer.remaining) { _, new in new != nil }
+        .animation(.snappy, value: camera.delay)
         .onChange(of: scenePhase, initial: true) { _, phase in handle(phase) }
         .onChange(of: lightOn) { updateScreenLight() }
+        .onChange(of: launch.request, initial: true) { _, request in open(request) }
         .sheet(isPresented: $showsAbout) { AboutSheet() }
+        // Volume buttons and Camera Control act as the shutter; the photo output plays its own sound.
+        .onCameraCaptureEvent(isEnabled: camera.status == .running && !showsAbout, defaultSoundDisabled: true) { event in
+            if event.phase == .ended { hardwareShutter() }
+        }
     }
 
-    /// The toast in the centre, the About button in the top-left corner (live mirror only).
+    /// The toast in the centre, About in the top-left corner and the guide in the top-right
+    /// (live mirror only).
     private var topBar: some View {
         // The row spans the screen even with no toast; an empty toast has no width, which used to
         // leave the ZStack as narrow as the button and the VStack centred it.
         ZStack(alignment: .top) {
             if frozen == nil {
-                GlassCircleButton(label: "About enMirror", diameter: 44, action: { showsAbout = true }) {
+                GlassCircleButton(label: "About enMirror", diameter: 44, action: openAbout) {
                     Image(systemName: "info")
                 }
                 .padding(.leading, 20)
                 .frame(maxWidth: .infinity, alignment: .leading)
+
+                MirrorTopControls(camera: camera, guide: $guide, onChange: showToast)
+                    .padding(.trailing, 20)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
             }
-            toastView
+            MirrorToastView(message: toast.current)
         }
         .frame(maxWidth: .infinity)
     }
@@ -105,74 +128,8 @@ struct MirrorView: View {
                 .id(frozen.id)
                 .transition(.opacity)
         } else {
-            livePreview
+            LivePreview(camera: camera, asOthersSee: asOthersSee)
         }
-    }
-
-    @ViewBuilder
-    private var livePreview: some View {
-        ZStack {
-            Color.black
-            switch camera.status {
-            case .starting, .running:
-                CameraPreview(
-                    session: camera.session,
-                    onTap: { viewPoint, devicePoint in
-                        camera.meter(at: devicePoint)
-                        focusMark = FocusMark(point: viewPoint)
-                    },
-                    onDoubleTap: { camera.setZoom(camera.zoomRange.lowerBound) }
-                )
-                // Inside the flip, so the square lands where the finger did.
-                .overlay(alignment: .topLeading) { focusSquare }
-                // The front-camera preview is mirrored by default; flip it back to show the true view.
-                .scaleEffect(x: asOthersSee ? -1 : 1, y: 1)
-                .gesture(pinchToZoom)
-                .accessibilityLabel(Text("Mirror"))
-            case .denied:
-                ContentUnavailableView {
-                    Label("Camera access is off", systemImage: "camera.fill")
-                } description: {
-                    Text("Allow camera access for enMirror in Settings to use the mirror.")
-                } actions: {
-                    Button("Open Settings") {
-                        if let url = URL(string: UIApplication.openSettingsURLString) { openURL(url) }
-                    }
-                    .buttonStyle(.glassProminent)
-                }
-            case .unavailable:
-                ContentUnavailableView(
-                    "No front camera",
-                    systemImage: "video.slash",
-                    description: Text("enMirror needs a device with a front camera.")
-                )
-            }
-        }
-    }
-
-    @ViewBuilder
-    private var focusSquare: some View {
-        if let focusMark {
-            FocusSquare()
-                .id(focusMark.id)
-                .position(focusMark.point)
-                .task(id: focusMark.id) {
-                    try? await Task.sleep(for: .seconds(1.2))
-                    if self.focusMark == focusMark { self.focusMark = nil }
-                }
-        }
-    }
-
-    private var pinchToZoom: some Gesture {
-        MagnifyGesture()
-            .onChanged { value in
-                let base = pinchBase ?? camera.zoom
-                pinchBase = base
-                camera.setZoom(
-                    CameraMath.pinchedZoom(base: base, magnification: value.magnification, range: camera.zoomRange)
-                )
-            }
-            .onEnded { _ in pinchBase = nil }
     }
 
     // MARK: - Controls
@@ -181,10 +138,16 @@ struct MirrorView: View {
     private var controls: some View {
         VStack(spacing: 12) {
             if let frozen {
-                PhotoActionsBar(photo: frozen, onSave: save, onDelete: { self.frozen = nil })
+                PhotoActionsBar(
+                    photo: frozen,
+                    isPinned: frozen.id == pinned?.id,
+                    onSave: save,
+                    onPin: pin,
+                    onDelete: { self.frozen = nil }
+                )
             } else {
                 if let panel {
-                    panelView(panel)
+                    ToolPanelView(panel: panel, camera: camera, lightTone: $lightTone, lightSize: $lightSize)
                         .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
                 liveBar
@@ -204,10 +167,18 @@ struct MirrorView: View {
                 }
                 .disabled(!camera.canAdjustExposure)
 
-                ShutterButton(isBusy: isCapturing, action: freeze)
+                ShutterButton(
+                    isBusy: isCapturing,
+                    timer: selfTimer.timer,
+                    isCounting: selfTimer.isCounting,
+                    onTimerChange: { selfTimer.timer = $0 },
+                    action: shutter
+                )
+                // Nothing to capture until the delayed mirror shows its first old frame.
+                .disabled(camera.isDelayFilling)
 
                 GlassCircleButton(label: "Zoom", isActive: panel == .zoom, action: { toggle(.zoom) }) {
-                    Text(verbatim: zoomText)
+                    Text(verbatim: camera.zoomText)
                         .font(.system(size: 15, weight: .bold).monospacedDigit())
                 }
                 .disabled(!camera.canZoom)
@@ -218,55 +189,6 @@ struct MirrorView: View {
             }
         }
         .disabled(camera.status != .running)
-    }
-
-    @ViewBuilder
-    private func panelView(_ panel: ToolPanel) -> some View {
-        VStack(spacing: 16) {
-            switch panel {
-            case .zoom:
-                SliderRow(
-                    label: "Zoom",
-                    minSymbol: "minus.magnifyingglass",
-                    maxSymbol: "plus.magnifyingglass",
-                    value: Binding(get: { Double(camera.zoom) }, set: { camera.setZoom(CGFloat($0)) }),
-                    range: Double(camera.zoomRange.lowerBound)...Double(camera.zoomRange.upperBound),
-                    valueText: zoomText
-                )
-            case .exposure:
-                SliderRow(
-                    label: "Exposure",
-                    minSymbol: "sun.min",
-                    maxSymbol: "sun.max.fill",
-                    value: Binding(get: { Double(camera.exposureBias) }, set: { camera.setExposureBias(Float($0)) }),
-                    range: Double(camera.biasRange.lowerBound)...Double(camera.biasRange.upperBound),
-                    valueText: String(format: "%+.1f", camera.exposureBias)
-                )
-            case .light:
-                SliderRow(label: "Light tone", minSymbol: "flame", maxSymbol: "snowflake", value: $lightTone, range: 0...1)
-                SliderRow(label: "Light size", minSymbol: "light.min", maxSymbol: "light.max", value: $lightSize, range: 0...1)
-            }
-        }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 16)
-        .glassEffect(.regular, in: .rect(cornerRadius: 28, style: .continuous))
-    }
-
-    @ViewBuilder
-    private var toastView: some View {
-        if let toast {
-            Text(toast.message)
-                .font(.subheadline.weight(.semibold))
-                .padding(.horizontal, 18)
-                .padding(.vertical, 10)
-                .glassEffect(.regular, in: .capsule)
-                .padding(.top, 8)
-                .transition(.move(edge: .top).combined(with: .opacity))
-        }
-    }
-
-    private var zoomText: String {
-        Double(camera.zoom).formatted(.number.precision(.fractionLength(1))) + "×"
     }
 
     // MARK: - Actions
@@ -280,13 +202,43 @@ struct MirrorView: View {
         panel = lightOn ? .light : (panel == .light ? nil : panel)
     }
 
+    /// A control, widget, Siri, Spotlight or quick action asked for the live mirror: clear
+    /// whatever covers it, then apply the mode.
+    private func open(_ request: MirrorLaunch.Request?) {
+        guard let request else { return }
+        selfTimer.cancel()
+        showsAbout = false
+        frozen = nil
+        switch request.mode {
+        case .mirror:
+            break
+        case .light:
+            if !lightOn { toggleLight() }
+        case .delayed:
+            camera.setDelay(3)
+            showToast(MirrorDelay.name(3))
+        case .asOthersSee:
+            if !asOthersSee { flip() }
+        case .guide:
+            if guide == .off {
+                guide = .centerLine
+                showToast(guide.name)
+            }
+        }
+    }
+
     private func flip() {
         asOthersSee.toggle()
         showToast(asOthersSee ? "As others see you" : "Mirror view")
     }
 
+    private func openAbout() {
+        selfTimer.cancel()
+        showsAbout = true
+    }
+
     private func freeze() {
-        guard !isCapturing else { return }
+        guard !isCapturing, frozen == nil, camera.status == .running else { return }
         isCapturing = true
         // Preview is mirrored unless the user flipped it, so the still matches what they saw.
         let mirrored = !asOthersSee
@@ -296,11 +248,32 @@ struct MirrorView: View {
                 let data = try await camera.capturePhoto(mirrored: mirrored)
                 guard let image = UIImage(data: data) else { throw CaptureEngine.CaptureError.noData }
                 panel = nil
-                frozen = FrozenPhoto(data: data, image: image)
+                frozen = FrozenPhoto(data: data, image: image, asOthersSee: !mirrored)
             } catch {
                 showToast("Couldn't capture a photo")
             }
         }
+    }
+
+    /// A hardware button: the shutter on the live mirror, or back to it from a frozen photo (unsaved).
+    private func hardwareShutter() {
+        if frozen != nil {
+            frozen = nil
+        } else {
+            shutter()
+        }
+    }
+
+    /// Captures now, starts the self-timer, or cancels a running countdown.
+    private func shutter() {
+        selfTimer.press(capture: freeze)
+    }
+
+    /// Floats the frozen photo over the live mirror, to compare before and after.
+    private func pin() {
+        pinned = frozen
+        frozen = nil
+        showToast("Pinned. Tap it to look closer.")
     }
 
     private func save() {
@@ -318,12 +291,7 @@ struct MirrorView: View {
     }
 
     private func showToast(_ message: LocalizedStringResource) {
-        let next = Toast(message: message)
-        toast = next
-        Task {
-            try? await Task.sleep(for: .seconds(1.6))
-            if toast == next { toast = nil }
-        }
+        toast.show(message)
     }
 
     private func handle(_ phase: ScenePhase) {
@@ -332,6 +300,7 @@ struct MirrorView: View {
             UIApplication.shared.isIdleTimerDisabled = true
             Task { await camera.start() }
         case .background:
+            selfTimer.cancel()
             camera.stop()
             UIApplication.shared.isIdleTimerDisabled = false
         default:

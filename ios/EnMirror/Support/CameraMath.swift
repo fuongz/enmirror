@@ -56,4 +56,19 @@ enum CameraMath {
         }
         return best
     }
+
+    /// The zoom to start with: the last one used, clamped to this camera's range; 1× if none.
+    static func restoredZoom(saved: Double?, range: ClosedRange<CGFloat>) -> CGFloat {
+        clamp(CGFloat(saved ?? 1), to: range)
+    }
+
+    /// `width`×`height` scaled so its long side is `longSide`, never enlarged, with even sides
+    /// (4:2:0 frames need them).
+    static func scaledSize(width: Int, height: Int, longSide: Int) -> CGSize {
+        let long = max(width, height)
+        guard long > 0 else { return .zero }
+        let scale = min(1, Double(longSide) / Double(long))
+        func even(_ value: Int) -> Int { max(2, Int((Double(value) * scale / 2).rounded()) * 2) }
+        return CGSize(width: even(width), height: even(height))
+    }
 }

@@ -1,6 +1,16 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "%lld-second timer": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hẹn giờ %lld giây"
+          }
+        }
+      }
+    },
     "A clear mirror with a ring light. Free, with no ads.": {
       "localizations": {
         "vi": {
@@ -37,6 +47,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ghi công"
+          }
+        }
+      }
+    },
+    "Alignment guide": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Đường căn"
           }
         }
       }
@@ -91,12 +111,32 @@
         }
       }
     },
-    "Captures a still so you can look closely": {
+    "Cancel timer": {
       "localizations": {
         "vi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Chụp lại khung hình để bạn xem kỹ"
+            "value": "Huỷ hẹn giờ"
+          }
+        }
+      }
+    },
+    "Captures a still so you can look closely. Touch and hold to set a timer.": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chụp ảnh tĩnh để bạn soi kỹ. Chạm và giữ để hẹn giờ."
+          }
+        }
+      }
+    },
+    "Center line": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Đường giữa"
           }
         }
       }
@@ -151,6 +191,26 @@
         }
       }
     },
+    "Delayed Mirror, 3 s": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gương trễ 3 giây"
+          }
+        }
+      }
+    },
+    "Delayed mirror": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gương trễ"
+          }
+        }
+      }
+    },
     "Delete": {
       "localizations": {
         "vi": {
@@ -181,6 +241,16 @@
         }
       }
     },
+    "Face oval": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Khung oval"
+          }
+        }
+      }
+    },
     "Free forever": {
       "localizations": {
         "vi": {
@@ -197,6 +267,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ảnh đã dừng"
+          }
+        }
+      }
+    },
+    "Grid": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lưới 3×3"
+          }
+        }
+      }
+    },
+    "Guide off": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tắt đường căn"
           }
         }
       }
@@ -251,12 +341,42 @@
         }
       }
     },
+    "Live mirror": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gương trực tiếp"
+          }
+        }
+      }
+    },
     "Mirror": {
       "localizations": {
         "vi": {
           "stringUnit": {
             "state": "translated",
             "value": "Gương"
+          }
+        }
+      }
+    },
+    "Mirror %lld s behind": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gương trễ %lld giây"
+          }
+        }
+      }
+    },
+    "Mirror + Light": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gương + đèn"
           }
         }
       }
@@ -311,6 +431,26 @@
         }
       }
     },
+    "Open Mirror": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mở gương"
+          }
+        }
+      }
+    },
+    "Open Mirror with Light": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mở gương kèm đèn"
+          }
+        }
+      }
+    },
     "Open Settings": {
       "localizations": {
         "vi": {
@@ -331,12 +471,62 @@
         }
       }
     },
+    "Opens enMirror to the live mirror with the ring light on.": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mở enMirror vào thẳng gương, bật sẵn đèn viền."
+          }
+        }
+      }
+    },
+    "Opens enMirror to the live mirror.": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mở enMirror vào thẳng gương."
+          }
+        }
+      }
+    },
     "Photo from enMirror": {
       "localizations": {
         "vi": {
           "stringUnit": {
             "state": "translated",
             "value": "Ảnh từ enMirror"
+          }
+        }
+      }
+    },
+    "Pin": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ghim"
+          }
+        }
+      }
+    },
+    "Pinned photo": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ảnh đã ghim"
+          }
+        }
+      }
+    },
+    "Pinned. Tap it to look closer.": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Đã ghim. Chạm vào ảnh để xem kỹ."
           }
         }
       }
@@ -391,6 +581,16 @@
         }
       }
     },
+    "Self-timer": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hẹn giờ"
+          }
+        }
+      }
+    },
     "Send Feedback": {
       "localizations": {
         "vi": {
@@ -437,6 +637,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "Chụp ảnh"
+          }
+        }
+      }
+    },
+    "Timer off": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tắt hẹn giờ"
+          }
+        }
+      }
+    },
+    "Turn around. You'll see yourself here in %lld s.": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quay lưng lại. %lld giây nữa bạn sẽ thấy mình ở đây."
+          }
+        }
+      }
+    },
+    "Unpin photo": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bỏ ghim ảnh"
           }
         }
       }
