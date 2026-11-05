@@ -6,4 +6,9 @@ PRODUCT_BUNDLE_IDENTIFIER = $(ENMIRROR_APP_BUNDLE_ID)
 DEVELOPMENT_TEAM =
 CODE_SIGN_STYLE = Automatic
 
+// One version for the app and its widget extension: App Store Connect rejects an extension whose
+// version differs from the app's. scripts/testflight.sh overrides the build number per upload.
+MARKETING_VERSION = 1.0
+CURRENT_PROJECT_VERSION = 1
+
 #include? "Local.xcconfig"

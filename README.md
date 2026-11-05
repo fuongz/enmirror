@@ -23,7 +23,11 @@ enmirror/
 | `ios/EnMirror/AppIcon.icon` | App icon made in Icon Composer (layers, Liquid Glass, dark and tinted variants). Xcode renders it at build time; open it in Icon Composer to edit. Artwork credit in `THIRD_PARTY_NOTICES.md`. |
 | `ios/EnMirror/*.xcstrings` | UI strings and permission prompts; English source, Vietnamese translation |
 | `ios/EnMirror/PrivacyInfo.xcprivacy` | Privacy manifest: no tracking, no collected data |
+| `ios/EnMirror/Intents/` | App Shortcuts for Siri and Spotlight (`MirrorShortcuts`, phrases in `AppShortcuts.xcstrings`) and the Home Screen quick actions (`QuickActions`, received by `AppDelegate` / `QuickActionSceneDelegate`) |
+| `ios/Shared/` | Compiled into both the app and the widget extension: `OpenMirrorIntent`, `OpenMirrorWithLightIntent` and `MirrorLaunch`, which `MirrorView` observes |
+| `ios/EnMirrorWidgets/` | Widget extension (`com.trinhvaphuong.enmirror.widgets`): Home Screen (small, medium) and Lock Screen (circular, rectangular) widgets, and Control Center / Lock Screen / Action button controls that open the mirror, with or without the ring light |
 | `ios/EnMirrorTests/` | Swift Testing unit tests for the math |
+| `ios/Config/Widgets.xcconfig`, `ios/Config/EnMirrorWidgets-Info.plist` | The extension's settings: it includes `Signing.xcconfig` and appends `.widgets` to the app's bundle ID |
 | `ios/Config/Signing.xcconfig` | Bundle ID (`com.trinhvaphuong.enmirror`) and signing of the app target. Includes the gitignored `Local.xcconfig`. |
 | `ios/scripts/` | `ci-ios.sh` (every check), `testflight.sh` (archive and upload), `ios-swift-files.sh` |
 | `ios/.swift-format`, `ios/.swiftlint.yml`, `ios/.periphery.yml` | Style, lint and dead-code settings |

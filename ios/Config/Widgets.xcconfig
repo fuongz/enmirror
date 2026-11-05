@@ -1,0 +1,5 @@
+// Build settings of the widget extension (Control Center, Lock Screen and Action button controls).
+// Same team and signing as the app; the bundle ID must be the app's plus a suffix.
+#include "Signing.xcconfig"
+
+PRODUCT_BUNDLE_IDENTIFIER = $(ENMIRROR_APP_BUNDLE_ID).widgets

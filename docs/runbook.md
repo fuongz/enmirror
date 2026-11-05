@@ -6,7 +6,7 @@
 
 1. **Apple Developer Program.** The team `GWG64UPCV5` (Phuong Phung, Individual) is paid, which TestFlight requires. Check it is active at developer.apple.com › Account › Membership details.
 2. **Xcode account.** Xcode › Settings › Accounts: sign in (or sign out and in again) with the Apple ID of that team. `xcodebuild -allowProvisioningUpdates` uses this login to create the certificates and profiles; "missing Xcode-Token" in the build log means the login has expired.
-3. **Bundle ID.** developer.apple.com › Certificates, IDs & Profiles › Identifiers › `+` › App IDs › App: description `enMirror`, explicit Bundle ID `com.trinhvaphuong.enmirror`. No extra capabilities: camera and Photos need only the Info.plist prompts. (Xcode's automatic signing also registers it on the first device build; check it is there.)
+3. **Bundle ID.** developer.apple.com › Certificates, IDs & Profiles › Identifiers › `+` › App IDs › App: description `enMirror`, explicit Bundle ID `com.trinhvaphuong.enmirror`. No extra capabilities: camera and Photos need only the Info.plist prompts. Add a second explicit App ID for the widget extension, `com.trinhvaphuong.enmirror.widgets` (description `enMirror Widgets`), also with no capabilities. (Xcode's automatic signing also registers both on the first device build; check they are there.)
 4. **App record.** appstoreconnect.apple.com › Apps › `+` › New App: platform iOS, name `enMirror` (it must be unique on the App Store; pick another if taken, the home-screen name stays `enMirror`), primary language English (U.S.), bundle ID `com.trinhvaphuong.enmirror`, SKU `enMirror` (Apple ID 6830683755), full access.
 5. **Signing on this Mac.** `ios/Config/Local.xcconfig` (gitignored) holds `DEVELOPMENT_TEAM = GWG64UPCV5`. The Apple Distribution certificate is created by the first archive with `-allowProvisioningUpdates`; nothing to make by hand.
 
@@ -17,7 +17,7 @@ mise run testflight:build    # archive + export an .ipa under build/testflight, 
 mise run testflight:upload   # archive + upload to App Store Connect
 ```
 
-`ios/scripts/testflight.sh` refuses to run unless Release signs with a team as `com.trinhvaphuong.enmirror`, and stamps the build number with the UTC time (`CURRENT_PROJECT_VERSION`), so every upload is unique. Bump `MARKETING_VERSION` (1.0 → 1.1) in the project for a new version.
+`ios/scripts/testflight.sh` refuses to run unless Release signs with a team as `com.trinhvaphuong.enmirror`, and stamps the build number with the UTC time (`CURRENT_PROJECT_VERSION`), so every upload is unique. Bump `MARKETING_VERSION` (1.0 → 1.1) in `ios/Config/Signing.xcconfig` for a new version; the app and the widget extension share it.
 
 Export compliance: `ITSAppUsesNonExemptEncryption = NO` is in Info.plist (the app uses no encryption), so App Store Connect does not ask on each build.
 

@@ -13,6 +13,8 @@ only_rules:
 included:
   - EnMirror
   - EnMirrorTests
+  - EnMirrorWidgets
+  - Shared
 
 file_length:
   warning: 500

@@ -1,0 +1,76 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "Check yourself": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Soi gương"
+          }
+        }
+      }
+    },
+    "Mirror": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gương"
+          }
+        }
+      }
+    },
+    "Mirror + Light": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gương + đèn"
+          }
+        }
+      }
+    },
+    "Open Mirror": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mở gương"
+          }
+        }
+      }
+    },
+    "Open Mirror with Light": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mở gương kèm đèn"
+          }
+        }
+      }
+    },
+    "Opens enMirror to the live mirror with the ring light on.": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mở enMirror vào thẳng gương, bật sẵn đèn viền."
+          }
+        }
+      }
+    },
+    "Opens enMirror to the live mirror.": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mở enMirror vào thẳng gương."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

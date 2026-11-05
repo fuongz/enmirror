@@ -21,7 +21,7 @@ scripts and tool settings, and mise runs every task from the root.
 README.md, LICENSE, THIRD_PARTY_NOTICES.md, mise.toml, AGENTS.md
 docs/                         This file, the runbook, the App Store guide; later ADRs (docs/adr/NNNN-title.md)
 ios/
-  EnMirror.xcodeproj          Synchronized folders: files added under EnMirror/ or EnMirrorTests/ join the target, no project edits
+  EnMirror.xcodeproj          Synchronized folders: files added under EnMirror/, EnMirrorTests/, EnMirrorWidgets/ or Shared/ join their targets, no project edits
   EnMirror/                   App target
     EnMirrorApp.swift         @main; only hosts the root view
     Camera/                   AVFoundation: session engine, @Observable service, preview bridge
@@ -32,8 +32,11 @@ ios/
     Assets.xcassets           Accent colour, artwork
     Localizable.xcstrings     UI strings
     InfoPlist.xcstrings       Permission prompts and display name
+    Intents/                  App Shortcuts (Siri, Spotlight), Home Screen quick actions, their app and scene delegates
+  EnMirrorWidgets/            Widget extension: Home Screen and Lock Screen widgets; Control Center / Lock Screen / Action button controls
+  Shared/                     Compiled into the app and the extension: the open-mirror intents and `MirrorLaunch`
   EnMirrorTests/              Swift Testing unit tests
-  Config/                     Signing.xcconfig; Local.xcconfig (gitignored) holds the team
+  Config/                     Signing.xcconfig (bundle ID, version for app and extension), Widgets.xcconfig; Local.xcconfig (gitignored) holds the team
   scripts/                    ci-ios.sh, testflight.sh, ios-swift-files.sh
   .swift-format, .swiftlint.yml, .periphery.yml
 web/                          Bun workspace (same shape as enchat)
@@ -132,4 +135,4 @@ Cards live on the Lanework board `mayfamily/enmirror` (see `AGENTS.md`): decisio
 
 All gaps from the first audit are closed (FE-02): one main type per file, swift-format + SwiftLint + Periphery wired into `ios/scripts/ci-ios.sh` and `mise.toml`, signing in `ios/Config/Signing.xcconfig` + gitignored `Local.xcconfig`, `PrivacyInfo.xcprivacy`, `THIRD_PARTY_NOTICES.md`, `README.md`, `docs/runbook.md`, and canvas previews in `Mirror/Previews.swift`. `ios/scripts/ci-ios.sh` passes with no warnings and Periphery finds no unused code.
 
-Watch next: `MirrorView.swift` is the largest file (~315 lines). If it gains features, move the bottom bar and the tool panel into their own views before it nears the 300-line type limit.
+Watch next: `MirrorView` is again close to the 300-line type limit. The live preview, tool panel, toast and self-timer already live in their own types; the next feature should move the bottom bar (`liveBar`) and the top bar into their own views first.

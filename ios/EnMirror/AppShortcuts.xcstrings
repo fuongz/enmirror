@@ -1,0 +1,56 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "Check myself in ${applicationName}": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Soi gương bằng ${applicationName}"
+          }
+        }
+      }
+    },
+    "Open the mirror in ${applicationName}": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mở gương trong ${applicationName}"
+          }
+        }
+      }
+    },
+    "Open the mirror with light in ${applicationName}": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mở gương kèm đèn trong ${applicationName}"
+          }
+        }
+      }
+    },
+    "Show the mirror in ${applicationName}": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hiện gương trong ${applicationName}"
+          }
+        }
+      }
+    },
+    "Turn on the ring light in ${applicationName}": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bật đèn viền trong ${applicationName}"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}
