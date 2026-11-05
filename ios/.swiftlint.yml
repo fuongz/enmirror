@@ -13,7 +13,6 @@ only_rules:
 included:
   - EnMirror
   - EnMirrorTests
-  - scripts
 
 file_length:
   warning: 500

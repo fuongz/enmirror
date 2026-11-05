@@ -5,13 +5,14 @@
 #   ENMIRROR_SIM = "<UDID of the simulator>"   # xcrun simctl list devices
 #   ENMIRROR_DEVICE = "<UDID of the iPhone>"   # xcrun devicectl list devices
 #
-# Signing for the iPhone comes from Config/Local.xcconfig (README.md, "Running on an iPhone").
+# Signing for the iPhone comes from ios/Config/Local.xcconfig (README.md, "Running on an iPhone").
 
-# Code checks run by scripts/ci-ios.sh (docs/conventions.md, "Tooling"). swift-format comes with Xcode.
+# Code checks run by ios/scripts/ci-ios.sh (docs/conventions.md, "Tooling"). swift-format comes with Xcode.
 [tools]
 "aqua:realm/SwiftLint" = "0.65.1"
 "aqua:peripheryapp/periphery" = "3.8.0"
 
+# iOS paths are relative to ios/, where every ios:* task runs.
 [env]
 ENMIRROR_PROJECT = "EnMirror.xcodeproj"
 ENMIRROR_BUNDLE_ID = "com.trinhvaphuong.enmirror"
@@ -20,6 +21,7 @@ ENMIRROR_DEVICE_DERIVED = "build/xcode-device"
 
 [tasks."ios:build-sim"]
 description = "Build the Debug app for the simulator"
+dir = "ios"
 run = """
 set -euo pipefail
 : "${ENMIRROR_SIM:?set ENMIRROR_SIM in mise.local.toml}"
@@ -29,6 +31,7 @@ xcodebuild build -quiet -project "$ENMIRROR_PROJECT" -scheme EnMirror \
 
 [tasks."ios:sim"]
 description = "Build, then install and launch on the simulator (boots it)"
+dir = "ios"
 depends = ["ios:build-sim"]
 run = """
 set -euo pipefail
@@ -40,6 +43,7 @@ xcrun simctl launch "$ENMIRROR_SIM" "$ENMIRROR_BUNDLE_ID"
 
 [tasks."ios:build-device"]
 description = "Build the Debug app for the iPhone"
+dir = "ios"
 run = """
 set -euo pipefail
 : "${ENMIRROR_DEVICE:?set ENMIRROR_DEVICE in mise.local.toml}"
@@ -50,6 +54,7 @@ xcodebuild build -quiet -project "$ENMIRROR_PROJECT" -scheme EnMirror \
 
 [tasks."ios:device"]
 description = "Build, then install and launch on the iPhone (unlocked, by cable or on the same Wi-Fi)"
+dir = "ios"
 depends = ["ios:build-device"]
 run = """
 set -euo pipefail
@@ -60,6 +65,7 @@ xcrun devicectl device process launch --device "$ENMIRROR_DEVICE" "$ENMIRROR_BUN
 
 [tasks."ios:test"]
 description = "Run the unit tests on the simulator"
+dir = "ios"
 run = """
 set -euo pipefail
 : "${ENMIRROR_SIM:?set ENMIRROR_SIM in mise.local.toml}"
@@ -69,10 +75,12 @@ xcodebuild test -quiet -project "$ENMIRROR_PROJECT" -scheme EnMirror \
 
 [tasks."ios:format"]
 description = "Format the Swift in place with swift-format (.swift-format)"
+dir = "ios"
 run = "scripts/ios-swift-files.sh | xargs -0 xcrun swift-format format --in-place --parallel"
 
 [tasks."ios:lint"]
 description = "Check the Swift: swift-format, then SwiftLint"
+dir = "ios"
 run = """
 set -euo pipefail
 scripts/ios-swift-files.sh | xargs -0 xcrun swift-format lint --strict --parallel
@@ -81,6 +89,7 @@ swiftlint lint --quiet --strict
 
 [tasks."ios:dead-code"]
 description = "List unused Swift declarations with Periphery (builds for the simulator first)"
+dir = "ios"
 run = """
 set -euo pipefail
 xcodebuild build -quiet -project "$ENMIRROR_PROJECT" -scheme EnMirror -destination "generic/platform=iOS Simulator" \
@@ -90,8 +99,39 @@ periphery scan --quiet --relative-results --index-store-path "build/ci-ios/iOS S
 
 [tasks."testflight:build"]
 description = "Archive and export the Release .ipa under build/testflight without uploading"
+dir = "ios"
 run = "scripts/testflight.sh"
 
 [tasks."testflight:upload"]
 description = "Archive the Release build and upload it to App Store Connect (TestFlight)"
+dir = "ios"
 run = "scripts/testflight.sh --upload"
+
+# Landing site (web/apps/landing, docs in its README). Deploying publishes enmirror.trinhvaphuong.com.
+[tasks."web:dev"]
+description = "Run the landing site's Vite dev server"
+dir = "web"
+run = "bun run dev"
+
+[tasks."web:build"]
+description = "Build and prerender the landing site into web/apps/landing/dist"
+dir = "web"
+run = "bun run build"
+
+[tasks."web:preview"]
+description = "Build, then serve dist/ with wrangler dev as Cloudflare would"
+dir = "web/apps/landing"
+run = "bun run preview"
+
+[tasks."web:deploy"]
+description = "Release build (fails on placeholders), then wrangler deploy to enmirror.trinhvaphuong.com"
+dir = "web"
+run = "bun run deploy"
+
+[tasks."ios:ci"]
+description = "Every iOS check (ios/scripts/ci-ios.sh)"
+run = "ios/scripts/ci-ios.sh"
+
+[tasks."web:ci"]
+description = "Every landing check (web/scripts/ci-web.sh)"
+run = "web/scripts/ci-web.sh"

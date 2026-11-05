@@ -4,4 +4,4 @@ DerivedData/
 xcuserdata/
 *.xcuserstate
 mise.local.toml
-Config/Local.xcconfig
+ios/Config/Local.xcconfig

@@ -1,0 +1,39 @@
+{
+  "fill": {
+    "linear-gradient": [
+      "display-p3:0.50977,0.28638,0.96484,1.00000",
+      "display-p3:0.19214,0.07062,0.52148,1.00000"
+    ]
+  },
+  "groups": [
+    {
+      "layers": [
+        {
+          "image-name": "hand-mirror.png",
+          "name": "hand-mirror",
+          "position": {
+            "scale": 0.9,
+            "translation-in-points": [
+              -39.700000000000045,
+              108
+            ]
+          }
+        }
+      ],
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.5
+      },
+      "translucency": {
+        "enabled": true,
+        "value": 0.3
+      }
+    }
+  ],
+  "supported-platforms": {
+    "circles": [
+      "watchOS"
+    ],
+    "squares": "shared"
+  }
+}

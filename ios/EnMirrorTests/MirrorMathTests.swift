@@ -128,3 +128,33 @@ struct FormatTests {
         #expect(CameraMath.bestFormatIndex([Candidate(width: 640, height: 480, maxFrameRate: 24)]) == nil)
     }
 }
+
+struct AppInfoTests {
+    @Test func versionShowsTheBuildInParentheses() {
+        #expect(AppInfo.versionText(short: "1.0", build: "202611051230") == "1.0 (202611051230)")
+    }
+
+    @Test func versionDropsAMissingOrRepeatedBuild() {
+        #expect(AppInfo.versionText(short: "1.0", build: nil) == "1.0")
+        #expect(AppInfo.versionText(short: "1.0", build: "1.0") == "1.0")
+        #expect(AppInfo.versionText(short: nil, build: "7") == "7")
+        #expect(AppInfo.versionText(short: nil, build: nil) == "–")
+    }
+
+    @Test func feedbackMailCarriesTheVersionInItsSubject() throws {
+        let url = try #require(AppLinks.feedbackMail(to: "help@example.com", version: "1.0 (42)"))
+        #expect(url.absoluteString == "mailto:help@example.com?subject=enMirror%201.0%20(42)")
+    }
+
+    @Test func storeLinksPointAtTheApp() {
+        #expect(AppLinks.writeReview?.absoluteString.contains("id6830683755") == true)
+        #expect(AppLinks.privacyPolicy?.host() == "enmirror.trinhvaphuong.com")
+    }
+}
+
+struct LanguageNameTests {
+    @Test func namesEachLanguageInItself() {
+        #expect(AppInfo.languageName(for: "vi") == "Tiếng Việt")
+        #expect(AppInfo.languageName(for: "en") == "English")
+    }
+}

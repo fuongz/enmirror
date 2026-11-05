@@ -27,6 +27,7 @@ struct MirrorView: View {
     @State private var isCapturing = false
     @State private var toast: Toast?
     @State private var focusMark: FocusMark?
+    @State private var showsAbout = false
 
     /// Where the last tap landed, in the preview's own (unflipped) coordinates.
     private struct FocusMark: Equatable {
@@ -47,7 +48,7 @@ struct MirrorView: View {
             .ignoresSafeArea()
 
             VStack {
-                toastView
+                topBar
                 Spacer()
                 controls
             }
@@ -64,6 +65,24 @@ struct MirrorView: View {
         .sensoryFeedback(.impact(weight: .medium), trigger: frozen?.id)
         .onChange(of: scenePhase, initial: true) { _, phase in handle(phase) }
         .onChange(of: lightOn) { updateScreenLight() }
+        .sheet(isPresented: $showsAbout) { AboutSheet() }
+    }
+
+    /// The toast in the centre, the About button in the top-left corner (live mirror only).
+    private var topBar: some View {
+        // The row spans the screen even with no toast; an empty toast has no width, which used to
+        // leave the ZStack as narrow as the button and the VStack centred it.
+        ZStack(alignment: .top) {
+            if frozen == nil {
+                GlassCircleButton(label: "About enMirror", diameter: 44, action: { showsAbout = true }) {
+                    Image(systemName: "info")
+                }
+                .padding(.leading, 20)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            toastView
+        }
+        .frame(maxWidth: .infinity)
     }
 
     // MARK: - Mirror surface

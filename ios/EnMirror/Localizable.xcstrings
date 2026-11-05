@@ -1,0 +1,516 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "A clear mirror with a ring light. Free, with no ads.": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gương soi rõ nét, có đèn viền. Miễn phí, không quảng cáo."
+          }
+        }
+      }
+    },
+    "About": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Giới thiệu"
+          }
+        }
+      }
+    },
+    "About enMirror": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Giới thiệu enMirror"
+          }
+        }
+      }
+    },
+    "Acknowledgements": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ghi công"
+          }
+        }
+      }
+    },
+    "Allow Photos access in Settings to save": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hãy cho phép truy cập Ảnh trong Cài đặt để lưu"
+          }
+        }
+      }
+    },
+    "Allow camera access for enMirror in Settings to use the mirror.": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hãy cho phép enMirror dùng camera trong Cài đặt để soi gương."
+          }
+        }
+      }
+    },
+    "App icon: original artwork made for enMirror.": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Icon app: hình vẽ riêng cho enMirror."
+          }
+        }
+      }
+    },
+    "As others see you": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Như người khác nhìn bạn"
+          }
+        }
+      }
+    },
+    "Camera access is off": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chưa có quyền dùng camera"
+          }
+        }
+      }
+    },
+    "Captures a still so you can look closely": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chụp lại khung hình để bạn xem kỹ"
+          }
+        }
+      }
+    },
+    "Copied": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Đã sao chép"
+          }
+        }
+      }
+    },
+    "Copies the version for a support request": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sao chép phiên bản để gửi khi cần hỗ trợ"
+          }
+        }
+      }
+    },
+    "Couldn't capture a photo": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Không chụp được ảnh"
+          }
+        }
+      }
+    },
+    "Couldn't save the photo": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Không lưu được ảnh"
+          }
+        }
+      }
+    },
+    "Delete": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xoá"
+          }
+        }
+      }
+    },
+    "Done": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xong"
+          }
+        }
+      }
+    },
+    "Exposure": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Độ sáng"
+          }
+        }
+      }
+    },
+    "Free forever: no ads, no subscriptions, no in-app purchases": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Miễn phí mãi mãi: không quảng cáo, không gói đăng ký, không mua trong app"
+          }
+        }
+      }
+    },
+    "Frozen photo": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ảnh đã dừng"
+          }
+        }
+      }
+    },
+    "Help & Support": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trợ giúp & Hỗ trợ"
+          }
+        }
+      }
+    },
+    "Hold your iPhone about 30 cm from your face: the front camera is sharpest there.": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cầm iPhone cách mặt khoảng 30 cm: camera trước nét nhất ở khoảng cách đó."
+          }
+        }
+      }
+    },
+    "In a dim room, turn on the ring light.": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trong phòng tối, hãy bật đèn viền."
+          }
+        }
+      }
+    },
+    "Language": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ngôn ngữ"
+          }
+        }
+      }
+    },
+    "Light": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Đèn"
+          }
+        }
+      }
+    },
+    "Light size": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Độ dày đèn"
+          }
+        }
+      }
+    },
+    "Light tone": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tông màu đèn"
+          }
+        }
+      }
+    },
+    "Mirror": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gương"
+          }
+        }
+      }
+    },
+    "Mirror view": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chế độ gương"
+          }
+        }
+      }
+    },
+    "No front camera": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Không có camera trước"
+          }
+        }
+      }
+    },
+    "Open Settings": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mở Cài đặt"
+          }
+        }
+      }
+    },
+    "Opens Settings › enMirror › Language. enMirror restarts in the language you pick.": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mở Cài đặt › enMirror › Ngôn ngữ. enMirror sẽ mở lại bằng ngôn ngữ bạn chọn."
+          }
+        }
+      }
+    },
+    "Photo from enMirror": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ảnh từ enMirror"
+          }
+        }
+      }
+    },
+    "Pinch to zoom, double-tap to go back to 1×.": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chụm hai ngón để zoom, chạm hai lần để về 1×."
+          }
+        }
+      }
+    },
+    "Privacy": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quyền riêng tư"
+          }
+        }
+      }
+    },
+    "Privacy Policy": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chính sách quyền riêng tư"
+          }
+        }
+      }
+    },
+    "Rate enMirror on the App Store": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Đánh giá enMirror trên App Store"
+          }
+        }
+      }
+    },
+    "Ring light, zoom and a true view of how others see you": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Đèn viền, zoom và chế độ xem như người khác nhìn bạn"
+          }
+        }
+      }
+    },
+    "Save": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lưu"
+          }
+        }
+      }
+    },
+    "Saved to Photos": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Đã lưu vào Ảnh"
+          }
+        }
+      }
+    },
+    "Send Feedback": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gửi góp ý"
+          }
+        }
+      }
+    },
+    "Share": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chia sẻ"
+          }
+        }
+      }
+    },
+    "Support": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hỗ trợ"
+          }
+        }
+      }
+    },
+    "Symbols: SF Symbols by Apple.": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Biểu tượng: SF Symbols của Apple."
+          }
+        }
+      }
+    },
+    "Take photo": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chụp ảnh"
+          }
+        }
+      }
+    },
+    "Tap the mirror to set the exposure there. On iPhone 14 and later it focuses there too.": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chạm vào gương để đo sáng tại điểm đó. Từ iPhone 14 trở lên, máy lấy nét luôn tại đó."
+          }
+        }
+      }
+    },
+    "Tips": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mẹo"
+          }
+        }
+      }
+    },
+    "Version %@": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Phiên bản %@"
+          }
+        }
+      }
+    },
+    "Works offline, with no account": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chạy offline, không cần tài khoản"
+          }
+        }
+      }
+    },
+    "Zoom": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Phóng to"
+          }
+        }
+      }
+    },
+    "enMirror collects no data. The camera image stays on your iPhone, nothing is uploaded, and a photo is saved only when you tap Save.": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "enMirror không thu thập dữ liệu. Hình từ camera chỉ ở trên iPhone của bạn, không có gì được tải lên, và ảnh chỉ được lưu khi bạn bấm Lưu."
+          }
+        }
+      }
+    },
+    "enMirror needs a device with a front camera.": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "enMirror cần thiết bị có camera trước."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

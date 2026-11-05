@@ -1,9 +1,10 @@
 import SwiftUI
 
-/// Round Liquid Glass button used in the bottom bar.
+/// Round Liquid Glass button used in the bottom bar and for the About button.
 struct GlassCircleButton<Content: View>: View {
     let label: LocalizedStringKey
     var isActive = false
+    var diameter: CGFloat = 54
     let action: () -> Void
     @ViewBuilder let content: () -> Content
 
@@ -12,7 +13,7 @@ struct GlassCircleButton<Content: View>: View {
             content()
                 .font(.system(size: 20, weight: .semibold))
                 .foregroundStyle(isActive ? Color.black : Color.white)
-                .frame(width: 54, height: 54)
+                .frame(width: diameter, height: diameter)
                 .contentShape(.circle)
         }
         .buttonStyle(.plain)
