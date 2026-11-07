@@ -105,8 +105,41 @@ const vi: LegalDoc = {
       body: (
         <TypographyP>
           enMirror dùng camera trước để hiển thị hình của bạn. Các khung hình được xử lý ngay trên thiết bị
-          để hiện lên màn hình. Chúng không được lưu lại, không được ghi hình và không được gửi đi đâu.
+          để hiện lên màn hình. Chúng không được lưu lại, không được ghi hình và không được gửi đi đâu. Khi
+          bạn bật gương trễ, app giữ các khung hình của tối đa 5 giây gần nhất trong bộ nhớ để hiện lại sau
+          vài giây; chúng bị xoá ngay khi bạn tắt gương trễ hoặc rời app, và không bao giờ được ghi xuống
+          máy.
         </TypographyP>
+      ),
+    },
+    {
+      id: "face-data",
+      title: "Dữ liệu khuôn mặt",
+      body: (
+        <>
+          <TypographyP>
+            <strong>enMirror không thu thập, lưu trữ hay chia sẻ dữ liệu khuôn mặt.</strong> App chỉ hiển
+            thị hình từ camera trước lên màn hình như một chiếc gương.
+          </TypographyP>
+          <TypographyList>
+            <li>
+              App không nhận diện, phát hiện, theo dõi hay phân tích khuôn mặt, và không tạo bản đồ hay số
+              đo khuôn mặt. App không dùng camera TrueDepth, dữ liệu Face ID, ARKit hay framework Vision.
+            </li>
+            <li>
+              Khung oval, đường giữa và lưới chỉ là hình vẽ cố định trên màn hình; chúng không dò tìm
+              khuôn mặt.
+            </li>
+            <li>
+              Khung hình camera chỉ nằm trong bộ nhớ của iPhone trong lúc hiển thị (tối đa 5 giây với gương
+              trễ) rồi bị xoá. Không có gì được ghi xuống máy, gửi lên mạng hay chia sẻ cho bên thứ ba.
+            </li>
+            <li>
+              Một ảnh chỉ được giữ lại khi chính bạn bấm Lưu (vào thư viện Ảnh trên máy bạn) hoặc Chia sẻ
+              (tới nơi bạn chọn). Chúng tôi không nhận được ảnh đó.
+            </li>
+          </TypographyList>
+        </>
       ),
     },
     {
@@ -246,8 +279,43 @@ const en: LegalDoc = {
       body: (
         <TypographyP>
           enMirror uses the front camera to show your reflection. Frames are processed on your iPhone
-          and shown on screen. They are never stored, never recorded and never sent anywhere.
+          and shown on screen. They are never stored, never recorded and never sent anywhere. When you
+          turn on the delayed mirror, the app keeps up to the last 5 seconds of frames in memory to show
+          them a few seconds later; they are deleted as soon as you turn the delay off or leave the app,
+          and are never written to storage.
         </TypographyP>
+      ),
+    },
+    {
+      id: "face-data",
+      title: "Face data",
+      body: (
+        <>
+          <TypographyP>
+            <strong>enMirror does not collect, store or share face data.</strong> It only shows the front
+            camera image on screen, like a mirror.
+          </TypographyP>
+          <TypographyList>
+            <li>
+              The app does not recognise, detect, track or analyse faces, and creates no face maps or
+              measurements. It does not use the TrueDepth camera, Face ID data, ARKit or the Vision
+              framework.
+            </li>
+            <li>
+              The face oval, centre line and grid are fixed drawings on the screen; they do not look for a
+              face.
+            </li>
+            <li>
+              Camera frames exist only in your iPhone's memory while they are shown (up to 5 seconds with
+              the delayed mirror) and are then discarded. Nothing is written to storage, sent over the
+              network or shared with third parties.
+            </li>
+            <li>
+              A photo is kept only when you tap Save (to the Photos library on your iPhone) or Share (to the
+              place you pick). We never receive it.
+            </li>
+          </TypographyList>
+        </>
       ),
     },
     {

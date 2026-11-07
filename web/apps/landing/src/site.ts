@@ -36,7 +36,7 @@ export const site = {
   // "coming soon" instead of linking to a page that does not exist yet.
   appStoreUrl: null as string | null,
   // Date the privacy policy and terms last changed (YYYY-MM-DD).
-  legalUpdated: "2026-11-05",
+  legalUpdated: "2026-11-07",
 } as const
 
 export const DEVELOPER_NAME_PLACEHOLDER = "[DEVELOPER_NAME]"
