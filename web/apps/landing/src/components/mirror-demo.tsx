@@ -176,7 +176,7 @@ export function MirrorDemo({ labels, lang }: { labels: DemoLabels; lang: Lang })
           open: state.aboutOpen,
           show: () => update({ aboutOpen: true, panel: undefined }),
           hide: () => update({ aboutOpen: false }),
-          links: { privacy: pathFor(lang, "privacy"), support: pathFor(lang, "support"), email: site.supportEmail },
+          links: { privacy: pathFor(lang, "privacy"), support: pathFor(lang, "support"), email: site.supportEmail, source: site.githubUrl },
           appVersion: site.appVersion,
         },
         mirrorProps: {

@@ -1,4 +1,3 @@
-import { ClockIcon } from "lucide-react"
 import { AnimatePresence, useMotionValueEvent, useScroll } from "motion/react"
 import * as m from "motion/react-m"
 import { useState } from "react"
@@ -79,22 +78,9 @@ function HeaderBar({ route }: { route: Route }) {
 
         <div className="col-start-3 flex items-center gap-2 justify-self-end">
           <LanguageSelect route={route} globe />
-          {site.appStoreUrl ? (
-            <a href={site.appStoreUrl} className={cn(buttonVariants(), "h-10 px-5 text-[15px]")}>
-              {t.getApp}
-            </a>
-          ) : (
-            <span
-              aria-disabled="true"
-              className={cn(
-                buttonVariants(),
-                "h-10 cursor-not-allowed gap-1.5 border-black/10 bg-none bg-zinc-100 px-4 text-[15px] text-zinc-500 shadow-none hover:brightness-100 dark:border-white/10 dark:bg-white/10 dark:text-white/50",
-              )}
-            >
-              <ClockIcon aria-hidden="true" className="size-4" />
-              {t.soon}
-            </span>
-          )}
+          <a href={`${pathFor(route.lang, "home")}#install`} className={cn(buttonVariants(), "h-10 px-5 text-[15px]")}>
+            {t.install}
+          </a>
         </div>
       </nav>
   )

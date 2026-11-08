@@ -7,7 +7,7 @@ import { site } from "@/site"
 // Facts behind this text: the app makes no network requests (no networking code at all),
 // ios/EnMirror/PrivacyInfo.xcprivacy (no tracking, no collected data), ios/EnMirror/InfoPlist.xcstrings
 // (camera and add-only Photos permissions), ios/EnMirror/Support/SettingsKey.swift (what UserDefaults
-// keeps) and the App Store privacy label "Data Not Collected". Change it together with the app,
+// keeps) and the privacy manifest (no data collected, no tracking). Change it together with the app,
 // and bump site.legalUpdated.
 
 const mail = <TypographyLink href={`mailto:${site.supportEmail}`}>{site.supportEmail}</TypographyLink>
@@ -92,9 +92,8 @@ const vi: LegalDoc = {
             <li>không bán hay chia sẻ dữ liệu, vì chúng tôi không có dữ liệu nào của bạn.</li>
           </TypographyList>
           <TypographyP>
-            Nhãn quyền riêng tư của enMirror trên App Store là <strong>Không thu thập dữ liệu</strong> (Data
-            Not Collected), và tệp khai báo quyền riêng tư (privacy manifest) trong app khai báo không theo
-            dõi.
+            Tệp khai báo quyền riêng tư (privacy manifest) trong app khai báo <strong>không thu thập dữ liệu</strong>{" "}
+            và không theo dõi. Mã nguồn mở trên GitHub, nên ai cũng kiểm tra được điều này.
           </TypographyP>
         </>
       ),
@@ -267,8 +266,8 @@ const en: LegalDoc = {
             <li>no selling or sharing of data, because we have none of yours.</li>
           </TypographyList>
           <TypographyP>
-            enMirror's App Store privacy label is <strong>Data Not Collected</strong>, and the app's privacy
-            manifest declares no tracking.
+            The app's privacy manifest declares <strong>no data collected</strong> and no tracking. The source
+            is open on GitHub, so anyone can check.
           </TypographyP>
         </>
       ),

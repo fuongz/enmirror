@@ -7,7 +7,6 @@ import { site } from "@/site"
 // content shared through us. They sit on top of Apple's Standard EULA.
 
 const mail = <TypographyLink href={`mailto:${site.supportEmail}`}>{site.supportEmail}</TypographyLink>
-const eula = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
 
 const vi: LegalDoc = {
   title: "Điều khoản sử dụng",
@@ -36,9 +35,12 @@ const vi: LegalDoc = {
       title: "Quyền sử dụng",
       body: (
         <TypographyP>
-          Bạn được dùng enMirror cho mục đích cá nhân trên iPhone của mình, theo các điều khoản này và quy
-          định của App Store. Bạn không được sao chép, sửa đổi, dịch ngược hay phân phối lại app, trừ khi
-          pháp luật cho phép. Tên, biểu tượng và hình ảnh của enMirror thuộc về chúng tôi; xem trang{" "}
+          Mã nguồn của enMirror được phát hành theo{" "}
+          <TypographyLink href={`${site.githubUrl}/blob/main/LICENSE`} rel="noreferrer">
+            giấy phép MIT
+          </TypographyLink>
+          : bạn được dùng, sao chép, sửa đổi và phân phối lại mã nguồn theo các điều kiện của giấy phép đó.
+          Tên, biểu tượng và hình ảnh của enMirror thì vẫn thuộc về chúng tôi; xem trang{" "}
           <TypographyLink href={pathFor("vi", "brand")}>Thương hiệu</TypographyLink> nếu bạn muốn giới
           thiệu enMirror.
         </TypographyP>
@@ -100,16 +102,12 @@ const vi: LegalDoc = {
       ),
     },
     {
-      id: "apple",
-      title: "Điều khoản của Apple",
+      id: "self-install",
+      title: "Bản bạn tự cài",
       body: (
         <TypographyP>
-          Các điều khoản này bổ sung cho{" "}
-          <TypographyLink href={eula} rel="noreferrer">
-            Giấy phép người dùng cuối tiêu chuẩn của Apple (Standard EULA)
-          </TypographyLink>{" "}
-          áp dụng cho ứng dụng tải từ App Store. Apple không chịu trách nhiệm về enMirror hay việc hỗ trợ
-          enMirror.
+          enMirror không có trên App Store. Bạn tự build và cài app lên iPhone từ mã nguồn trên GitHub, bằng
+          Xcode và Apple ID của bạn. Apple không phát hành, không chịu trách nhiệm và không hỗ trợ enMirror.
         </TypographyP>
       ),
     },
@@ -153,9 +151,12 @@ const en: LegalDoc = {
       title: "Licence",
       body: (
         <TypographyP>
-          You may use enMirror for personal purposes on your own iPhone, under these terms and the App Store
-          rules. You may not copy, modify, reverse engineer or redistribute the app, except where the law
-          allows it. enMirror's name, icon and artwork belong to us; see the{" "}
+          enMirror's source code is released under the{" "}
+          <TypographyLink href={`${site.githubUrl}/blob/main/LICENSE`} rel="noreferrer">
+            MIT licence
+          </TypographyLink>
+          : you may use, copy, modify and redistribute it under that licence's conditions. enMirror's name,
+          icon and artwork still belong to us; see the{" "}
           <TypographyLink href={pathFor("en", "brand")}>Brand</TypographyLink> page if you want to write about
           enMirror.
         </TypographyP>
@@ -216,15 +217,13 @@ const en: LegalDoc = {
       ),
     },
     {
-      id: "apple",
-      title: "Apple's terms",
+      id: "self-install",
+      title: "Builds you install yourself",
       body: (
         <TypographyP>
-          These terms add to{" "}
-          <TypographyLink href={eula} rel="noreferrer">
-            Apple's Standard End User License Agreement
-          </TypographyLink>
-          , which applies to apps from the App Store. Apple is not responsible for enMirror or its support.
+          enMirror is not on the App Store. You build it from the source on GitHub and install it on your
+          iPhone with Xcode and your own Apple ID. Apple does not distribute enMirror and is not responsible
+          for it or its support.
         </TypographyP>
       ),
     },

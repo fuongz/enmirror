@@ -18,6 +18,15 @@ export type Feature = {
   focus?: "top" | "bottom"
 }
 
+/** How to build enMirror and put it on an iPhone; the app is not on the App Store. */
+export type InstallGuide = {
+  title: string
+  lead: string
+  steps: { title: string; body: string; code?: string }[]
+  note: string
+  guideLink: string
+}
+
 export type HomeDoc = {
   title: string
   description: string
@@ -31,8 +40,9 @@ export type HomeDoc = {
   /** Short promises under the call to action, each with its symbol. */
   facts: HeroFact[]
   requirement: string
-  cta: string
-  ctaSoon: string
+  /** The hero button that scrolls to the install guide. */
+  installCta: string
+  install: InstallGuide
   phone: DemoLabels
   featuresTitle: string
   featuresLead: string
@@ -68,8 +78,25 @@ const vi: HomeDoc = {
     { icon: "offline", label: "Dùng không cần mạng" },
   ],
   requirement: "Dành cho iPhone chạy iOS 26 trở lên",
-  cta: "Tải enMirror — miễn phí",
-  ctaSoon: "Sắp có trên App Store",
+  installCta: "Cách cài lên iPhone",
+  install: {
+    title: "Tự cài lên iPhone",
+    lead: "enMirror không có trên App Store. Mã nguồn mở theo giấy phép MIT: bạn tự build và cài bằng Xcode, miễn phí.",
+    steps: [
+      { title: "Chuẩn bị", body: "Máy Mac có Xcode 27, iPhone chạy iOS 26 trở lên và một Apple ID (tài khoản miễn phí cũng được)." },
+      { title: "Tải mã nguồn", body: "Mở Terminal và chạy:", code: "git clone https://github.com/fuongz/enmirror" },
+      {
+        title: "Điền thông tin ký app",
+        body: "Copy ios/Config/Local.xcconfig.example thành Local.xcconfig, điền DEVELOPMENT_TEAM (Team ID của bạn) và ENMIRROR_APP_BUNDLE_ID (một mã riêng, ví dụ com.tenban.enmirror).",
+      },
+      {
+        title: "Chạy lên iPhone",
+        body: "Cắm iPhone, bật Chế độ nhà phát triển (Cài đặt › Quyền riêng tư & Bảo mật), mở ios/EnMirror.xcodeproj, chọn iPhone của bạn rồi bấm Run.",
+      },
+    ],
+    note: "Với tài khoản Apple miễn phí, app chạy được 7 ngày rồi cần build lại. Với tài khoản Apple Developer trả phí, khoảng 1 năm.",
+    guideLink: "Hướng dẫn chi tiết trên GitHub",
+  },
   phone: {
     share: "Chia sẻ",
     save: "Lưu",
@@ -109,7 +136,7 @@ const vi: HomeDoc = {
       languageName: "Tiếng Việt",
       privacyPolicy: "Chính sách quyền riêng tư",
       supportTitle: "Hỗ trợ",
-      rate: "Đánh giá enMirror trên App Store",
+      source: "Mã nguồn trên GitHub",
       feedback: "Gửi góp ý",
       help: "Trợ giúp",
       creditsTitle: "Ghi công",
@@ -189,8 +216,25 @@ const en: HomeDoc = {
     { icon: "offline", label: "Works offline" },
   ],
   requirement: "For iPhone with iOS 26 or later",
-  cta: "Get enMirror — it's free",
-  ctaSoon: "Coming soon to the App Store",
+  installCta: "Install on your iPhone",
+  install: {
+    title: "Install it yourself",
+    lead: "enMirror is not on the App Store. It is open source under the MIT licence: build it and put it on your iPhone with Xcode, for free.",
+    steps: [
+      { title: "What you need", body: "A Mac with Xcode 27, an iPhone on iOS 26 or later, and an Apple ID (a free account works)." },
+      { title: "Get the code", body: "Open Terminal and run:", code: "git clone https://github.com/fuongz/enmirror" },
+      {
+        title: "Set up signing",
+        body: "Copy ios/Config/Local.xcconfig.example to Local.xcconfig, then set DEVELOPMENT_TEAM (your Team ID) and ENMIRROR_APP_BUNDLE_ID (an ID of your own, such as com.yourname.enmirror).",
+      },
+      {
+        title: "Run it on your iPhone",
+        body: "Plug in your iPhone, turn on Developer Mode (Settings › Privacy & Security), open ios/EnMirror.xcodeproj, pick your iPhone and press Run.",
+      },
+    ],
+    note: "With a free Apple account the app runs for 7 days, then you build it again. With a paid Apple Developer account, about a year.",
+    guideLink: "Full guide on GitHub",
+  },
   phone: {
     share: "Share",
     save: "Save",
@@ -230,7 +274,7 @@ const en: HomeDoc = {
       languageName: "English",
       privacyPolicy: "Privacy Policy",
       supportTitle: "Support",
-      rate: "Rate enMirror on the App Store",
+      source: "Source code on GitHub",
       feedback: "Send Feedback",
       help: "Help & Support",
       creditsTitle: "Acknowledgements",

@@ -29,14 +29,12 @@ export const site = {
   /** enMirror is open source under this licence (LICENSE at the repository root). */
   githubUrl: "https://github.com/fuongz/enmirror",
   license: "MIT",
-  /** The App Store version, shown under the download button. Keep it in step with MARKETING_VERSION. */
+  /** The app version the demo's About sheet shows. Keep it in step with MARKETING_VERSION. */
   appVersion: "1.0",
-  // The App Store listing, https://apps.apple.com/app/id6830683755 (AppLinks.appStoreID in the
-  // iOS app). null until the app is live: the home page and the floating header then say
-  // "coming soon" instead of linking to a page that does not exist yet.
-  appStoreUrl: null as string | null,
+  /** The README section on building and installing the app with Xcode. */
+  installGuideUrl: "https://github.com/fuongz/enmirror#running-on-an-iphone",
   // Date the privacy policy and terms last changed (YYYY-MM-DD).
-  legalUpdated: "2026-11-07",
+  legalUpdated: "2026-11-08",
 } as const
 
 export const DEVELOPER_NAME_PLACEHOLDER = "[DEVELOPER_NAME]"

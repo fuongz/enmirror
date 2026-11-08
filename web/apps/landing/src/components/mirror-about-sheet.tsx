@@ -4,6 +4,7 @@ import {
   BadgeCheckIcon,
   CheckCircle2Icon,
   ChevronRightIcon,
+  CodeIcon,
   FileTextIcon,
   GlobeIcon,
   InfoIcon,
@@ -11,7 +12,6 @@ import {
   MailIcon,
   PaletteIcon,
   SparklesIcon,
-  StarIcon,
   type LucideIcon,
 } from "lucide-react"
 
@@ -28,7 +28,7 @@ export type AboutLabels = {
   languageName: string
   privacyPolicy: string
   supportTitle: string
-  rate: string
+  source: string
   feedback: string
   help: string
   creditsTitle: string
@@ -37,7 +37,7 @@ export type AboutLabels = {
 
 type Bento = { title: string; subtitle: string; checks: [string, string, string]; offline: string; light: string }
 
-export type AboutLinks = { privacy: string; support: string; email: string }
+export type AboutLinks = { privacy: string; support: string; email: string; source: string }
 
 // Sizes in the app's points on a 393 pt wide screen (as in mirror-screen.tsx).
 const pt = (value: number) => `calc(${value} * 100cqw / 393)`
@@ -148,20 +148,18 @@ const chevron = <ChevronRightIcon aria-hidden="true" className="shrink-0 self-ce
 /**
  * The app's About sheet (ios/EnMirror/About/AboutSheet.swift) inside the demo phone: a dark sheet
  * that rises over the mirror, with the same sections. Escape or Done closes it and focus goes back
- * to the info button; the store rating is in the app only, so it shows the demo's toast.
+ * to the info button.
  */
 export function MirrorAboutSheet({
   labels,
   links,
   appVersion,
   onClose,
-  onInApp,
 }: {
   labels: AboutLabels
   links: AboutLinks
   appVersion: string
   onClose: () => void
-  onInApp: () => void
 }) {
   const done = useRef<HTMLButtonElement>(null)
   const [copied, setCopied] = useState(false)
@@ -225,8 +223,8 @@ export function MirrorAboutSheet({
           </Section>
 
           <Section title={labels.supportTitle}>
-            <Row icon={StarIcon} onPress={onInApp} trailing={chevron}>
-              {labels.rate}
+            <Row icon={CodeIcon} href={links.source} trailing={chevron}>
+              {labels.source}
             </Row>
             <Row icon={MailIcon} href={`mailto:${links.email}?subject=enMirror`} trailing={chevron}>
               {labels.feedback}

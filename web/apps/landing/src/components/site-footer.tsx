@@ -1,4 +1,4 @@
-import { ClockIcon, DownloadIcon } from "lucide-react"
+import { WrenchIcon } from "lucide-react"
 
 import { GitHubMark } from "@/components/github-mark"
 import { Logo } from "@/components/logo"
@@ -28,17 +28,10 @@ export function SiteFooter({ route }: { route: Route }) {
             </a>
             <p className="mt-5 max-w-sm text-base leading-relaxed text-pretty">{t.footerDescription}</p>
             <div className="mt-6">
-              {site.appStoreUrl ? (
-                <a href={site.appStoreUrl} className={`${download} text-foreground transition-colors hover:bg-muted`}>
-                  <DownloadIcon aria-hidden="true" className="size-4 shrink-0" />
-                  {doc.cta}
-                </a>
-              ) : (
-                <span aria-disabled="true" className={`${download} bg-muted/40`}>
-                  <ClockIcon aria-hidden="true" className="size-4 shrink-0" />
-                  {doc.ctaSoon}
-                </span>
-              )}
+              <a href={`${pathFor(route.lang, "home")}#install`} className={`${download} text-foreground transition-colors hover:bg-muted`}>
+                <WrenchIcon aria-hidden="true" className="size-4 shrink-0" />
+                {doc.installCta}
+              </a>
             </div>
             <a href={site.githubUrl} aria-label="GitHub" className="mt-4 inline-flex size-10 items-center justify-center rounded-full bg-muted/60 transition-colors hover:bg-muted hover:text-foreground">
               <GitHubMark className="size-5" />

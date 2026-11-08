@@ -709,7 +709,6 @@ export function MirrorScreen({ art, labels, demo, className }: { art: MirrorArt;
           labels={demo.labels.about}
           links={demo.about.links}
           appVersion={demo.about.appVersion}
-          onInApp={demo.share}
           onClose={() => {
             demo.about.hide()
             infoButton.current?.focus({ preventScroll: true })
