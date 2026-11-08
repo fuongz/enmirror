@@ -1,5 +1,7 @@
 # Runbook
 
+> **Status (2026-11-08):** enMirror is not released. App Review rejected 1.0 (build 202611070156) under guideline 4.3(b), "Spam": the mirror category is saturated. We do not resubmit or appeal. The app is installed from source (README › Running on an iPhone); TestFlight internal testing still works if needed (builds last 90 days). The steps below are kept for reference.
+
 ## TestFlight
 
 ### One-time setup

@@ -1,5 +1,7 @@
 # enMirror · App Store listing (version 1.0)
 
+> **Not released.** App Review rejected 1.0 on 2026-11-08 under guideline 4.3(b) (saturated mirror category); see `docs/runbook.md`. This listing was used for that submission and is kept for reference. The primary language on App Store Connect was switched to Vietnamese for it.
+
 Text to paste into App Store Connect. Primary language English (U.S.); Vietnamese is added under
 Localizations. Limits checked: Subtitle ≤ 30, Promotional Text ≤ 170, Keywords ≤ 100, Description ≤ 4000.
 Only describe what this build does.

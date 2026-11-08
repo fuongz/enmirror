@@ -1,6 +1,8 @@
 # enMirror
 
-A free iPhone mirror with no ads: a sharp front-camera view, a ring light around the screen, zoom, exposure, freeze-to-inspect and a "how others see you" flip. SwiftUI, iOS 26 and later, fully offline. Conventions: [docs/conventions.md](docs/conventions.md). Releasing: [docs/runbook.md](docs/runbook.md); the step-by-step App Store guide in Vietnamese is [docs/app-store-guide.html](docs/app-store-guide.html) (open it in a browser).
+A free iPhone mirror with no ads: a sharp front-camera view, a ring light around the screen, zoom, exposure, freeze-to-inspect and a "how others see you" flip. SwiftUI, iOS 26 and later, fully offline. Open source under the [MIT licence](LICENSE). Conventions: [docs/conventions.md](docs/conventions.md).
+
+**enMirror is not on the App Store.** App Review rejected version 1.0 on 2026-11-08 under guideline 4.3(b) (the mirror category is saturated), so there is no store release: build it and put it on your iPhone yourself, see [Running on an iPhone](#running-on-an-iphone). The release runbook ([docs/runbook.md](docs/runbook.md)) and the App Store guide ([docs/app-store-guide.html](docs/app-store-guide.html)) are kept for reference.
 
 ```
 enmirror/
@@ -62,10 +64,16 @@ ENMIRROR_DEVICE = "<UDID>"   # xcrun devicectl list devices
 
 ## Running on an iPhone
 
-Signing stays out of git. Copy `ios/Config/Local.xcconfig.example` to `ios/Config/Local.xcconfig` and set `DEVELOPMENT_TEAM`. With a free Personal Team, also set a development-only `ENMIRROR_APP_BUNDLE_ID` (such as `com.<you>.enmirror.dev`); such builds expire after 7 days.
+You need a Mac with Xcode 27, an iPhone on iOS 26 or later and an Apple ID (a free one works).
+
+1. `git clone https://github.com/fuongz/enmirror`
+2. Signing stays out of git. Copy `ios/Config/Local.xcconfig.example` to `ios/Config/Local.xcconfig` and set `DEVELOPMENT_TEAM` (your Team ID: Xcode › Settings › Accounts). With a free Personal Team, also set an `ENMIRROR_APP_BUNDLE_ID` of your own (such as `com.<you>.enmirror`); the widget extension takes the same ID plus `.widgets`.
+3. Turn on Developer Mode on the iPhone (Settings › Privacy & Security), connect it, open `ios/EnMirror.xcodeproj`, pick the iPhone and press Run. Or, with [mise](https://mise.jdx.dev) and `ENMIRROR_DEVICE` in `mise.local.toml`:
 
 ```sh
 mise run ios:device       # build, install and launch on ENMIRROR_DEVICE
 ```
+
+With a free Apple account the installed app runs for 7 days, then build it again; with a paid Apple Developer account, about a year.
 
 The iPhone must be unlocked, connected by cable or on the same Wi-Fi, with Developer Mode on (Settings › Privacy & Security). Camera, ring light, zoom and freeze can only be checked on a real iPhone.
