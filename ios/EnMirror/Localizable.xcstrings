@@ -541,16 +541,6 @@
         }
       }
     },
-    "Rate enMirror on the App Store": {
-      "localizations": {
-        "vi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Đánh giá enMirror trên App Store"
-          }
-        }
-      }
-    },
     "Ring light, zoom and how others see you.": {
       "localizations": {
         "vi": {
@@ -607,6 +597,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Chia sẻ"
+          }
+        }
+      }
+    },
+    "Source Code on GitHub": {
+      "localizations": {
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mã nguồn trên GitHub"
           }
         }
       }

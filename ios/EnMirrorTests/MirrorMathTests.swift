@@ -149,8 +149,8 @@ struct AppInfoTests {
         #expect(url.absoluteString == "mailto:help@example.com?subject=enMirror%201.0%20(42)")
     }
 
-    @Test func storeLinksPointAtTheApp() {
-        #expect(AppLinks.writeReview?.absoluteString.contains("id6830683755") == true)
+    @Test func linksPointAtTheProject() {
+        #expect(AppLinks.sourceCode?.absoluteString == "https://github.com/fuongz/enmirror")
         #expect(AppLinks.privacyPolicy?.host() == "enmirror.trinhvaphuong.com")
     }
 }

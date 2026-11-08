@@ -94,8 +94,8 @@ struct AboutSheet: View {
 
     private var links: some View {
         Section("Support") {
-            if let url = AppLinks.writeReview {
-                Link(destination: url) { Label("Rate enMirror on the App Store", systemImage: "star") }
+            if let url = AppLinks.sourceCode {
+                Link(destination: url) { Label("Source Code on GitHub", systemImage: "chevron.left.forwardslash.chevron.right") }
             }
             if let address = AppLinks.supportEmail, let url = AppLinks.feedbackMail(to: address, version: version) {
                 Link(destination: url) { Label("Send Feedback", systemImage: "envelope") }
