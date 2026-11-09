@@ -31,8 +31,6 @@ export const site = {
   license: "MIT",
   /** The app version the demo's About sheet shows. Keep it in step with MARKETING_VERSION. */
   appVersion: "1.0",
-  /** The README section on building and installing the app with Xcode. */
-  installGuideUrl: "https://github.com/fuongz/enmirror#running-on-an-iphone",
   // Date the privacy policy and terms last changed (YYYY-MM-DD).
   legalUpdated: "2026-11-08",
 } as const

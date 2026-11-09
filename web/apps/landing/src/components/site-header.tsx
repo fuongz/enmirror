@@ -3,6 +3,7 @@ import * as m from "motion/react-m"
 import { useState } from "react"
 import { cn } from "cn"
 
+import { GitHubMark } from "@/components/github-mark"
 import { LanguageSelect } from "@/components/language-select"
 import { buttonVariants } from "@/components/ui/button"
 import { ui } from "@/i18n"
@@ -71,15 +72,13 @@ function HeaderBar({ route }: { route: Route }) {
               {t.nav[page]}
             </a>
           ))}
-          <a href={site.githubUrl} className={link}>
-            GitHub
-          </a>
         </div>
 
         <div className="col-start-3 flex items-center gap-2 justify-self-end">
           <LanguageSelect route={route} globe />
-          <a href={`${pathFor(route.lang, "home")}#install`} className={cn(buttonVariants(), "h-10 px-5 text-[15px]")}>
-            {t.install}
+          <a href={site.githubUrl} className={cn(buttonVariants(), "h-10 gap-2 px-4 text-[15px]")}>
+            <GitHubMark className="size-4" />
+            {t.github}
           </a>
         </div>
       </nav>

@@ -10,7 +10,7 @@ export const ui = {
   vi: {
     nav: { home: "Trang chủ", privacy: "Quyền riêng tư", terms: "Điều khoản", support: "Hỗ trợ", brand: "Thương hiệu" },
     language: "Ngôn ngữ",
-    install: "Cách cài",
+    github: "GitHub",
     theme: { label: "Giao diện", light: "Sáng", dark: "Tối", system: "Theo hệ thống" },
     updated: "Cập nhật lần cuối",
     onThisPage: "Trên trang này",
@@ -25,7 +25,7 @@ export const ui = {
   en: {
     nav: { home: "Home", privacy: "Privacy", terms: "Terms", support: "Support", brand: "Brand" },
     language: "Language",
-    install: "Install",
+    github: "GitHub",
     theme: { label: "Appearance", light: "Light", dark: "Dark", system: "System" },
     updated: "Last updated",
     onThisPage: "On this page",

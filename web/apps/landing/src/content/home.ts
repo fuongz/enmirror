@@ -18,15 +18,6 @@ export type Feature = {
   focus?: "top" | "bottom"
 }
 
-/** How to build enMirror and put it on an iPhone; the app is not on the App Store. */
-export type InstallGuide = {
-  title: string
-  lead: string
-  steps: { title: string; body: string; code?: string }[]
-  note: string
-  guideLink: string
-}
-
 export type HomeDoc = {
   title: string
   description: string
@@ -40,9 +31,6 @@ export type HomeDoc = {
   /** Short promises under the call to action, each with its symbol. */
   facts: HeroFact[]
   requirement: string
-  /** The hero button that scrolls to the install guide. */
-  installCta: string
-  install: InstallGuide
   phone: DemoLabels
   featuresTitle: string
   featuresLead: string
@@ -69,7 +57,7 @@ const vi: HomeDoc = {
   heading: "Soi rõ, sáng đủ.",
   headingAccent: "Miễn\u00a0phí, không quảng\u00a0cáo.",
   openSource: "Mã nguồn mở",
-  github: "GitHub",
+  github: "Xem trên GitHub",
   lead: "Biến iPhone thành gương soi với đèn viền, zoom và chụp ảnh để xem kỹ. Dùng thoải mái, không mất phí, không cần đăng ký gói.",
   facts: [
     { icon: "free", label: "Miễn phí" },
@@ -77,26 +65,7 @@ const vi: HomeDoc = {
     { icon: "noAccount", label: "Không cần tài khoản" },
     { icon: "offline", label: "Dùng không cần mạng" },
   ],
-  requirement: "Dành cho iPhone chạy iOS 26 trở lên",
-  installCta: "Cách cài lên iPhone",
-  install: {
-    title: "Tự cài lên iPhone",
-    lead: "enMirror không có trên App Store. Mã nguồn mở theo giấy phép MIT: bạn tự build và cài bằng Xcode, miễn phí.",
-    steps: [
-      { title: "Chuẩn bị", body: "Máy Mac có Xcode 27, iPhone chạy iOS 26 trở lên và một Apple ID (tài khoản miễn phí cũng được)." },
-      { title: "Tải mã nguồn", body: "Mở Terminal và chạy:", code: "git clone https://github.com/fuongz/enmirror" },
-      {
-        title: "Điền thông tin ký app",
-        body: "Copy ios/Config/Local.xcconfig.example thành Local.xcconfig, điền DEVELOPMENT_TEAM (Team ID của bạn) và ENMIRROR_APP_BUNDLE_ID (một mã riêng, ví dụ com.tenban.enmirror).",
-      },
-      {
-        title: "Chạy lên iPhone",
-        body: "Cắm iPhone, bật Chế độ nhà phát triển (Cài đặt › Quyền riêng tư & Bảo mật), mở ios/EnMirror.xcodeproj, chọn iPhone của bạn rồi bấm Run.",
-      },
-    ],
-    note: "Với tài khoản Apple miễn phí, app chạy được 7 ngày rồi cần build lại. Với tài khoản Apple Developer trả phí, khoảng 1 năm.",
-    guideLink: "Hướng dẫn chi tiết trên GitHub",
-  },
+  requirement: "Mã nguồn mở, tự cài bằng Xcode lên iPhone chạy iOS 26 trở lên",
   phone: {
     share: "Chia sẻ",
     save: "Lưu",
@@ -207,7 +176,7 @@ const en: HomeDoc = {
   heading: "A clearer view. A little light.",
   headingAccent: "Free. No\u00a0ads.",
   openSource: "Open source",
-  github: "GitHub",
+  github: "View on GitHub",
   lead: "Turn your iPhone into a mirror with a ring light, zoom and photos for a closer look. Use it all for free, with no subscriptions or in-app purchases.",
   facts: [
     { icon: "free", label: "Free" },
@@ -215,26 +184,7 @@ const en: HomeDoc = {
     { icon: "noAccount", label: "No account" },
     { icon: "offline", label: "Works offline" },
   ],
-  requirement: "For iPhone with iOS 26 or later",
-  installCta: "Install on your iPhone",
-  install: {
-    title: "Install it yourself",
-    lead: "enMirror is not on the App Store. It is open source under the MIT licence: build it and put it on your iPhone with Xcode, for free.",
-    steps: [
-      { title: "What you need", body: "A Mac with Xcode 27, an iPhone on iOS 26 or later, and an Apple ID (a free account works)." },
-      { title: "Get the code", body: "Open Terminal and run:", code: "git clone https://github.com/fuongz/enmirror" },
-      {
-        title: "Set up signing",
-        body: "Copy ios/Config/Local.xcconfig.example to Local.xcconfig, then set DEVELOPMENT_TEAM (your Team ID) and ENMIRROR_APP_BUNDLE_ID (an ID of your own, such as com.yourname.enmirror).",
-      },
-      {
-        title: "Run it on your iPhone",
-        body: "Plug in your iPhone, turn on Developer Mode (Settings › Privacy & Security), open ios/EnMirror.xcodeproj, pick your iPhone and press Run.",
-      },
-    ],
-    note: "With a free Apple account the app runs for 7 days, then you build it again. With a paid Apple Developer account, about a year.",
-    guideLink: "Full guide on GitHub",
-  },
+  requirement: "Open source: build it with Xcode for an iPhone on iOS 26 or later",
   phone: {
     share: "Share",
     save: "Save",

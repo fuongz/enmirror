@@ -1,5 +1,3 @@
-import { WrenchIcon } from "lucide-react"
-
 import { GitHubMark } from "@/components/github-mark"
 import { Logo } from "@/components/logo"
 import { PageContainer } from "@/components/page-container"
@@ -28,14 +26,11 @@ export function SiteFooter({ route }: { route: Route }) {
             </a>
             <p className="mt-5 max-w-sm text-base leading-relaxed text-pretty">{t.footerDescription}</p>
             <div className="mt-6">
-              <a href={`${pathFor(route.lang, "home")}#install`} className={`${download} text-foreground transition-colors hover:bg-muted`}>
-                <WrenchIcon aria-hidden="true" className="size-4 shrink-0" />
-                {doc.installCta}
+              <a href={site.githubUrl} className={`${download} text-foreground transition-colors hover:bg-muted`}>
+                <GitHubMark className="size-4 shrink-0" />
+                {doc.github}
               </a>
             </div>
-            <a href={site.githubUrl} aria-label="GitHub" className="mt-4 inline-flex size-10 items-center justify-center rounded-full bg-muted/60 transition-colors hover:bg-muted hover:text-foreground">
-              <GitHubMark className="size-5" />
-            </a>
           </div>
           <div className="grid grid-cols-2 items-start gap-6 sm:gap-10">
             {site.products.length > 0 && (

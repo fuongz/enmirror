@@ -1,9 +1,8 @@
 import { StarIcon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { ChevronRightIcon, SmartphoneIcon, WrenchIcon } from "lucide-react"
+import { ChevronRightIcon, SmartphoneIcon } from "lucide-react"
 
 import { GitHubMark } from "@/components/github-mark"
-import { InstallSection } from "@/components/install-section"
 import { Logo } from "@/components/logo"
 import { MirrorPreview } from "@/components/mirror-preview"
 import { buttonVariants } from "@/components/ui/button"
@@ -14,8 +13,8 @@ import { site } from "@/site"
 
 const heroButton = "h-14 gap-3 px-7 text-lg [&_svg:not([class*='size-'])]:size-5"
 // One centred column: an open-source pill, a serif headline with the app icon beside it, one
-// paragraph, the install and GitHub buttons, a small requirement line, the app itself, then how
-// to install it (the app is open source and not on the App Store).
+// paragraph, the GitHub button (the app is open source and not on the App Store; the README there
+// explains how to install it), a small requirement line, then the app itself.
 export function HomePage({ lang }: { lang: Lang }) {
   const doc = home[lang]
 
@@ -51,11 +50,7 @@ export function HomePage({ lang }: { lang: Lang }) {
       <p className="mt-6 max-w-2xl text-lg text-pretty text-muted-foreground sm:text-xl">{doc.lead}</p>
 
       <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-        <a href="#install" className={cn(buttonVariants({ size: "lg" }), heroButton)}>
-          <WrenchIcon aria-hidden="true" />
-          {doc.installCta}
-        </a>
-        <a href={site.githubUrl} className={cn(buttonVariants({ variant: "outline", size: "lg" }), heroButton)}>
+        <a href={site.githubUrl} className={cn(buttonVariants({ size: "lg" }), heroButton)}>
           <GitHubMark className="size-5" />
           {doc.github}
         </a>
@@ -71,8 +66,6 @@ export function HomePage({ lang }: { lang: Lang }) {
       <div className="mt-20 w-full">
         <MirrorPreview labels={doc.phone} lang={lang} />
       </div>
-
-      <InstallSection guide={doc.install} />
     </div>
   )
 }
