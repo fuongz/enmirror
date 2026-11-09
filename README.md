@@ -59,7 +59,7 @@ Per-machine IDs go in `mise.local.toml` (gitignored):
 ```toml
 [env]
 ENMIRROR_SIM = "<UDID>"      # xcrun simctl list devices
-ENMIRROR_DEVICE = "<UDID>"   # xcrun devicectl list devices
+ENMIRROR_DEVICES = "<UDID> <UDID>"   # iPhones, space-separated: xcrun devicectl list devices
 ```
 
 ## Running on an iPhone
@@ -68,10 +68,10 @@ You need a Mac with Xcode 27, an iPhone on iOS 26 or later and an Apple ID (a fr
 
 1. `git clone https://github.com/fuongz/enmirror`
 2. Signing stays out of git. Copy `ios/Config/Local.xcconfig.example` to `ios/Config/Local.xcconfig` and set `DEVELOPMENT_TEAM` (your Team ID: Xcode › Settings › Accounts). With a free Personal Team, also set an `ENMIRROR_APP_BUNDLE_ID` of your own (such as `com.<you>.enmirror`); the widget extension takes the same ID plus `.widgets`.
-3. Turn on Developer Mode on the iPhone (Settings › Privacy & Security), connect it, open `ios/EnMirror.xcodeproj`, pick the iPhone and press Run. Or, with [mise](https://mise.jdx.dev) and `ENMIRROR_DEVICE` in `mise.local.toml`:
+3. Turn on Developer Mode on the iPhone (Settings › Privacy & Security), connect it, open `ios/EnMirror.xcodeproj`, pick the iPhone and press Run. Or, with [mise](https://mise.jdx.dev) and the iPhones' UDIDs in `mise.local.toml` (`ENMIRROR_DEVICES = "<UDID> <UDID>"`, from `xcrun devicectl list devices`):
 
 ```sh
-mise run ios:device       # build, install and launch on ENMIRROR_DEVICE
+mise run ios:devices      # build, install and launch on every iPhone in ENMIRROR_DEVICES
 ```
 
 With a free Apple account the installed app runs for 7 days, then build it again; with a paid Apple Developer account, about a year.

@@ -3,7 +3,7 @@
 #
 #   [env]
 #   ENMIRROR_SIM = "<UDID of the simulator>"   # xcrun simctl list devices
-#   ENMIRROR_DEVICE = "<UDID of the iPhone>"   # xcrun devicectl list devices
+#   ENMIRROR_DEVICES = "<UDID> <UDID>"         # iPhones, space-separated: xcrun devicectl list devices
 #
 # Signing for the iPhone comes from ios/Config/Local.xcconfig (README.md, "Running on an iPhone").
 
@@ -42,25 +42,57 @@ xcrun simctl launch "$ENMIRROR_SIM" "$ENMIRROR_BUNDLE_ID"
 """
 
 [tasks."ios:build-device"]
-description = "Build the Debug app for the iPhone"
+description = "Build the Debug app for the iPhones in ENMIRROR_DEVICES"
 dir = "ios"
 run = """
-set -euo pipefail
-: "${ENMIRROR_DEVICE:?set ENMIRROR_DEVICE in mise.local.toml}"
-xcodebuild build -quiet -project "$ENMIRROR_PROJECT" -scheme EnMirror \
-  -destination "platform=iOS,id=$ENMIRROR_DEVICE" -derivedDataPath "$ENMIRROR_DEVICE_DERIVED" \
-  -allowProvisioningUpdates -allowProvisioningDeviceRegistration
+set -uo pipefail
+devices=${ENMIRROR_DEVICES:-${ENMIRROR_DEVICE:-}}
+: "${devices:?set ENMIRROR_DEVICES in mise.local.toml}"
+# One build per iPhone so each one is registered and lands in the development profile; after the
+# first, the build is incremental and only re-signs. An iPhone that is not paired or reachable is
+# skipped, so it does not stop the others; the task fails only if no build succeeded.
+built=0
+for id in $devices; do
+  log="$ENMIRROR_DEVICE_DERIVED/build-$id.log"
+  mkdir -p "$ENMIRROR_DEVICE_DERIVED"
+  if xcodebuild build -quiet -project "$ENMIRROR_PROJECT" -scheme EnMirror \
+    -destination "platform=iOS,id=$id" -derivedDataPath "$ENMIRROR_DEVICE_DERIVED" \
+    -allowProvisioningUpdates -allowProvisioningDeviceRegistration >"$log" 2>&1; then
+    built=1
+  else
+    grep -v "DVTDevice" "$log" | tail -5
+    echo "skipped $id: not paired, locked or not connected (log: ios/$log)"
+  fi
+done
+[ "$built" = 1 ]
 """
 
-[tasks."ios:device"]
-description = "Build, then install and launch on the iPhone (unlocked, by cable or on the same Wi-Fi)"
+[tasks."ios:devices"]
+description = "Build, then install and launch on every iPhone in ENMIRROR_DEVICES (unlocked, by cable or Wi-Fi)"
 dir = "ios"
 depends = ["ios:build-device"]
 run = """
-set -euo pipefail
-xcrun devicectl device install app --device "$ENMIRROR_DEVICE" \
-  "$ENMIRROR_DEVICE_DERIVED/Build/Products/Debug-iphoneos/EnMirror.app" | grep -E "App installed|error" || true
-xcrun devicectl device process launch --device "$ENMIRROR_DEVICE" "$ENMIRROR_BUNDLE_ID" | tail -1
+set -uo pipefail
+devices=${ENMIRROR_DEVICES:-${ENMIRROR_DEVICE:-}}
+app="$ENMIRROR_DEVICE_DERIVED/Build/Products/Debug-iphoneos/EnMirror.app"
+failed=0
+for id in $devices; do
+  echo "== $id"
+  # One iPhone that is locked or away must not stop the others (mise runs scripts with errexit,
+  # so every step that may fail is guarded).
+  if xcrun devicectl device install app --device "$id" "$app" 2>&1 | grep -q "App installed"; then
+    echo "installed"
+    if xcrun devicectl device process launch --device "$id" "$ENMIRROR_BUNDLE_ID" >/dev/null 2>&1; then
+      echo "launched"
+    else
+      echo "installed but not launched: unlock the iPhone and open enMirror"
+    fi
+  else
+    echo "could not install on $id (locked, not trusted, Developer Mode off or not connected?)"
+    failed=1
+  fi
+done
+exit $failed
 """
 
 [tasks."ios:test"]

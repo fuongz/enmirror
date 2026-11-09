@@ -105,7 +105,7 @@ Config copied from Enchat (`.swift-format`): 4-space indentation, lines up to 13
 | Periphery, pinned in `mise.toml` | `.periphery.yml` | Dead-code report, does not fail CI |
 | `ios/scripts/ci-ios.sh` | | Format, lint, tests, simulator and device builds with `CODE_SIGNING_ALLOWED=NO`. Run before committing |
 
-mise tasks follow Enchat's names: `ios:build-sim`, `ios:sim`, `ios:device`, `ios:format`, `ios:lint`, `ios:dead-code`.
+mise tasks follow Enchat's names: `ios:build-sim`, `ios:sim`, `ios:devices`, `ios:format`, `ios:lint`, `ios:dead-code`.
 
 ## Simulators and devices
 

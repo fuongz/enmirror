@@ -210,7 +210,7 @@
 <pre><code>cp ios/Config/Local.xcconfig.example ios/Config/Local.xcconfig
 # rồi sửa: DEVELOPMENT_TEAM = GWG64UPCV5</code></pre>
       <p>Kiểm tra: build cho iPhone rồi xem chữ ký có đúng team và bundle ID không:</p>
-<pre><code>mise run ios:device
+<pre><code>mise run ios:devices
 codesign -dvv build/xcode-device/Build/Products/Debug-iphoneos/EnMirror.app | grep -E "Identifier|Team"</code></pre>
       <div class="note">Certificate <b>Apple Distribution</b> dùng cho TestFlight được tạo tự động lần đầu archive (nhờ <code>-allowProvisioningUpdates</code>), không cần tạo tay.</div>
     </section>
